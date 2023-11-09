@@ -60,7 +60,7 @@ class AppDrawer extends StatelessWidget {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              'PRECIO LUZ',
+                              'TARIFA LUZ',
                               style: Theme.of(context)
                                   .textTheme
                                   .displaySmall!

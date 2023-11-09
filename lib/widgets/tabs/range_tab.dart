@@ -255,6 +255,7 @@ class _RangeTabState extends State<RangeTab> {
                 const SizedBox(width: 20),
                 CircleAvatar(
                   radius: 30,
+                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
                   child: IconButton(
                     onPressed: submitDuracion,
                     icon: const Icon(

@@ -13,7 +13,7 @@ class HeadScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 2,
             child: FittedBox(
               child: Text(
-                'App PVPC',
+                'Tarifa Luz PVPC',
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.onBackground,
                 ),

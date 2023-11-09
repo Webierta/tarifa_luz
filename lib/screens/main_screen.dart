@@ -230,8 +230,9 @@ class _MainScreenState extends State<MainScreen> {
             TextButton(
               child: const Text('Volver'),
               onPressed: () {
-                resetMainScreen();
                 Navigator.of(context).pop();
+                resetMainScreen();
+                //Navigator.of(context).pop();
                 /* Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -392,7 +393,7 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tarifa PVPC'),
+        title: const Text('Tarifa Luz'),
         actions: [
           IconButton(
             onPressed: (listDatabaseSort.length > 1 && !isFirstFecha)
