@@ -9,7 +9,7 @@ environment:
 dependencies:
   fl_chart: ^0.64.0
   flutter:
-    sdk: flutter
+    sdk: flutter  
   flutter_localizations:
     sdk: flutter
   google_fonts: ^6.1.0
@@ -27,6 +27,16 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   hive_generator: ^2.0.1  
   build_runner: ^2.4.6
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path_android: assets/icon/pvpc_icon.png
+  image_path_ios: assets/icon/pvpc_ios.png
+  adaptive_icon_background: "#1565c0"
+  #adaptive_icon_background: assets/icon/ic_background.png
+  adaptive_icon_foreground: assets/icon/ic_foreground.png
 
 flutter:
   uses-material-design: true
