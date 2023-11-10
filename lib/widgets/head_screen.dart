@@ -11,24 +11,14 @@ class HeadScreen extends StatelessWidget {
         children: <Widget>[
           SizedBox(
             width: MediaQuery.of(context).size.width / 2,
-            child: FittedBox(
-              child: Text(
-                'Tarifa Luz PVPC',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-              ),
+            child: const FittedBox(
+              child: Text('Tarifa Luz PVPC'),
             ),
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width / 2,
-            child: FittedBox(
-              child: Text(
-                'Precio de la luz por horas',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
-              ),
+            child: const FittedBox(
+              child: Text('Precio de la luz por horas'),
             ),
           ),
         ],

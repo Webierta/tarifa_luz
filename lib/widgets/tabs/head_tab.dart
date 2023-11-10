@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:tarifa_luz/theme/theme_app.dart';
-
 class HeadTab extends StatelessWidget {
   final String fecha;
   final String titulo;
@@ -9,7 +7,6 @@ class HeadTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
     return Column(
       children: [
         Row(
@@ -17,26 +14,17 @@ class HeadTab extends StatelessWidget {
           children: <Widget>[
             Text(
               'Tarifa 2.0 TD',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: onBackgroundColor),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ],
         ),
         Text(
           fecha,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(color: onBackgroundColor),
+          style: Theme.of(context).textTheme.titleMedium,
         ),
         Text(
           titulo,
-          style: Theme.of(context)
-              .textTheme
-              .bodyLarge!
-              .copyWith(color: onBackgroundColor),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         //const Divider(thickness: 0.5, height: 20),
         const SizedBox(height: 20),

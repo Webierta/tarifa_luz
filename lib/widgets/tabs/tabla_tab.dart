@@ -32,7 +32,7 @@ class TablaTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color backgroundColor = ThemeApp(context).backgroundColor;
+    final ThemeApp themeApp = ThemeApp(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
@@ -41,7 +41,7 @@ class TablaTab extends StatelessWidget {
           ListView.separated(
               separatorBuilder: (context, index) => Divider(
                     height: 0.2,
-                    color: backgroundColor.withOpacity(0.2),
+                    color: themeApp.backgroundColor.withOpacity(0.2),
                   ),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -101,30 +101,41 @@ class TablaTab extends StatelessWidget {
                         ? Tarifa.getIconCara(precios, precios[index])
                         : Text(
                             '${index + 1}',
-                            style: TextStyle(color: backgroundColor),
+                            style: TextStyle(color: themeApp.backgroundColor),
                           ),
                     title: page == 2
                         ? Text(
                             '${(precios[index]).toStringAsFixed(5)} €/kWh',
-                            style: TextStyle(
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(color: themeApp.backgroundColor),
+                            /* style: TextStyle(
                               color: backgroundColor,
                               fontWeight: FontWeight.bold,
-                            ),
+                            ), */
                           )
                         : Text(
                             '${indice}h - ${indice + 1}h',
-                            style: Theme.of(context).textTheme.titleLarge,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(color: themeApp.backgroundColor),
                           ),
                     subtitle: page == 2
                         ? Text(
                             '${index}h - ${index + 1}h',
-                            style: TextStyle(
-                              color: backgroundColor,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(color: themeApp.backgroundColor),
                           )
                         : Text(
                             '${precios[index].toStringAsFixed(5)} €/kWh',
-                            style: TextStyle(color: backgroundColor),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(color: themeApp.backgroundColor),
                           ),
                     trailing: Column(
                       children: [
@@ -138,10 +149,10 @@ class TablaTab extends StatelessWidget {
                         Flexible(
                           child: Text(
                             '${desviacion.toStringAsFixed(4)} €',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: backgroundColor,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(color: themeApp.backgroundColor),
                           ),
                         ),
                       ],

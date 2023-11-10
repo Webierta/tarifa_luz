@@ -3,18 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:tarifa_luz/theme/theme_app.dart';
 import 'package:tarifa_luz/widgets/head_screen.dart';
 
 const String btcAddress = '15ZpNzqbYFx9P7wg4U438JMwZr2q3W6fkS';
 const String urlPayPal =
     'https://www.paypal.com/donate?hosted_button_id=986PSAHLH6N4L';
-const String urlGitHub = 'https://github.com/Webierta/precio-luz/issues';
+const String urlGitHub = 'https://github.com/Webierta/tarifa_luz/issues';
 
 class DonateScreen extends StatelessWidget {
   const DonateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ThemeApp themeApp = ThemeApp(context);
+
     Future<void> launchURL(String url) async {
       if (!await launchUrl(Uri.parse(url),
           mode: LaunchMode.externalApplication)) {
@@ -40,27 +43,23 @@ class DonateScreen extends StatelessWidget {
               child: Text(
                 'Esta App es Software libre y de Código Abierto. Por favor considera colaborar '
                 'para mantener activo el desarrollo de esta App.',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+                style: themeApp.bodyLarge,
               ),
             ),
             const SizedBox(height: 20.0),
-            Center(
+            Align(
+              alignment: Alignment.centerLeft,
               child: RichText(
                 text: TextSpan(
                   children: [
                     TextSpan(
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
+                        style: themeApp.bodyLarge,
                         text:
                             '¿Crees que has encontrado un problema? Identificar y corregir errores hace que '
                             'esta App sea mejor para todos. Informa de un error aquí: '),
                     TextSpan(
-                      style: const TextStyle(
+                      style: themeApp.bodyLarge.copyWith(
                         color: Colors.blueAccent,
-                        //fontSize: 22,
                         decoration: TextDecoration.underline,
                       ),
                       text: 'GitHub issues.',
@@ -77,9 +76,7 @@ class DonateScreen extends StatelessWidget {
               child: Text(
                 'Puedes colaborar con el desarrollo de ésta y otras aplicaciones con una pequeña '
                 'aportación a mi monedero de Bitcoins o vía PayPal.',
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onBackground,
-                ),
+                style: themeApp.bodyLarge,
               ),
             ),
             Align(
@@ -88,9 +85,7 @@ class DonateScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
                   'Scan this QR code with your wallet application:',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+                  style: themeApp.bodyLarge,
                 ),
               ),
             ),
@@ -104,9 +99,7 @@ class DonateScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
                   'Or copy the BTC Wallet Address:',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+                  style: themeApp.bodyLarge,
                 ),
               ),
             ),
@@ -137,9 +130,12 @@ class DonateScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.center,
-                        child: Text(btcAddress),
+                        child: Text(
+                          btcAddress,
+                          style: TextStyle(color: themeApp.backgroundColor),
+                        ),
                       ),
                     ),
                     Container(
@@ -155,7 +151,8 @@ class DonateScreen extends StatelessWidget {
                         icon: const Icon(Icons.copy),
                         onPressed: () async {
                           await Clipboard.setData(
-                              const ClipboardData(text: btcAddress));
+                            const ClipboardData(text: btcAddress),
+                          );
                           if (!context.mounted) return;
                           ScaffoldMessenger.of(context)
                               .showSnackBar(const SnackBar(
@@ -174,9 +171,7 @@ class DonateScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                 child: Text(
                   'Donate via Paypal (open the PayPal payment website):',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+                  style: themeApp.bodyLarge,
                 ),
               ),
             ),

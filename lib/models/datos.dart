@@ -59,7 +59,14 @@ class Datos {
               double.tryParse(precio.replaceAll(',', '.'))! / 1000;
           preciosHora.add(precioDouble);
         }
-        // TODO: HORARIO DE VERANO
+        // HORARIO DE VERANO: Adelanto de 1 Hora
+        if (fecha == '2022-03-27' ||
+            fecha == '2023-03-26' ||
+            fecha == '2024-03-31' ||
+            fecha == '2025-03-30' ||
+            fecha == '2026-03-29') {
+          preciosHora.insert(2, 0);
+        }
         status = preciosHora.length == 24 ? Status.ok : Status.error;
       } else {
         status = Status.noAcceso;

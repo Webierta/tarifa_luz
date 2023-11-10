@@ -6,13 +6,13 @@ import 'package:tarifa_luz/screens/iconografia_screen.dart';
 import 'package:tarifa_luz/screens/info_screen.dart';
 import 'package:tarifa_luz/screens/settings_screen.dart';
 import 'package:tarifa_luz/screens/storage_screen.dart';
+import 'package:tarifa_luz/theme/style_app.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Color onBackgroundColor = Theme.of(context).colorScheme.onBackground;
     return Drawer(
       child: Container(
         decoration: BoxDecoration(
@@ -63,8 +63,8 @@ class AppDrawer extends StatelessWidget {
                               'TARIFA LUZ',
                               style: Theme.of(context)
                                   .textTheme
-                                  .displaySmall!
-                                  .copyWith(color: onBackgroundColor),
+                                  .headlineSmall!
+                                  .copyWith(color: StyleApp.accentColor),
                             ),
                           ),
                         ),
@@ -74,34 +74,22 @@ class AppDrawer extends StatelessWidget {
                             fit: BoxFit.fitWidth,
                             child: Text(
                               'TARIFA ELÉCTRICA REGULADA (PVPC)',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(color: onBackgroundColor),
+                              style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
                         ),
                         const Spacer(),
                         Text(
                           'Copyleft 2020-2023',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(color: onBackgroundColor),
+                          style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
                           'Jesús Cuerda (Webierta)',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(color: onBackgroundColor),
+                          style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(
                           'All Wrongs Reserved. Licencia GPLv3',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall!
-                              .copyWith(color: onBackgroundColor),
+                          style: Theme.of(context).textTheme.labelSmall,
                         ),
                       ],
                     ),

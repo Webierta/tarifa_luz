@@ -10,6 +10,11 @@ class IconografiaScreen extends StatelessWidget {
       color: Theme.of(context).colorScheme.background.withOpacity(0.2),
     );
 
+    TextStyle labelMediumDark = Theme.of(context)
+        .textTheme
+        .labelMedium!
+        .copyWith(color: Theme.of(context).colorScheme.background);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Iconografía'),
@@ -25,9 +30,7 @@ class IconografiaScreen extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       'Periodos horarios:',
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Card(
                       elevation: 4.0,
@@ -61,9 +64,7 @@ class IconografiaScreen extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     Text(
                       'Diferencia respecto al precio medio del día:',
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Card(
                       elevation: 4.0,
@@ -77,9 +78,7 @@ class IconografiaScreen extends StatelessWidget {
                             ),
                             title: Text(
                               'Inferior',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                              ),
+                              style: labelMediumDark,
                             ),
                           ),
                           ListTile(
@@ -89,9 +88,7 @@ class IconografiaScreen extends StatelessWidget {
                             ),
                             title: Text(
                               'Superior',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                              ),
+                              style: labelMediumDark,
                             ),
                           ),
                         ],
@@ -100,9 +97,7 @@ class IconografiaScreen extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     Text(
                       'Rangos de horas:',
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Card(
                       elevation: 4.0,
@@ -117,9 +112,7 @@ class IconografiaScreen extends StatelessWidget {
                             ),
                             title: Text(
                               '8 horas más baratas',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                              ),
+                              style: labelMediumDark,
                             ),
                           ),
                           ListTile(
@@ -130,9 +123,7 @@ class IconografiaScreen extends StatelessWidget {
                             ),
                             title: Text(
                               '8 horas intermedias',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                              ),
+                              style: labelMediumDark,
                             ),
                           ),
                           ListTile(
@@ -143,9 +134,7 @@ class IconografiaScreen extends StatelessWidget {
                             ),
                             title: Text(
                               '8 horas más caras',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.background,
-                              ),
+                              style: labelMediumDark,
                             ),
                           ),
                         ],
@@ -154,9 +143,7 @@ class IconografiaScreen extends StatelessWidget {
                     const SizedBox(height: 20.0),
                     Text(
                       'Rangos de precios (€/kWh):',
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground,
-                          ),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                     Card(
                       elevation: 4.0,
@@ -174,9 +161,10 @@ class IconografiaScreen extends StatelessWidget {
                                 ),
                                 color: const Color(0xFFDCEDC8),
                                 //Colors.lightGreen[100]
-                                child: const Text(
+                                child: Text(
                                   '< 0,10',
                                   textAlign: TextAlign.center,
+                                  style: labelMediumDark,
                                 ),
                               ),
                             ),
@@ -189,11 +177,12 @@ class IconografiaScreen extends StatelessWidget {
                                 ),
                                 color: const Color(0xFFFFFDE7),
                                 // Colors.yellow[50]
-                                child: const FittedBox(
+                                child: FittedBox(
                                   fit: BoxFit.contain,
                                   child: Text(
                                     'Intermedio',
                                     textAlign: TextAlign.center,
+                                    style: labelMediumDark,
                                   ),
                                 ),
                               ),
@@ -205,9 +194,10 @@ class IconografiaScreen extends StatelessWidget {
                                     const EdgeInsets.symmetric(vertical: 20.0),
                                 color: const Color(0xFFFFCDD2),
                                 // Colors.red[100],
-                                child: const Text(
+                                child: Text(
                                   '> 0,15',
                                   textAlign: TextAlign.center,
+                                  style: labelMediumDark,
                                 ),
                               ),
                             ),
@@ -273,7 +263,12 @@ class ContainerPeriodo extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(texto),
+            Text(
+              texto,
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.background,
+                  ),
+            ),
             const SizedBox(width: 10),
             Icon(icono, color: colorIcono, size: 40),
           ],

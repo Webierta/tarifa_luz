@@ -20,24 +20,15 @@ class AboutScreen extends StatelessWidget {
                 const Icon(Icons.code, size: 60),
                 Text(
                   'Versión 3.0.0', // VERSION
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   'Copyleft 2020-2023\nJesús Cuerda (Webierta)',
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
+                  style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
-                FittedBox(
-                  child: Text(
-                    'All Wrongs Reserved. Licencia GPLv3',
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-                  ),
+                const FittedBox(
+                  child: Text('All Wrongs Reserved. Licencia GPLv3'),
                 ),
                 const Divider(),
                 const SizedBox(height: 10.0),

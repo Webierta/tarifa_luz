@@ -12,10 +12,7 @@ class ReadFile extends StatelessWidget {
         return Text(
           snapshot.data ?? 'Error: archivo no encontrado',
           softWrap: true,
-          style: TextStyle(
-            fontSize: 20,
-            color: Theme.of(context).colorScheme.onBackground,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge,
         );
       },
     );

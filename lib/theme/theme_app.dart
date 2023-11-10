@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ThemeApp {
   final BuildContext context;
@@ -15,23 +16,20 @@ class ThemeApp {
   // Color(0xffe4e1e6)
   Color get onBackgroundColor => Theme.of(context).colorScheme.onBackground;
 
+  TextTheme get textTheme =>
+      GoogleFonts.latoTextTheme().merge(Typography().white);
+
+  TextStyle get bodyLarge => Theme.of(context).textTheme.bodyLarge!;
+  TextStyle get titleSmall => Theme.of(context).textTheme.titleSmall!;
+  TextStyle get labelMedium => Theme.of(context).textTheme.labelMedium!;
+
   FloatingActionButtonThemeData get floatingActionButtonTheme =>
       const FloatingActionButtonThemeData(
         backgroundColor: Color(0xFFFFDE03),
         foregroundColor: Color(0xFF0336FF),
       );
 
-  DialogTheme get dialogTheme => DialogTheme(
-        titleTextStyle: Theme.of(context)
-            .textTheme
-            .titleLarge!
-            .copyWith(color: onBackgroundColor),
-        contentTextStyle: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(color: onBackgroundColor),
-        shadowColor: onBackgroundColor,
-      );
+  DialogTheme get dialogTheme => DialogTheme(shadowColor: onBackgroundColor);
 
   BottomNavigationBarThemeData get bottomNavigationBarTheme =>
       BottomNavigationBarThemeData(

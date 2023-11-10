@@ -35,4 +35,6 @@ class StyleApp {
 
   static const TextStyle size22Black =
       TextStyle(fontSize: 22.0, color: Colors.black);
+
+  static const Color accentColor = Color(0xFFFFDE03);
 }
