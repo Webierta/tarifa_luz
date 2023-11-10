@@ -393,12 +393,19 @@ class ContainerListView extends StatelessWidget {
               ),
               child: ListTile(
                 leadingAndTrailingTextStyle: TextStyle(color: backgroundColor),
-                subtitleTextStyle: TextStyle(color: backgroundColor),
+                titleTextStyle: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(color: backgroundColor),
+                subtitleTextStyle: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: backgroundColor),
                 leading: Text('${index + 1}'),
                 title: Text(
                   '$horaInicioFranja:${minInicioFranja.toString().padLeft(2, '0')} - '
                   '$horaLapso:${minLapso.toString().padLeft(2, '0')}',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  //style: Theme.of(context).textTheme.titleLarge,
                 ),
                 subtitle: Text(
                   '${(precioOrdenado.toStringAsFixed(5))} €/kWh',

@@ -31,12 +31,12 @@ class DataScreen extends StatelessWidget {
       1 => TablaTab(
           page: 2,
           fecha: fecha,
-          titulo: 'Evolución del Precio en el día',
+          titulo: 'Evolución diaria del Precio €/kWh',
           data: data),
       2 => TablaTab(
           page: 3,
           fecha: fecha,
-          titulo: 'Horas por Precio ascendente',
+          titulo: 'Horas por Precio €/kWh ascendente',
           data: data),
       3 => RangeTab(fecha: fecha, data: data),
       int() => MainTab(

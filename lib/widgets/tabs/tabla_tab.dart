@@ -105,10 +105,10 @@ class TablaTab extends StatelessWidget {
                           ),
                     title: page == 2
                         ? Text(
-                            '${(precios[index]).toStringAsFixed(5)} €/kWh',
+                            (precios[index]).toStringAsFixed(5),
                             style: Theme.of(context)
                                 .textTheme
-                                .titleMedium!
+                                .titleLarge!
                                 .copyWith(color: themeApp.backgroundColor),
                             /* style: TextStyle(
                               color: backgroundColor,
@@ -127,14 +127,14 @@ class TablaTab extends StatelessWidget {
                             '${index}h - ${index + 1}h',
                             style: Theme.of(context)
                                 .textTheme
-                                .labelLarge!
+                                .titleSmall!
                                 .copyWith(color: themeApp.backgroundColor),
                           )
                         : Text(
-                            '${precios[index].toStringAsFixed(5)} €/kWh',
+                            precios[index].toStringAsFixed(5),
                             style: Theme.of(context)
                                 .textTheme
-                                .labelLarge!
+                                .titleSmall!
                                 .copyWith(color: themeApp.backgroundColor),
                           ),
                     trailing: Column(

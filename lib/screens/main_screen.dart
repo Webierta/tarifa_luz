@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:tarifa_luz/database/database.dart';
 import 'package:tarifa_luz/database/storage.dart';
@@ -36,7 +35,8 @@ class _MainScreenState extends State<MainScreen> {
 
   bool dataNotYet = false;
   String txtProgress = '';
-  StatusGetData statusGetData = StatusGetData.stopped;
+  ProcessGetData processGetData = ProcessGetData.stopped;
+  bool mainBodyAutoSaveFalse = false;
 
   //bool dateStorage = false;
   Storage storage = Storage();
@@ -50,10 +50,20 @@ class _MainScreenState extends State<MainScreen> {
         fecha = getStorageLastDate.$1!;
         datos = getStorageLastDate.$2!;
         datosGeneracion = getStorageLastDate.$3 ?? datosGeneracion;
-        statusGetData = StatusGetData.completed;
       });
     }
+    setState(() {
+      processGetData = ProcessGetData.completed; // aborted
+    });
   }
+
+  /* void deleteDataBase(Database item) {
+    listDatabaseSort.remove(item);
+    storage.deleteData(item);
+    setState(() {
+      listDatabaseSort = storage.sortByDate;
+    });
+  } */
 
   void loadSharedPrefs() async {
     await sharedPrefs.init();
@@ -84,8 +94,11 @@ class _MainScreenState extends State<MainScreen> {
       listDatabaseSort = storage.sortByDate;
       fecha = storage.lastDate;
       loadDataByDate(fecha);
+      dataNotYet = false;
       txtProgress = '';
-      statusGetData = StatusGetData.completed;
+      processGetData = ProcessGetData.completed;
+      mainBodyAutoSaveFalse = false;
+      currentTab = 0;
     });
   }
 
@@ -111,6 +124,20 @@ class _MainScreenState extends State<MainScreen> {
       Database nextData = listDatabaseSort[currentIndex + 1];
       String nextFecha = nextData.fecha;
       loadDataByDate(nextFecha);
+      /* DateTime time = DateFormat('dd/MM/yyyy').parse(nextFecha);
+      datos.fecha = DateFormat('yyyy-MM-dd').format(time);
+      datos.preciosHora = nextData.preciosHora;
+      datosGeneracion.generacion =
+          nextData.generacion ?? datosGeneracion.generacion;
+      datosGeneracion.mapNoRenovables =
+          nextData.mapNoRenovables ?? datosGeneracion.mapNoRenovables;
+      datosGeneracion.mapRenovables =
+          nextData.mapRenovables ?? datosGeneracion.mapRenovables;
+      setState(() {
+        fecha = nextFecha;
+        datos = datos;
+        datosGeneracion = datosGeneracion;
+      }); */
     }
   }
 
@@ -120,6 +147,20 @@ class _MainScreenState extends State<MainScreen> {
       Database prevData = listDatabaseSort[currentIndex - 1];
       String prevFecha = prevData.fecha;
       loadDataByDate(prevFecha);
+      /* DateTime time = DateFormat('dd/MM/yyyy').parse(prevFecha);
+      datos.fecha = DateFormat('yyyy-MM-dd').format(time);
+      datos.preciosHora = prevData.preciosHora;
+      datosGeneracion.generacion =
+          prevData.generacion ?? datosGeneracion.generacion;
+      datosGeneracion.mapNoRenovables =
+          prevData.mapNoRenovables ?? datosGeneracion.mapNoRenovables;
+      datosGeneracion.mapRenovables =
+          prevData.mapRenovables ?? datosGeneracion.mapRenovables;
+      setState(() {
+        fecha = prevFecha;
+        datos = datos;
+        datosGeneracion = datosGeneracion;
+      }); */
     }
   }
 
@@ -154,6 +195,12 @@ class _MainScreenState extends State<MainScreen> {
       if (continuar == 'no' || continuar == null) {
         return;
       } else if (continuar == 'ver') {
+        if (mainBodyAutoSaveFalse == true) {
+          setState(() {
+            mainBodyAutoSaveFalse = false;
+            listDatabaseSort = storage.sortByDate;
+          });
+        }
         loadDataByDate(fechaSelect);
         return;
       }
@@ -162,7 +209,7 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       //fecha = fechaSelect!;
       txtProgress = 'Iniciando consulta...';
-      statusGetData = StatusGetData.started;
+      processGetData = ProcessGetData.started;
     });
     DateTime time = DateFormat('dd/MM/yyyy').parse(fechaSelect);
     datos.fecha = DateFormat('yyyy-MM-dd').format(time);
@@ -174,7 +221,6 @@ class _MainScreenState extends State<MainScreen> {
       setState(() => txtProgress = 'Consultando archivo...');
       await datos.getPreciosHorasFile(datos.fecha);
       // TODO: test fecha mañana dataNotYet
-      /// no para si no encuentra datos ???
     }
     if (datos.status == Status.tiempoExcedido) {
       checkStatus(Status.tiempoExcedido);
@@ -191,22 +237,38 @@ class _MainScreenState extends State<MainScreen> {
       var fechaDatos = datos.fecha.toString();
       await datosGeneracion.getDatosGeneracion(fechaDatos);
       //if (datos.preciosHora.isNotEmpty) {
-      var prefs = await SharedPreferences.getInstance();
-      var autoSave = prefs.getBool('autosave');
-      //if (autoSave == true) {
-      storage.saveDataBase(
-        fecha: fechaSelect,
-        data: datos,
-        datosGeneracion: datosGeneracion,
-      );
-      //}
-      setState(() {
-        //fecha = fechaSelect!;
-        listDatabaseSort = storage.sortByDate;
-        loadDataByDate(fechaSelect!);
-        txtProgress = '';
-        statusGetData = StatusGetData.completed;
-      });
+      //SharedPreferences prefs = await SharedPreferences.getInstance();
+      //var autoSave = prefs.getBool('autosave');
+      if (sharedPrefs.autoSave == true) {
+        storage.saveDataBase(
+          fecha: fechaSelect,
+          data: datos,
+          datosGeneracion: datosGeneracion,
+        );
+        setState(() {
+          //fecha = fechaSelect!;
+          listDatabaseSort = storage.sortByDate;
+          loadDataByDate(fechaSelect!);
+          txtProgress = '';
+          processGetData = ProcessGetData.completed;
+        });
+      } else {
+        setState(() {
+          listDatabaseSort.clear();
+          fecha = fechaSelect!;
+          listDatabaseSort.add(Database(
+            fecha: fechaSelect,
+            preciosHora: datos.preciosHora,
+          )
+            ..mapRenovables = datosGeneracion.mapRenovables
+            ..mapNoRenovables = datosGeneracion.mapNoRenovables
+            ..generacion = datosGeneracion.generacion);
+          txtProgress = '';
+          mainBodyAutoSaveFalse = true;
+          processGetData = ProcessGetData.completed;
+        });
+      }
+
       //return;
       /* } else {
         resetMainScreen();
@@ -217,7 +279,6 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   showError({required String titulo, required String msg}) async {
-    //setState(() => statusGetData = StatusGetData.aborted);
     await showDialog(
       context: context,
       barrierDismissible: false,
@@ -232,13 +293,6 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
                 resetMainScreen();
-                //Navigator.of(context).pop();
-                /* Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MainScreen(),
-                  ),
-                ); */
               },
             ),
           ],
@@ -304,15 +358,18 @@ class _MainScreenState extends State<MainScreen> {
     if (picked != null) {
       //bool x = picked.difference(hoy).inDays > 1;
       dataNotYet = picked == manana && hoy.hour < 20 ? true : false;
-      bool continuarGetData = true;
+      //bool continuarGetData = true;
       if (dataNotYet) {
-        continuarGetData = await openDialogNoPublicado();
-      }
-      if (continuarGetData) {
-        //fecha = DateFormat('dd/MM/yyyy').format(picked);
-        getDatos(DateFormat('dd/MM/yyyy').format(picked));
+        //continuarGetData = await openDialogNoPublicado();
+        if (await openDialogNoPublicado() == true) {
+          //fecha = DateFormat('dd/MM/yyyy').format(picked);
+          getDatos(DateFormat('dd/MM/yyyy').format(picked));
+        }
+        /*  else {
+          setState(() => processGetData = ProcessGetData.completed);
+        } */
       } else {
-        setState(() => statusGetData = StatusGetData.completed);
+        getDatos(DateFormat('dd/MM/yyyy').format(picked));
       }
     }
   }
@@ -343,13 +400,20 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void showSnack(String title) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    final snackbar = SnackBar(content: Text(title));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget mainBody = MainBodyEmpty(tokenSaved: token);
-    if (statusGetData == StatusGetData.started) {
+    if (processGetData == ProcessGetData.started) {
       mainBody = MainBodyStarted(stringProgress: txtProgress);
-    } else if (statusGetData == StatusGetData.completed) {
-      // storage.boxData.isNotEmpty &&
+    } else if (processGetData == ProcessGetData.completed &&
+        storage.boxData.isNotEmpty) //&& listDatabaseSort.isNotEmpty
+    {
       mainBody = SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -395,18 +459,47 @@ class _MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: const Text('Tarifa Luz'),
         actions: [
-          IconButton(
-            onPressed: (listDatabaseSort.length > 1 && !isFirstFecha)
-                ? nextFecha
-                : null,
-            icon: const Icon(Icons.skip_previous),
-          ),
-          IconButton(
-            onPressed: (listDatabaseSort.length > 1 && !isLastFecha)
-                ? prevFecha
-                : null,
-            icon: const Icon(Icons.skip_next),
-          ),
+          if (mainBodyAutoSaveFalse)
+            IconButton(
+              onPressed: () {
+                showSnack('Datos archivados');
+                storage.saveDataBase(
+                  fecha: fecha,
+                  data: datos,
+                  datosGeneracion: datosGeneracion,
+                );
+                setState(() {
+                  //fecha = fechaSelect!;
+                  listDatabaseSort = storage.sortByDate;
+                  loadDataByDate(fecha);
+                  txtProgress = '';
+                  processGetData = ProcessGetData.completed;
+                  //mainBodyAutoSaveFalse = false;
+                });
+              },
+              icon: const Icon(Icons.save),
+            ),
+          if (mainBodyAutoSaveFalse)
+            IconButton(
+              onPressed: () {
+                resetMainScreen();
+              },
+              icon: const Icon(Icons.storage),
+            ),
+          if (!mainBodyAutoSaveFalse)
+            IconButton(
+              onPressed: (listDatabaseSort.length > 1 && !isFirstFecha)
+                  ? nextFecha
+                  : null,
+              icon: const Icon(Icons.skip_previous),
+            ),
+          if (!mainBodyAutoSaveFalse)
+            IconButton(
+              onPressed: (listDatabaseSort.length > 1 && !isLastFecha)
+                  ? prevFecha
+                  : null,
+              icon: const Icon(Icons.skip_next),
+            ),
           IconButton(
             onPressed: () => selectDate(context),
             icon: const Icon(Icons.today),
@@ -416,13 +509,13 @@ class _MainScreenState extends State<MainScreen> {
       drawer: const AppDrawer(),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
           decoration: StyleApp.mainDecoration,
           child: mainBody,
         ),
       ),
       bottomNavigationBar: (storage.boxData.isNotEmpty &&
-              statusGetData == StatusGetData.completed)
+              processGetData == ProcessGetData.completed)
           ? BottomNavigationBar(
               items: const [
                 BottomNavigationBarItem(

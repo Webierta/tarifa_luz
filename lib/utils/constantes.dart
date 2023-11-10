@@ -1,7 +1,8 @@
 const String boxPVPC = 'pvpc';
 
-const String tokenKey = 'token';
-const String autosaveKey = 'autosave';
+const String keyToken = 'keyToken';
+const String keyAutoGetData = 'keyAutoGetData';
+const String keyAutoSave = 'keyAutoSave';
 
 const String ddMMyyyy = 'dd/MM/yyyy';
 const String yyyyMMdd = 'yyyy-MM-dd';

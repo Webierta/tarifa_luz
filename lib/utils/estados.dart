@@ -14,7 +14,7 @@ enum Status {
 
 enum StatusGeneracion { ok, error }
 
-enum StatusGetData { stopped, started, completed, aborted }
+enum ProcessGetData { stopped, started, completed, aborted }
 
 enum Periodo { llano, valle, punta }
 
