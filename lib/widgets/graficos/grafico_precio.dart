@@ -116,16 +116,15 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                 )
               ],
             ),
-            barGroups: precios.map(
+            barGroups: precios.asMap().entries.map(
               (precio) {
-                Periodo periodo = Tarifa.getPeriodo(widget.data
-                    .getDataTime(widget.data.fecha, precios.indexOf(precio)));
+                Periodo periodo = Tarifa.getPeriodo(
+                    widget.data.getDataTime(widget.data.fecha, precio.key));
                 return BarChartGroupData(
-                  x: precios.indexOf(precio) + 1,
-                  //x: precios.indexOf(precio),
+                  x: precio.key + 1,
                   barRods: [
                     BarChartRodData(
-                      toY: cuatroDec(precio),
+                      toY: cuatroDec(precio.value),
                       width: 10,
                       color: Tarifa.getColorPeriodo(periodo),
                       borderRadius: const BorderRadius.only(
@@ -137,6 +136,25 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                 );
               },
             ).toList(),
+            /* barGroups: [
+              for (int index = 0; index < precios.length; index++)
+                BarChartGroupData(
+                  x: index + 1,
+                  barRods: [
+                    BarChartRodData(
+                      toY: cuatroDec(precios[index]),
+                      width: 10,
+                      color: Tarifa.getColorPeriodo(Tarifa.getPeriodo(
+                          widget.data.getDataTime(widget.data.fecha,
+                              precios.indexOf(precios[index])))),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(6),
+                        topRight: Radius.circular(6),
+                      ),
+                    ),
+                  ],
+                )
+            ], */
           ),
           swapAnimationCurve: Curves.easeInOutCubic,
           swapAnimationDuration: const Duration(milliseconds: 1000),

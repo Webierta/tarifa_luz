@@ -184,7 +184,6 @@ class _RangeTabState extends State<RangeTab> {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
@@ -194,82 +193,62 @@ class _RangeTabState extends State<RangeTab> {
             fecha: widget.fecha,
             titulo: 'Franjas horarias más baratas',
           ),
-          Align(
+          const Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              'Selecciona la duración (mínimo 1:00 / máximo 24:00):',
-              style: TextStyle(color: onBackgroundColor),
-            ),
+            child: Text('Selecciona la duración (mínimo 1:00 / máximo 24:00):'),
           ),
           const SizedBox(height: 20),
-          FittedBox(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              //crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 70,
-                  child: TextField(
-                    controller: controladorHor,
-                    keyboardType: TextInputType.number,
-                    maxLength: 2,
-                    style: textTheme.headlineMedium!.copyWith(
-                      color: onBackgroundColor,
-                    ),
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Hora',
-                      hintText: '00',
-                      counterText: '',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    ':',
-                    style: textTheme.headlineLarge!.copyWith(
-                      color: onBackgroundColor,
+          Container(
+            width: double.infinity,
+            height: 90,
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: FittedBox(
+              child: Row(
+                children: [
+                  TextFielTime(controller: controladorHor, label: 'Horas'),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
+                    child: Text(
+                      ':',
+                      style: textTheme.displayLarge!.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onPrimary
+                            .withOpacity(0.5),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 70,
-                  child: TextField(
-                    controller: controladorMin,
-                    keyboardType: TextInputType.number,
-                    maxLength: 2,
-                    style: textTheme.headlineMedium!.copyWith(
-                      color: onBackgroundColor,
-                    ),
-                    textAlign: TextAlign.center,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Min',
-                      hintText: '00',
-                      counterText: '',
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Theme.of(context).colorScheme.onPrimary,
-                  child: IconButton(
-                    onPressed: submitDuracion,
-                    icon: const Icon(
-                      //Icons.play_circle,
-                      Icons.calculate,
-                      //color: Colors.blue,
-                      size: 42,
+                  TextFielTime(controller: controladorMin, label: 'Mins'),
+                  const SizedBox(width: 20),
+                  SizedBox(
+                    width: 90,
+                    //height: 90,
+                    child: FittedBox(
+                      child: IconButton(
+                        onPressed: submitDuracion,
+                        padding: const EdgeInsets.all(0),
+                        constraints: const BoxConstraints(
+                          maxHeight: 80,
+                          maxWidth: 80,
+                        ),
+                        icon: Icon(
+                          Icons.calculate,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary
+                              .withOpacity(0.5),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          //const Divider(thickness: 0.5),
           const SizedBox(height: 20),
           if (duration.inMinutes > 60 && calculando == true) const Loading(),
           if (duration.inMinutes > 60 &&
@@ -283,6 +262,43 @@ class _RangeTabState extends State<RangeTab> {
             ),
           //else const Placeholder(color: Colors.transparent),
         ],
+      ),
+    );
+  }
+}
+
+final class TextFielTime extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+  const TextFielTime({
+    super.key,
+    required this.controller,
+    required this.label,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 70,
+      //height: double.infinity,
+      child: Center(
+        child: TextField(
+          controller: controller,
+          keyboardType: TextInputType.number,
+          maxLength: 2,
+          style: Theme.of(context).textTheme.headlineMedium,
+          textAlign: TextAlign.center,
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            filled: true,
+            fillColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
+            labelText: label,
+            hintText: '00',
+            counterText: '',
+          ),
+        ),
       ),
     );
   }

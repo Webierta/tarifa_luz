@@ -25,7 +25,12 @@ class GraficoMain extends StatelessWidget {
     //final today = DateTime(now.year, now.month, now.day);
     DateTime fechaData = DateFormat('dd/MM/yyyy').parse(fecha);
     fechaData = DateTime(
-        fechaData.year, fechaData.month, fechaData.day, now.hour, now.minute);
+      fechaData.year,
+      fechaData.month,
+      fechaData.day,
+      now.hour,
+      now.minute,
+    );
 
     //DateTime hoy = today == fechaData ? now : fechaData;
     /*DateTime hoy = DateTime(today.year, today.month, today.day)
@@ -62,12 +67,7 @@ class GraficoMain extends StatelessWidget {
                   interval: 2,
                   getTitlesWidget: (value, meta) {
                     if (int.parse(meta.formattedValue).isEven) {
-                      return Text(
-                        meta.formattedValue,
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                      );
+                      return Text(meta.formattedValue);
                     }
                     return const Text('');
                   },
@@ -105,10 +105,17 @@ class GraficoMain extends StatelessWidget {
             ),
             lineBarsData: [
               LineChartBarData(
-                spots: precios.map((precio) {
-                  return FlSpot(precios.indexOf(precio).toDouble() + 1,
-                      cuatroDec(precio));
-                }).toList(),
+                spots: precios
+                    .asMap()
+                    .entries
+                    .map((precio) => FlSpot(
+                        precio.key.toDouble() + 1, cuatroDec(precio.value)))
+                    .toList(),
+
+                /* spots: [
+                  for (int index = 0; index < precios.length; index++)
+                    FlSpot(index.toDouble() + 1, precios[index])
+                ], */
                 isCurved: true,
                 barWidth: 2,
                 color: Colors.white,
