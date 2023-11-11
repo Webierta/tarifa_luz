@@ -236,7 +236,7 @@ class _RangeTabState extends State<RangeTab> {
                           maxWidth: 80,
                         ),
                         icon: Icon(
-                          Icons.calculate,
+                          Icons.timer,
                           color: Theme.of(context)
                               .colorScheme
                               .onPrimary
@@ -279,7 +279,7 @@ final class TextFielTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 70,
+      width: 80,
       //height: double.infinity,
       child: Center(
         child: TextField(

@@ -47,27 +47,24 @@ class DonateScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        style: themeApp.bodyLarge,
-                        text:
-                            '¿Crees que has encontrado un problema? Identificar y corregir errores hace que '
-                            'esta App sea mejor para todos. Informa de un error aquí: '),
-                    TextSpan(
-                      style: themeApp.bodyLarge.copyWith(
-                        color: Colors.blueAccent,
-                        decoration: TextDecoration.underline,
-                      ),
-                      text: 'GitHub issues.',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => launchURL(urlGitHub),
+            Text.rich(
+              TextSpan(
+                style: themeApp.bodyLarge,
+                children: [
+                  const TextSpan(
+                      text:
+                          '¿Crees que has encontrado un problema? Identificar y corregir errores hace que '
+                          'esta App sea mejor para todos. Informa de un error aquí: '),
+                  TextSpan(
+                    style: const TextStyle(
+                      color: Colors.blueAccent,
+                      decoration: TextDecoration.underline,
                     ),
-                  ],
-                ),
+                    text: 'GitHub issues.',
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => launchURL(urlGitHub),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20.0),

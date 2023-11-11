@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:tarifa_luz/theme/theme_app.dart';
-
 class InfoTokenScreen extends StatelessWidget {
   const InfoTokenScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Info Token'),
@@ -25,14 +22,14 @@ class InfoTokenScreen extends StatelessWidget {
                   'La aplicación dispone de dos métodos para ejecutar '
                   'la consulta de datos: con al API oficial (recomendado) '
                   'y desde un archivo.',
-                  style: TextStyle(color: onBackgroundColor),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 20.0),
-                RichText(
-                  text: TextSpan(
+                Text.rich(
+                  TextSpan(
+                    style: Theme.of(context).textTheme.bodyLarge,
                     children: [
-                      TextSpan(
-                        style: TextStyle(color: onBackgroundColor),
+                      const TextSpan(
                         text:
                             'Para utilizar la API se necesita autentificarse con un código '
                             'de acceso personal (token) gestionado por el ',
@@ -60,14 +57,14 @@ class InfoTokenScreen extends StatelessWidget {
                   'Si no dispones de token deja el cuadro de texto vacío y la aplicación '
                   'descargará los datos desde un archivo (este proceso puede ser potencialmente '
                   'más lento, menos eficiente y más propenso a errores).',
-                  style: TextStyle(color: onBackgroundColor),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 20.0),
                 const Icon(Icons.warning, color: Color(0xFFF44336), size: 60.0),
                 //const SizedBox(height: 20.0),
                 Text(
                   'IMPORTANTE',
-                  style: TextStyle(color: onBackgroundColor),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 20.0),
                 Text(
@@ -80,7 +77,7 @@ class InfoTokenScreen extends StatelessWidget {
                   'no asume ninguna responsabilidad sobre posibles acciones de REE '
                   'derivadas de un uso inadecuado o irresponsable de la API por parte de '
                   'los usuarios.',
-                  style: TextStyle(color: onBackgroundColor),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),

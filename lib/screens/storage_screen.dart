@@ -77,7 +77,7 @@ class _StorageScreenState extends State<StorageScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainScreen(),
+            builder: (context) => const MainScreen(isFirstLaunch: false),
           ),
         );
         return Future.value(true);
@@ -178,8 +178,10 @@ class _StorageScreenState extends State<StorageScreen> {
                                     onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            MainScreen(fecha: itemFecha),
+                                        builder: (context) => MainScreen(
+                                          fecha: itemFecha,
+                                          isFirstLaunch: false,
+                                        ),
                                       ),
                                     ),
                                     leading: const Icon(Icons.today),

@@ -18,7 +18,7 @@ class InfoScreen extends StatelessWidget {
               children: <Widget>[
                 Image.asset('assets/images/ic_launcher.png'),
                 const HeadScreen(),
-                const Icon(Icons.info_outline, size: 60),
+                //const Icon(Icons.info_outline, size: 60),
                 const Divider(),
                 const SizedBox(height: 10.0),
                 const ReadFile(archivo: 'assets/files/info.txt'),

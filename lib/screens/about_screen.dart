@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:tarifa_luz/utils/constantes.dart';
 import 'package:tarifa_luz/utils/read_file.dart';
 import 'package:tarifa_luz/widgets/head_screen.dart';
 
@@ -19,7 +20,7 @@ class AboutScreen extends StatelessWidget {
                 const HeadScreen(),
                 const Icon(Icons.code, size: 60),
                 Text(
-                  'Versión 3.0.0', // VERSION
+                  'Versión $kVersion', // VERSION
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(

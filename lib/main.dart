@@ -34,7 +34,7 @@ class PrecioLuz extends StatelessWidget {
         dialogTheme: themeApp.dialogTheme,
         bottomNavigationBarTheme: themeApp.bottomNavigationBarTheme,
       ),
-      home: const MainScreen(),
+      home: const MainScreen(isFirstLaunch: true),
     );
   }
 }

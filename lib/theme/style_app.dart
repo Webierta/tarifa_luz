@@ -13,7 +13,8 @@ class StyleApp {
       ],
       radius: 0.9,
       center: Alignment.topRight,
-      stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+      //stops: [0.1, 0.3, 0.5, 0.7, 0.9],
+      stops: [0.05, 0.1, 0.3, 0.5, 0.7],
     ),
   );
 

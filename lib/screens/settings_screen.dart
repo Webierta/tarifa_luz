@@ -77,7 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainScreen(),
+            builder: (context) => const MainScreen(isFirstLaunch: false),
           ),
         );
         return Future.value(true);
@@ -88,12 +88,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           body: SafeArea(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
+                    horizontalTitleGap: 0,
+                    titleAlignment: ListTileTitleAlignment.top,
                     title: TextField(
                       controller: controllerToken,
                       obscureText: !tokenVisible,
@@ -125,21 +127,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                       ),
                       icon: const Icon(Icons.info_outline),
-                      label: const Text('Información sobre el token'),
+                      label: const Text('Info sobre el token'),
                       style: TextButton.styleFrom(
                         alignment: Alignment.bottomLeft,
                       ),
                     ),
                     trailing: IconButton(
                       onPressed: setToken,
-                      icon: const Icon(Icons.check_circle_outline_outlined),
+                      icon: const Icon(Icons.save),
+                      // check_circle_outline_outlined
                       color: Theme.of(context).colorScheme.primary,
                       iconSize: 32,
                     ),
-                    titleAlignment: ListTileTitleAlignment.top,
                   ),
                   const Divider(height: 40),
                   ListTile(
+                    horizontalTitleGap: 0,
                     title: const Text('Sincronización automática'),
                     subtitle: const Text(
                         'Al abrir la aplicación se consultan los últimos datos disponibles'),
@@ -153,6 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   const Divider(height: 40),
                   ListTile(
+                    horizontalTitleGap: 0,
                     title: const Text('Guardado automático'),
                     subtitle:
                         const Text('Archiva los datos en la página Histórico'),

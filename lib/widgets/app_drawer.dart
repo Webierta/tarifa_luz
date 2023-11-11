@@ -7,6 +7,7 @@ import 'package:tarifa_luz/screens/info_screen.dart';
 import 'package:tarifa_luz/screens/settings_screen.dart';
 import 'package:tarifa_luz/screens/storage_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
+import 'package:tarifa_luz/utils/constantes.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -194,7 +195,7 @@ class AppDrawer extends StatelessWidget {
             Container(
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
               child: Text(
-                'Versión 3.0.0',
+                'Versión $kVersion',
                 style: Theme.of(context).textTheme.labelSmall,
               ),
             ),

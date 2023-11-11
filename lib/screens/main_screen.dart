@@ -16,7 +16,8 @@ import 'package:tarifa_luz/widgets/graficos/grafico_precio.dart';
 
 class MainScreen extends StatefulWidget {
   final String? fecha;
-  const MainScreen({super.key, this.fecha});
+  final bool isFirstLaunch;
+  const MainScreen({super.key, this.fecha, required this.isFirstLaunch});
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   late ScrollController scrollController;
 
   final SharedPrefs sharedPrefs = SharedPrefs();
-  String token = '';
+  //String token = '';
 
   Datos datos = Datos();
   DatosGeneracion datosGeneracion = DatosGeneracion();
@@ -67,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
 
   void loadSharedPrefs() async {
     await sharedPrefs.init();
-    setState(() => token = sharedPrefs.token);
+    //setState(() => token = sharedPrefs.token);
   }
 
   @override
@@ -79,6 +80,17 @@ class _MainScreenState extends State<MainScreen> {
     if (widget.fecha != null) {
       fecha = widget.fecha!;
       loadDataByDate(fecha);
+    } else if (widget.isFirstLaunch && sharedPrefs.autoGetData == true) {
+      // 1. ESTABLECER FECHA HOY
+      fecha = DateFormat('dd/MM/yyyy').format(hoy);
+      // 2. COMPROBAR SI FECHA EXISTE EN ARCHIVO
+      if (storage.dateInDataBase(fecha)) {
+        // 3. SI EXISTE: MOSTRAR
+        loadDataByDate(fecha);
+      } else {
+        // 4. SI NO EXISTE: CONSULTAR COMO INITAPP (SIN MENSAJES?)
+        getDatos(fechaSelect: fecha);
+      }
     } else if (widget.fecha == null && storage.boxData.isNotEmpty) {
       fecha = storage.lastDate;
       loadDataByDate(fecha);
@@ -164,10 +176,11 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
-  void getDatos([String? fechaSelect]) async {
+  void getDatos({String? fechaSelect}) async {
+    // TODO: set fecha a hoy si < 20:00 h o ayer ??
     fechaSelect = fechaSelect ?? DateFormat('dd/MM/yyyy').format(hoy);
 
-    if (storage.dateInDataBase(fechaSelect)) {
+    if (widget.isFirstLaunch == false && storage.dateInDataBase(fechaSelect)) {
       String? continuar = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -363,13 +376,13 @@ class _MainScreenState extends State<MainScreen> {
         //continuarGetData = await openDialogNoPublicado();
         if (await openDialogNoPublicado() == true) {
           //fecha = DateFormat('dd/MM/yyyy').format(picked);
-          getDatos(DateFormat('dd/MM/yyyy').format(picked));
+          getDatos(fechaSelect: DateFormat('dd/MM/yyyy').format(picked));
         }
         /*  else {
           setState(() => processGetData = ProcessGetData.completed);
         } */
       } else {
-        getDatos(DateFormat('dd/MM/yyyy').format(picked));
+        getDatos(fechaSelect: DateFormat('dd/MM/yyyy').format(picked));
       }
     }
   }
@@ -408,7 +421,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget mainBody = MainBodyEmpty(tokenSaved: token);
+    Widget mainBody = MainBodyEmpty(tokenSaved: sharedPrefs.token);
     if (processGetData == ProcessGetData.started) {
       mainBody = MainBodyStarted(stringProgress: txtProgress);
     } else if (processGetData == ProcessGetData.completed &&
