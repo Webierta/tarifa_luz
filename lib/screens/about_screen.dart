@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/constantes.dart';
 import 'package:tarifa_luz/utils/read_file.dart';
 import 'package:tarifa_luz/widgets/head_screen.dart';
@@ -11,9 +12,10 @@ class AboutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Acerca de')),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: SafeArea(
+      body: SafeArea(
+        child: Container(
+          decoration: StyleApp.mainDecoration,
+          padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 20),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
@@ -31,7 +33,7 @@ class AboutScreen extends StatelessWidget {
                 const FittedBox(
                   child: Text('All Wrongs Reserved. Licencia GPLv3'),
                 ),
-                const Divider(),
+                Divider(color: Theme.of(context).colorScheme.onBackground),
                 const SizedBox(height: 10.0),
                 const ReadFile(archivo: 'assets/files/about.txt'),
               ],

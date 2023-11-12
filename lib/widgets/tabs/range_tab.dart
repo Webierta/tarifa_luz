@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:tarifa_luz/models/datos.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
-import 'package:tarifa_luz/theme/theme_app.dart';
+import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/widgets/tabs/head_tab.dart';
 
 class RangeTab extends StatefulWidget {
@@ -26,14 +27,44 @@ class _RangeTabState extends State<RangeTab> {
   Map<Duration, double> mapPreciosSorted = {};
   bool calculando = false;
 
-  TextEditingController controladorHor = TextEditingController();
-  TextEditingController controladorMin = TextEditingController();
+  upHoras() {
+    if (horas < 24) {
+      setState(() => horas++);
+    } else {
+      setState(() => horas = 0);
+    }
+  }
 
-  @override
-  void dispose() {
-    controladorHor.dispose();
-    controladorMin.dispose();
-    super.dispose();
+  upMin() {
+    if (minutos < 55) {
+      setState(() => minutos += 5);
+    } else {
+      setState(() => minutos = 0);
+    }
+  }
+
+  downHoras() {
+    if (horas > 0) {
+      setState(() => horas--);
+    } else {
+      setState(() => horas = 24);
+    }
+  }
+
+  downMin() {
+    if (minutos > 0) {
+      setState(() => minutos -= 5);
+    } else {
+      setState(() => minutos = 55);
+    }
+  }
+
+  void reset() {
+    setState(() {
+      horas = 0;
+      minutos = 0;
+      mapPreciosSorted.clear();
+    });
   }
 
   int getFranjas({required int duracion, required int step}) {
@@ -90,78 +121,21 @@ class _RangeTabState extends State<RangeTab> {
     }
   }
 
+  void showSnack(String title) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    final snackbar = SnackBar(content: Text(title));
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
+  }
+
   void submitDuracion() async {
-    if (controladorHor.text.trim().isEmpty) {
-      controladorHor.text = '00';
-    }
-    if (controladorMin.text.trim().isEmpty) {
-      controladorMin.text = '00';
-    }
-    final int? intHor = int.tryParse(controladorHor.text);
-    final int? intMin = int.tryParse(controladorMin.text);
-    final bool intHorIsNull = intHor == null || intHor < 0;
-    final bool intMinIsNull = intMin == null || intMin < 0;
-    if (intHorIsNull || intMinIsNull) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
-          return AlertDialog(
-            titleTextStyle: TextStyle(color: onBackgroundColor),
-            contentTextStyle: TextStyle(color: onBackgroundColor),
-            iconColor: Theme.of(context).colorScheme.error,
-            icon: const Icon(Icons.warning),
-            title: const Text('Duración no válida'),
-            content: const Text('Por favor, comprueba los datos introducidos'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Ok'),
-              ),
-            ],
-          );
-        },
-      );
+    duration = Duration(hours: horas, minutes: minutos);
+    if (duration.inMinutes <= 60) {
+      showSnack('Duración insuficiente: debe superar 1 hora');
       return;
     }
     if (mounted) {
       setState(() {
         calculando = true;
-        //duration = resultingDuration;
-        //horas = duration.inHours; // > 5 ? 6 : _duration.inHours;
-        //minutos = int.tryParse(duration.toString().split(':')[1]) ?? 0;
-        horas = intHor;
-        minutos = intMin;
-        duration = Duration(hours: horas, minutes: minutos);
-
-        if (duration.inMinutes <= 60) {
-          showDialog(
-            context: context,
-            builder: (context) {
-              final Color onBackgroundColor =
-                  ThemeApp(context).onBackgroundColor;
-              return AlertDialog(
-                titleTextStyle: TextStyle(color: onBackgroundColor),
-                contentTextStyle: TextStyle(color: onBackgroundColor),
-                iconColor: Theme.of(context).colorScheme.error,
-                icon: const Icon(Icons.warning),
-                title: const Text('Duración insuficiente'),
-                content: const Text(
-                  'La duración no supera una hora: '
-                  'puedes comprobar la hora más barata en la pestaña Horas',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Ok'),
-                  ),
-                ],
-              );
-            },
-          );
-          return;
-        }
-
         if (duration.inMinutes > 1440) {
           duration = const Duration(hours: 24, minutes: 0);
           horas = 24;
@@ -172,20 +146,19 @@ class _RangeTabState extends State<RangeTab> {
           step: minutos,
         );
       });
-    }
-    getPreciosFranjas();
-    await Future.delayed(Duration(milliseconds: franjas * 10));
-    // franjas * 25
-    if (mounted) {
-      setState(() => calculando = false);
+      getPreciosFranjas();
+      await Future.delayed(Duration(milliseconds: franjas * 10));
+      // franjas * 25
+      if (mounted) {
+        setState(() => calculando = false);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
         //mainAxisSize: MainAxisSize.max,
         children: [
@@ -193,56 +166,85 @@ class _RangeTabState extends State<RangeTab> {
             fecha: widget.fecha,
             titulo: 'Franjas horarias más baratas',
           ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text('Selecciona la duración (mínimo 1:00 / máximo 24:00):'),
-          ),
-          const SizedBox(height: 20),
-          Container(
-            width: double.infinity,
-            height: 90,
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 5),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: FittedBox(
-              child: Row(
+          const Text('Selecciona la duración (HH:MM)'),
+          const SizedBox(height: 10),
+          FractionallySizedBox(
+            widthFactor: 0.7,
+            child: Container(
+              decoration: const BoxDecoration(
+                //border: Border.all(),
+                color: Colors.black,
+                //color: StyleApp.backgroundColor,
+              ),
+              child: Column(
+                //mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFielTime(controller: controladorHor, label: 'Horas'),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
-                    child: Text(
-                      ':',
-                      style: textTheme.displayLarge!.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .onPrimary
-                            .withOpacity(0.5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ButtonsUpDownTimer(
+                        upTimer: upHoras,
+                        downTimer: downHoras,
                       ),
-                    ),
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.black,
+                          child: FittedBox(
+                            child: Text(
+                              '${horas.toString().padLeft(2, '0')} : ${minutos.toString().padLeft(2, '0')}',
+                              style: GoogleFonts.cairoPlay(
+                                textStyle: const TextStyle(
+                                  fontSize: 50,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      ButtonsUpDownTimer(
+                        upTimer: upMin,
+                        downTimer: downMin,
+                      ),
+                    ],
                   ),
-                  TextFielTime(controller: controladorMin, label: 'Mins'),
-                  const SizedBox(width: 20),
-                  SizedBox(
-                    width: 90,
-                    //height: 90,
-                    child: FittedBox(
-                      child: IconButton(
-                        onPressed: submitDuracion,
-                        padding: const EdgeInsets.all(0),
-                        constraints: const BoxConstraints(
-                          maxHeight: 80,
-                          maxWidth: 80,
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(),
+                              color: Colors.red.withOpacity(0.8),
+                            ),
+                            child: TextButton(
+                              onPressed: reset,
+                              child: const Text(
+                                'RESET',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
                         ),
-                        icon: Icon(
-                          Icons.timer,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary
-                              .withOpacity(0.5),
-                        ),
-                      ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(),
+                              color: Colors.green.withOpacity(0.8),
+                            ),
+                            child: TextButton(
+                              onPressed: submitDuracion,
+                              child: const Text(
+                                'START',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ],
@@ -267,39 +269,28 @@ class _RangeTabState extends State<RangeTab> {
   }
 }
 
-final class TextFielTime extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-  const TextFielTime({
-    super.key,
-    required this.controller,
-    required this.label,
-  });
+class ButtonsUpDownTimer extends StatelessWidget {
+  final void Function() upTimer;
+  final void Function() downTimer;
+  const ButtonsUpDownTimer(
+      {super.key, required this.upTimer, required this.downTimer});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 80,
-      //height: double.infinity,
-      child: Center(
-        child: TextField(
-          controller: controller,
-          keyboardType: TextInputType.number,
-          maxLength: 2,
-          style: Theme.of(context).textTheme.headlineMedium,
-          textAlign: TextAlign.center,
-          decoration: InputDecoration(
-            border: const UnderlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            filled: true,
-            fillColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
-            labelText: label,
-            hintText: '00',
-            counterText: '',
-          ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          onPressed: upTimer,
+          icon: const Icon(Icons.arrow_drop_up),
+          color: Colors.white,
         ),
-      ),
+        IconButton(
+          onPressed: downTimer,
+          icon: const Icon(Icons.arrow_drop_down),
+          color: Colors.white,
+        ),
+      ],
     );
   }
 }
@@ -347,13 +338,13 @@ class ContainerListView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<double> preciosOrdenados = mapPreciosSorted.values.toList();
     List<Duration> listaKeys = mapPreciosSorted.keys.toList();
-    final Color backgroundColor = ThemeApp(context).backgroundColor;
+    //final Color backgroundColor = ThemeApp(context).StyleApp.backgroundColor;
     return Container(
       constraints: BoxConstraints(maxHeight: 100.0 * franjas),
       child: ListView.separated(
           separatorBuilder: (context, index) => Divider(
                 height: 0.2,
-                color: backgroundColor.withOpacity(0.2),
+                color: StyleApp.backgroundColor.withOpacity(0.2),
               ),
           physics: const NeverScrollableScrollPhysics(),
           //cacheExtent: 10000.0 * franjas.value,
@@ -402,21 +393,23 @@ class ContainerListView extends StatelessWidget {
                 ), */
                 gradient: LinearGradient(
                   stops: const [0.04, 0.02], // const [0.02, 0.02],
-                  colors: [backgroundColor.withOpacity(0.5), color],
+                  colors: [StyleApp.backgroundColor.withOpacity(0.5), color],
                 ),
                 borderRadius: borderRadius,
                 color: color,
               ),
               child: ListTile(
-                leadingAndTrailingTextStyle: TextStyle(color: backgroundColor),
+                leadingAndTrailingTextStyle: const TextStyle(
+                  color: StyleApp.backgroundColor,
+                ),
                 titleTextStyle: Theme.of(context)
                     .textTheme
                     .titleLarge!
-                    .copyWith(color: backgroundColor),
+                    .copyWith(color: StyleApp.backgroundColor),
                 subtitleTextStyle: Theme.of(context)
                     .textTheme
                     .titleSmall!
-                    .copyWith(color: backgroundColor),
+                    .copyWith(color: StyleApp.backgroundColor),
                 leading: Text('${index + 1}'),
                 title: Text(
                   '$horaInicioFranja:${minInicioFranja.toString().padLeft(2, '0')} - '

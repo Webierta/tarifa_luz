@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tarifa_luz/models/datos.dart';
-import 'package:tarifa_luz/theme/theme_app.dart';
+import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/widgets/tabs/head_tab.dart';
@@ -32,7 +32,6 @@ class TablaTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeApp themeApp = ThemeApp(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
@@ -41,7 +40,7 @@ class TablaTab extends StatelessWidget {
           ListView.separated(
               separatorBuilder: (context, index) => Divider(
                     height: 0.2,
-                    color: themeApp.backgroundColor.withOpacity(0.2),
+                    color: StyleApp.backgroundColor.withOpacity(0.2),
                   ),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -101,7 +100,9 @@ class TablaTab extends StatelessWidget {
                         ? Tarifa.getIconCara(precios, precios[index])
                         : Text(
                             '${index + 1}',
-                            style: TextStyle(color: themeApp.backgroundColor),
+                            style: const TextStyle(
+                              color: StyleApp.backgroundColor,
+                            ),
                           ),
                     title: page == 2
                         ? Text(
@@ -109,7 +110,7 @@ class TablaTab extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
-                                .copyWith(color: themeApp.backgroundColor),
+                                .copyWith(color: StyleApp.backgroundColor),
                             /* style: TextStyle(
                               color: backgroundColor,
                               fontWeight: FontWeight.bold,
@@ -120,7 +121,7 @@ class TablaTab extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
-                                .copyWith(color: themeApp.backgroundColor),
+                                .copyWith(color: StyleApp.backgroundColor),
                           ),
                     subtitle: page == 2
                         ? Text(
@@ -128,14 +129,14 @@ class TablaTab extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .copyWith(color: themeApp.backgroundColor),
+                                .copyWith(color: StyleApp.backgroundColor),
                           )
                         : Text(
                             precios[index].toStringAsFixed(5),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleSmall!
-                                .copyWith(color: themeApp.backgroundColor),
+                                .copyWith(color: StyleApp.backgroundColor),
                           ),
                     trailing: Column(
                       children: [
@@ -152,7 +153,7 @@ class TablaTab extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .labelSmall!
-                                .copyWith(color: themeApp.backgroundColor),
+                                .copyWith(color: StyleApp.backgroundColor),
                           ),
                         ),
                       ],

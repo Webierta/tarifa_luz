@@ -7,14 +7,12 @@ class ThemeApp {
 
   ColorScheme get colorScheme => ColorScheme.fromSeed(
         brightness: Brightness.dark,
-        seedColor: const Color(0xFF0336FF),
+        seedColor: const Color(0xFF607D8B), // bluegrey
       );
 
-  // Color(0xff1b1b1f)
-  Color get backgroundColor => Theme.of(context).colorScheme.background;
+  //Color get backgroundColor => Theme.of(context).colorScheme.background;
 
-  // Color(0xffe4e1e6)
-  Color get onBackgroundColor => Theme.of(context).colorScheme.onBackground;
+  //Color get onBackgroundColor => Theme.of(context).colorScheme.onBackground;
 
   TextTheme get textTheme =>
       GoogleFonts.latoTextTheme().merge(Typography().white);
@@ -26,14 +24,17 @@ class ThemeApp {
   FloatingActionButtonThemeData get floatingActionButtonTheme =>
       const FloatingActionButtonThemeData(
         backgroundColor: Color(0xFFFFDE03),
-        foregroundColor: Color(0xFF0336FF),
+        //foregroundColor: Color(0xFF0336FF),
+        foregroundColor: Color(0xFF263238),
       );
 
-  DialogTheme get dialogTheme => DialogTheme(shadowColor: onBackgroundColor);
+  DialogTheme get dialogTheme =>
+      DialogTheme(shadowColor: Theme.of(context).colorScheme.onBackground);
 
   BottomNavigationBarThemeData get bottomNavigationBarTheme =>
       BottomNavigationBarThemeData(
-        selectedItemColor: onBackgroundColor,
-        unselectedItemColor: onBackgroundColor.withOpacity(0.5),
+        selectedItemColor: Theme.of(context).colorScheme.onBackground,
+        unselectedItemColor:
+            Theme.of(context).colorScheme.onBackground.withOpacity(0.5),
       );
 }

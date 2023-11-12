@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InfoTokenScreen extends StatelessWidget {
@@ -11,11 +12,12 @@ class InfoTokenScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Info Token'),
       ),
-      body: SizedBox(
-        height: double.infinity,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
+      body: SafeArea(
+        child: Container(
+          decoration: StyleApp.mainDecoration,
+          padding: const EdgeInsets.all(20),
+          height: double.infinity,
+          child: SingleChildScrollView(
             child: Column(
               children: [
                 Text(

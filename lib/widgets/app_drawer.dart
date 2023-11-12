@@ -16,28 +16,24 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        decoration: BoxDecoration(
-          /* gradient: LinearGradient(
-            colors: [
-              Theme.of(context).colorScheme.primary.withOpacity(0.4),
-              Theme.of(context).colorScheme.primary.withOpacity(0.8),
-            ],
-          ), */
-
-          /* Color(0xFF02121D),
-              Color(0xFF284964),
-              Color(0xFF61778A),
-              Color(0xFFA4AFB8), */
-
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            stops: const [0.2, 0.5, 0.8, 0.7],
+            stops: [0.2, 0.5, 0.8, 0.7],
             colors: [
-              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
+              /* Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
               Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
               Theme.of(context).colorScheme.primary.withOpacity(0.8),
-              Theme.of(context).colorScheme.primary.withOpacity(0.7),
+              Theme.of(context).colorScheme.primary.withOpacity(0.7), */
+              /* Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              Theme.of(context).colorScheme.primary.withOpacity(0.5),
+              Theme.of(context).colorScheme.primary.withOpacity(0.8),
+              Theme.of(context).colorScheme.primary.withOpacity(0.7), */
+              StyleApp.primaryColorOpacity01,
+              StyleApp.primaryColorOpacity05,
+              StyleApp.primaryColorOpacity08,
+              StyleApp.primaryColorOpacity07,
             ],
           ),
         ),
@@ -48,11 +44,11 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   DrawerHeader(
                     decoration: const BoxDecoration(
-                      image: DecorationImage(
+                        /* image: DecorationImage(
                         fit: BoxFit.fill,
                         image: AssetImage('assets/images/drawer3.png'),
-                      ),
-                    ),
+                      ), */
+                        ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -177,7 +173,7 @@ class AppDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  const DividerDrawer(),
+                  /* const DividerDrawer(),
                   ListTile(
                     leading: const Icon(Icons.exit_to_app),
                     title: const Text('Salir'),
@@ -187,7 +183,7 @@ class AppDrawer extends StatelessWidget {
                       //await database.close();
                       //SystemNavigator.pop();
                     },
-                  ),
+                  ), */
                 ],
               ),
             ),
@@ -196,7 +192,9 @@ class AppDrawer extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
               child: Text(
                 'Versión $kVersion',
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.background,
+                    ),
               ),
             ),
           ],

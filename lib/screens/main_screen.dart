@@ -8,7 +8,6 @@ import 'package:tarifa_luz/models/datos_generacion.dart';
 import 'package:tarifa_luz/screens/data_screen.dart';
 import 'package:tarifa_luz/screens/settings_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
-import 'package:tarifa_luz/theme/theme_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 import 'package:tarifa_luz/utils/shared_prefs.dart';
 import 'package:tarifa_luz/widgets/app_drawer.dart';
@@ -81,8 +80,15 @@ class _MainScreenState extends State<MainScreen> {
       fecha = widget.fecha!;
       loadDataByDate(fecha);
     } else if (widget.isFirstLaunch && sharedPrefs.autoGetData == true) {
-      // 1. ESTABLECER FECHA HOY
-      fecha = DateFormat('dd/MM/yyyy').format(hoy);
+      // 1. ESTABLECER FECHA HOY si h < 20 y mañana si h > 20
+
+      if (hoy.hour < 21) {
+        fecha = DateFormat('dd/MM/yyyy').format(hoy);
+      } else {
+        //final DateTime manana = DateTime(hoy.year, hoy.month, hoy.day + 1);
+        final DateTime tomorrow = DateTime.now().add(const Duration(days: 1));
+        fecha = DateFormat('dd/MM/yyyy').format(tomorrow);
+      }
       // 2. COMPROBAR SI FECHA EXISTE EN ARCHIVO
       if (storage.dateInDataBase(fecha)) {
         // 3. SI EXISTE: MOSTRAR
@@ -177,7 +183,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void getDatos({String? fechaSelect}) async {
-    // TODO: set fecha a hoy si < 20:00 h o ayer ??
+    // set fecha a hoy si < 20:00 h o ayer ??
     fechaSelect = fechaSelect ?? DateFormat('dd/MM/yyyy').format(hoy);
 
     if (widget.isFirstLaunch == false && storage.dateInDataBase(fechaSelect)) {
@@ -233,7 +239,7 @@ class _MainScreenState extends State<MainScreen> {
     if (datos.status != Status.ok) {
       setState(() => txtProgress = 'Consultando archivo...');
       await datos.getPreciosHorasFile(datos.fecha);
-      // TODO: test fecha mañana dataNotYet
+      // test fecha mañana dataNotYet ??
     }
     if (datos.status == Status.tiempoExcedido) {
       checkStatus(Status.tiempoExcedido);
@@ -577,7 +583,7 @@ class MainBodyEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
+    //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
 
     return Container(
       width: double.infinity,
@@ -590,7 +596,7 @@ class MainBodyEmpty extends StatelessWidget {
             Text(
               'Uh oh... ¡sin datos!',
               style: textTheme.headlineLarge!.copyWith(
-                color: onBackgroundColor,
+                color: StyleApp.onBackgroundColor,
               ),
             ),
             const SizedBox(height: 30),
@@ -603,7 +609,7 @@ class MainBodyEmpty extends StatelessWidget {
                               'La aplicación utiliza un código de acceso personal (token) como clave de '
                               'acceso al sistema REData de REE.\n\nUtiliza tu token y obtén más información en',
                           style: textTheme.bodyLarge!.copyWith(
-                            color: onBackgroundColor,
+                            color: StyleApp.onBackgroundColor,
                           ),
                         ),
                         WidgetSpan(
@@ -621,7 +627,7 @@ class MainBodyEmpty extends StatelessWidget {
                             label: Text(
                               'Ajustes',
                               style: textTheme.bodyLarge!.copyWith(
-                                color: onBackgroundColor,
+                                color: StyleApp.onBackgroundColor,
                               ),
                             ),
                           ),
@@ -632,7 +638,7 @@ class MainBodyEmpty extends StatelessWidget {
                 : Text(
                     'Descarga los últimos datos de la tarifa PVPC',
                     style: textTheme.bodyLarge!.copyWith(
-                      color: onBackgroundColor,
+                      color: StyleApp.onBackgroundColor,
                     ),
                   ),
           ],

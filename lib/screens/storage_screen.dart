@@ -4,7 +4,6 @@ import 'package:tarifa_luz/database/database.dart';
 import 'package:tarifa_luz/database/storage.dart';
 import 'package:tarifa_luz/screens/main_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
-import 'package:tarifa_luz/theme/theme_app.dart';
 
 class StorageScreen extends StatefulWidget {
   const StorageScreen({super.key});
@@ -27,11 +26,11 @@ class _StorageScreenState extends State<StorageScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
+        //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
         return AlertDialog(
-          title: Text(
+          title: const Text(
             'Eliminar datos',
-            style: TextStyle(color: onBackgroundColor),
+            style: TextStyle(color: StyleApp.onBackgroundColor),
           ),
           content: const SingleChildScrollView(
             child: Column(
@@ -70,7 +69,7 @@ class _StorageScreenState extends State<StorageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
+    //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
     return WillPopScope(
       onWillPop: () {
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -112,7 +111,7 @@ class _StorageScreenState extends State<StorageScreen> {
                       style: Theme.of(context)
                           .textTheme
                           .headlineMedium!
-                          .copyWith(color: onBackgroundColor),
+                          .copyWith(color: StyleApp.onBackgroundColor),
                     ),
                   )
                 : SingleChildScrollView(
@@ -129,11 +128,11 @@ class _StorageScreenState extends State<StorageScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!
-                                .copyWith(color: onBackgroundColor),
+                                .copyWith(color: StyleApp.onBackgroundColor),
                           ),
-                          Text(
+                          const Text(
                             'No requiere conexión a internet',
-                            style: TextStyle(color: onBackgroundColor),
+                            style: TextStyle(color: StyleApp.onBackgroundColor),
                           ),
                           const SizedBox(height: 20),
                           ListView.builder(
@@ -187,8 +186,8 @@ class _StorageScreenState extends State<StorageScreen> {
                                     leading: const Icon(Icons.today),
                                     title: Text(
                                       itemFecha,
-                                      style:
-                                          TextStyle(color: onBackgroundColor),
+                                      style: const TextStyle(
+                                          color: StyleApp.onBackgroundColor),
                                     ),
                                     trailing:
                                         const Icon(Icons.arrow_forward_ios),

@@ -21,6 +21,7 @@ class PrecioLuz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeApp themeApp = ThemeApp(context);
+    //print(Theme.of(context).colorScheme.secondaryContainer.toString());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TarifaLuz',
@@ -33,6 +34,7 @@ class PrecioLuz extends StatelessWidget {
         floatingActionButtonTheme: themeApp.floatingActionButtonTheme,
         dialogTheme: themeApp.dialogTheme,
         bottomNavigationBarTheme: themeApp.bottomNavigationBarTheme,
+        //scaffoldBackgroundColor: Colors.transparent,
       ),
       home: const MainScreen(isFirstLaunch: true),
     );

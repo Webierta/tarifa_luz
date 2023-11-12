@@ -4,7 +4,6 @@ import 'package:tarifa_luz/models/datos.dart';
 import 'package:tarifa_luz/models/datos_generacion.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
-import 'package:tarifa_luz/theme/theme_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 import 'package:tarifa_luz/widgets/datos_hoy.dart';
 import 'package:tarifa_luz/widgets/generacion_balance.dart';
@@ -103,7 +102,7 @@ class MainTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double altoScreen = MediaQuery.of(context).size.height;
-    final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
+    //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
     return Padding(
       padding: const EdgeInsets.only(top: 24),
       child: Column(
@@ -114,19 +113,22 @@ class MainTab extends StatelessWidget {
           SizedBox(height: altoScreen / 20),
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6),
                 child: Row(
                   children: [
                     Icon(
                       Icons.access_time,
-                      color: onBackgroundColor,
+                      color: StyleApp.onBackgroundColor,
                       size: 24,
                     ),
-                    const SizedBox(width: 4),
+                    SizedBox(width: 4),
                     Text(
                       'Precios mínimo y máximo',
-                      style: TextStyle(color: onBackgroundColor, fontSize: 16),
+                      style: TextStyle(
+                        color: StyleApp.onBackgroundColor,
+                        fontSize: 16,
+                      ),
                     ),
                   ],
                 ),
@@ -147,7 +149,7 @@ class MainTab extends StatelessWidget {
                         desviacion: desviacionMin,
                       ),
                       Divider(
-                        color: onBackgroundColor.withOpacity(0.5),
+                        color: StyleApp.onBackgroundColor.withOpacity(0.5),
                         indent: 20,
                         endIndent: 20,
                       ),
@@ -161,7 +163,7 @@ class MainTab extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: onBackgroundColor.withOpacity(0.5),
+                        color: StyleApp.onBackgroundColor.withOpacity(0.5),
                         indent: 20,
                         endIndent: 20,
                       ),
@@ -169,7 +171,9 @@ class MainTab extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           'Precio Medio: ${(data.calcularPrecioMedio(data.preciosHora)).toStringAsFixed(5)} €/kWh',
-                          style: TextStyle(color: onBackgroundColor),
+                          style: const TextStyle(
+                            color: StyleApp.onBackgroundColor,
+                          ),
                         ),
                       ),
                     ],
@@ -179,15 +183,22 @@ class MainTab extends StatelessWidget {
             ],
           ),
           SizedBox(height: altoScreen / 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6),
             child: Row(
               children: [
-                Icon(Icons.bolt, color: onBackgroundColor, size: 24),
-                const SizedBox(width: 4),
+                Icon(
+                  Icons.bolt,
+                  color: StyleApp.onBackgroundColor,
+                  size: 24,
+                ),
+                SizedBox(width: 4),
                 Text(
                   'Balance Generación',
-                  style: TextStyle(color: onBackgroundColor, fontSize: 16),
+                  style: TextStyle(
+                    color: StyleApp.onBackgroundColor,
+                    fontSize: 16,
+                  ),
                 ),
               ],
             ),
@@ -249,7 +260,8 @@ class MainTab extends StatelessWidget {
                                   ? 'Datos programados'
                                   : 'Datos previstos',
                               style: TextStyle(
-                                color: onBackgroundColor.withOpacity(0.8),
+                                color:
+                                    StyleApp.onBackgroundColor.withOpacity(0.8),
                               ),
                             ),
                           ),
@@ -263,12 +275,12 @@ class MainTab extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0),
             child: Column(
               children: [
-                Divider(color: onBackgroundColor.withOpacity(0.5)),
+                Divider(color: StyleApp.onBackgroundColor.withOpacity(0.5)),
                 Text('Fuente: REE (e·sios y REData)',
                     style: TextStyle(
-                      color: onBackgroundColor.withOpacity(0.5),
+                      color: StyleApp.onBackgroundColor.withOpacity(0.5),
                     )),
-                Divider(color: onBackgroundColor.withOpacity(0.5)),
+                Divider(color: StyleApp.onBackgroundColor.withOpacity(0.5)),
               ],
             ),
           ),
