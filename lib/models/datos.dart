@@ -138,7 +138,10 @@ class Datos {
   }
 
   double precioMin(List<double> precios) {
-    return precios.reduce((curr, next) => curr < next ? curr : next);
+    if (precios.isNotEmpty) {
+      return precios.reduce((curr, next) => curr < next ? curr : next);
+    }
+    return 0;
   }
 
   double precioMax(List<double> precios) {

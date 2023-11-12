@@ -22,6 +22,8 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  bool isFirstLaunch = false;
+
   var currentTab = 0;
   late ScrollController scrollController;
 
@@ -53,6 +55,7 @@ class _MainScreenState extends State<MainScreen> {
       });
     }
     setState(() {
+      currentTab = 0;
       processGetData = ProcessGetData.completed; // aborted
     });
   }
@@ -72,6 +75,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void initState() {
+    isFirstLaunch = widget.isFirstLaunch;
     Intl.defaultLocale = 'es_ES';
     loadSharedPrefs();
     scrollController = ScrollController();
@@ -186,7 +190,7 @@ class _MainScreenState extends State<MainScreen> {
     // set fecha a hoy si < 20:00 h o ayer ??
     fechaSelect = fechaSelect ?? DateFormat('dd/MM/yyyy').format(hoy);
 
-    if (widget.isFirstLaunch == false && storage.dateInDataBase(fechaSelect)) {
+    if (isFirstLaunch == false && storage.dateInDataBase(fechaSelect)) {
       String? continuar = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -223,6 +227,8 @@ class _MainScreenState extends State<MainScreen> {
         loadDataByDate(fechaSelect);
         return;
       }
+    } else if (isFirstLaunch == true && storage.dateInDataBase(fechaSelect)) {
+      return;
     }
 
     setState(() {
@@ -243,12 +249,18 @@ class _MainScreenState extends State<MainScreen> {
     }
     if (datos.status == Status.tiempoExcedido) {
       checkStatus(Status.tiempoExcedido);
+      setState(() => processGetData = ProcessGetData.completed);
     } else if (datos.status == Status.noInternet) {
       checkStatus(Status.noInternet);
+      /* setState(() {
+        processGetData = ProcessGetData.completed;
+      }); */
     } else if (dataNotYet && datos.status == Status.error) {
       checkStatus(Status.noPublicado);
+      //setState(() => processGetData = ProcessGetData.completed);
     } else if (datos.status != Status.ok) {
       checkStatus(datos.status);
+      //setState(() => processGetData = ProcessGetData.completed);
     } else if (datos.status == Status.ok) {
       setState(() {
         txtProgress = 'Consultando datos generación...';
@@ -293,7 +305,7 @@ class _MainScreenState extends State<MainScreen> {
         resetMainScreen();
       } */
     } else {
-      resetMainScreen();
+      resetMainScreen(); // ¿¿ mejor PageRoute con isFirstLaunch: false ??
     }
   }
 
@@ -311,7 +323,14 @@ class _MainScreenState extends State<MainScreen> {
               child: const Text('Volver'),
               onPressed: () {
                 Navigator.of(context).pop();
-                resetMainScreen();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const MainScreen(isFirstLaunch: false),
+                  ),
+                );
+                //resetMainScreen();
               },
             ),
           ],
@@ -453,7 +472,10 @@ class _MainScreenState extends State<MainScreen> {
     FloatingActionButton? floatingActionButton() {
       if (currentTab == 0) {
         return FloatingActionButton(
-          onPressed: () => getDatos(),
+          onPressed: () {
+            setState(() => isFirstLaunch = false);
+            getDatos();
+          },
           child: const Icon(Icons.update, size: 42),
         );
       }

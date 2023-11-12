@@ -18,11 +18,13 @@ class GraficoMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<double> precios = List.from(dataHoy.preciosHora);
+    double precioMin = dataHoy.precioMin(precios);
+    double precioMax = dataHoy.precioMax(precios);
+    double precioMedio = dataHoy.calcularPrecioMedio(dataHoy.preciosHora);
     //var axisMin = (dataHoy.precioMin(precios)) - 0.01;
     double altoScreen = MediaQuery.of(context).size.height;
 
     final now = DateTime.now().toLocal();
-    //final today = DateTime(now.year, now.month, now.day);
     DateTime fechaData = DateFormat('dd/MM/yyyy').parse(fecha);
     fechaData = DateTime(
       fechaData.year,
@@ -32,19 +34,6 @@ class GraficoMain extends StatelessWidget {
       now.minute,
     );
 
-    //DateTime hoy = today == fechaData ? now : fechaData;
-    /*DateTime hoy = DateTime(today.year, today.month, today.day)
-                .difference(
-                    DateTime(fechaData.year, fechaData.month, fechaData.day))
-                .inDays ==
-            0
-        ? now
-        : fechaData;*/
-    //DateTime hoy = fechaData;
-    //DateTime hoy = DateTime.now().toLocal();
-    //int hora = hoy.hour;
-    //int horaValor = -1;
-
     double cuatroDec(double precio) {
       return double.parse((precio).toStringAsFixed(4));
     }
@@ -52,7 +41,7 @@ class GraficoMain extends StatelessWidget {
     return ClipPath(
       clipper: StyleApp.kBorderClipper,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(10, 40, 10, 10),
+        padding: const EdgeInsets.all(10),
         width: double.infinity,
         height: altoScreen / 3,
         decoration: StyleApp.kBoxDeco,
@@ -86,7 +75,7 @@ class GraficoMain extends StatelessWidget {
             extraLinesData: ExtraLinesData(
               horizontalLines: [
                 HorizontalLine(
-                  y: dataHoy.calcularPrecioMedio(dataHoy.preciosHora),
+                  y: precioMedio,
                   strokeWidth: 1,
                   dashArray: [2, 2],
                   color: Theme.of(context).colorScheme.onBackground,
@@ -103,6 +92,8 @@ class GraficoMain extends StatelessWidget {
                 )
               ],
             ),
+            minY: precioMin - (precioMedio / 4),
+            maxY: precioMax + (precioMedio / 3),
             lineBarsData: [
               LineChartBarData(
                 spots: precios
@@ -119,12 +110,23 @@ class GraficoMain extends StatelessWidget {
                 isCurved: true,
                 barWidth: 2,
                 color: Colors.white,
-                /* dotData: FlDotData(
-                  show: false,
-                  getDotPainter: (p0, p1, p2, p3) =>
-                      FlDotCirclePainter(color: Colors.green),
-                ), */
-
+                dotData: FlDotData(
+                  show: true,
+                  getDotPainter: (p0, p1, p2, p3) {
+                    if (p3 == fechaData.hour) {
+                      return FlDotCirclePainter(
+                        color: Colors.red,
+                        radius: 6,
+                        //strokeColor: Colors.red,
+                        //strokeWidth: 2,
+                      );
+                    }
+                    return FlDotCirclePainter(
+                      color: Colors.white,
+                      strokeWidth: 0,
+                    );
+                  },
+                ),
                 belowBarData: BarAreaData(
                   show: false,
                   /* gradient: Gradient(),

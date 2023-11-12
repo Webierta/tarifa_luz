@@ -37,6 +37,8 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
     return double.parse((precio).toStringAsFixed(4));
   }
 
+  final now = DateTime.now().toLocal();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +77,17 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                       );
                     } */
                     if (int.parse(meta.formattedValue).isEven) {
+                      if (now.hour == int.parse(meta.formattedValue)) {
+                        return CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Text(
+                            meta.formattedValue,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                          ),
+                        );
+                      }
                       return Text(
                         meta.formattedValue,
                         style: TextStyle(
@@ -82,6 +95,11 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                         ),
                       );
                     }
+                    /* if (now.hour == int.parse(meta.formattedValue)) {
+                      return const CircleAvatar(
+                        backgroundColor: Colors.white,
+                      );
+                    } */
                     return const Text('');
                   },
                   //interval: 20,
@@ -127,6 +145,9 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                       toY: cuatroDec(precio.value),
                       width: 10,
                       color: Tarifa.getColorPeriodo(periodo),
+                      borderSide: precio.key == now.hour
+                          ? const BorderSide(color: Colors.white, width: 10)
+                          : null,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(6),
                         topRight: Radius.circular(6),
@@ -136,25 +157,6 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                 );
               },
             ).toList(),
-            /* barGroups: [
-              for (int index = 0; index < precios.length; index++)
-                BarChartGroupData(
-                  x: index + 1,
-                  barRods: [
-                    BarChartRodData(
-                      toY: cuatroDec(precios[index]),
-                      width: 10,
-                      color: Tarifa.getColorPeriodo(Tarifa.getPeriodo(
-                          widget.data.getDataTime(widget.data.fecha,
-                              precios.indexOf(precios[index])))),
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(6),
-                        topRight: Radius.circular(6),
-                      ),
-                    ),
-                  ],
-                )
-            ], */
           ),
           swapAnimationCurve: Curves.easeInOutCubic,
           swapAnimationDuration: const Duration(milliseconds: 1000),
