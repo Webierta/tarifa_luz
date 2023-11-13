@@ -15,9 +15,10 @@ class InfoTokenScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           decoration: StyleApp.mainDecoration,
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           height: double.infinity,
           child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
               children: [
                 Text(

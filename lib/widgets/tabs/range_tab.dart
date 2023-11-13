@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:tarifa_luz/models/datos.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
@@ -171,9 +170,14 @@ class _RangeTabState extends State<RangeTab> {
           FractionallySizedBox(
             widthFactor: 0.7,
             child: Container(
-              decoration: const BoxDecoration(
-                //border: Border.all(),
+              clipBehavior: Clip.hardEdge,
+              decoration: BoxDecoration(
                 color: Colors.black,
+                border: Border.all(
+                  width: 2,
+                  color: Colors.white,
+                ),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 //color: StyleApp.backgroundColor,
               ),
               child: Column(
@@ -193,10 +197,45 @@ class _RangeTabState extends State<RangeTab> {
                           child: FittedBox(
                             child: Text(
                               '${horas.toString().padLeft(2, '0')} : ${minutos.toString().padLeft(2, '0')}',
-                              style: GoogleFonts.cairoPlay(
+                              /* style: GoogleFonts.cairoPlay(
                                 textStyle: const TextStyle(
                                   fontSize: 50,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.white,
+                                      blurRadius: 2.0,
+                                      offset: Offset(2.0, 2.0),
+                                    )
+                                  ],
                                 ),
+                              ), */
+                              /* style: const TextStyle(
+                                fontFamily: 'CairoPlay',
+                                fontSize: 50,
+                                color: Colors.yellowAccent,
+                                fontWeight: FontWeight.w100,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.white,
+                                    blurRadius: 2,
+                                    offset: Offset(1.5, 1.5),
+                                  )
+                                ],
+                              ), */
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayMedium!
+                                  .copyWith(
+                                color: Colors.yellowAccent,
+                                fontWeight: FontWeight.w100,
+                                shadows: [
+                                  const Shadow(
+                                    color: Colors.white,
+                                    blurRadius: 2,
+                                    offset: Offset(1.5, 1.5),
+                                  )
+                                ],
                               ),
                             ),
                           ),
@@ -208,44 +247,43 @@ class _RangeTabState extends State<RangeTab> {
                       ),
                     ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: Colors.red.withOpacity(0.8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(7),
                             ),
-                            child: TextButton(
-                              onPressed: reset,
-                              child: const Text(
-                                'RESET',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                            color: Colors.red,
+                          ),
+                          child: TextButton(
+                            onPressed: reset,
+                            child: const Text(
+                              'RESET',
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
                         ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(),
-                              color: Colors.green.withOpacity(0.8),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(7),
                             ),
-                            child: TextButton(
-                              onPressed: submitDuracion,
-                              child: const Text(
-                                'START',
-                                style: TextStyle(color: Colors.white),
-                              ),
+                            color: Colors.green,
+                          ),
+                          child: TextButton(
+                            onPressed: submitDuracion,
+                            child: const Text(
+                              'START',
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
-                        )
-                      ],
-                    ),
+                        ),
+                      )
+                    ],
                   ),
                 ],
               ),

@@ -14,7 +14,7 @@ class InfoScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           decoration: StyleApp.mainDecoration,
-          padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[

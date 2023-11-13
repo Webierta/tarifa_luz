@@ -18,7 +18,8 @@ class GraficoPrecio extends StatefulWidget {
   State<GraficoPrecio> createState() => _GraficoPrecioState();
 }
 
-class _GraficoPrecioState extends State<GraficoPrecio> {
+class _GraficoPrecioState extends State<GraficoPrecio>
+    with TickerProviderStateMixin {
   List<double> precios = [];
   //late int _selectedItem;
   late int horaValor;
@@ -77,7 +78,7 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                       );
                     } */
                     if (int.parse(meta.formattedValue).isEven) {
-                      if (now.hour == int.parse(meta.formattedValue)) {
+                      if (int.parse(meta.formattedValue) == now.hour + 1) {
                         return CircleAvatar(
                           backgroundColor: Colors.white,
                           child: Text(
@@ -95,9 +96,15 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                         ),
                       );
                     }
-                    /* if (now.hour == int.parse(meta.formattedValue)) {
-                      return const CircleAvatar(
+                    /* if (int.parse(meta.formattedValue) == now.hour + 1) {
+                      return CircleAvatar(
                         backgroundColor: Colors.white,
+                        child: Text(
+                          meta.formattedValue,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.background,
+                          ),
+                        ),
                       );
                     } */
                     return const Text('');
@@ -146,7 +153,10 @@ class _GraficoPrecioState extends State<GraficoPrecio> {
                       width: 10,
                       color: Tarifa.getColorPeriodo(periodo),
                       borderSide: precio.key == now.hour
-                          ? const BorderSide(color: Colors.white, width: 10)
+                          ? const BorderSide(
+                              color: Colors.white,
+                              width: 10,
+                            )
                           : null,
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(6),

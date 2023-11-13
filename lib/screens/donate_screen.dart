@@ -34,8 +34,9 @@ class DonateScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           decoration: StyleApp.mainDecoration,
-          padding: const EdgeInsets.fromLTRB(20.0, 0, 20, 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 20),
             //padding: const EdgeInsets.fromLTRB(20, 10, 20, 40),
             child: Column(
               children: [

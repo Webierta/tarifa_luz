@@ -30,10 +30,12 @@ class PrecioLuz extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: themeApp.colorScheme,
+        //fontFamily: themeApp.fontFamily,
         textTheme: themeApp.textTheme,
         floatingActionButtonTheme: themeApp.floatingActionButtonTheme,
         dialogTheme: themeApp.dialogTheme,
         bottomNavigationBarTheme: themeApp.bottomNavigationBarTheme,
+        //typography: Typography.whiteRedwoodCity,
         //scaffoldBackgroundColor: Colors.transparent,
       ),
       home: const MainScreen(isFirstLaunch: true),

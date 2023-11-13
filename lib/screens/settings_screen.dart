@@ -163,7 +163,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       ),
                     ),
-                    const Divider(height: 40),
+                    const Divider(
+                      height: 40,
+                      color: StyleApp.onBackgroundColor,
+                    ),
                     ListTile(
                       horizontalTitleGap: 8,
                       title: const Text('Guardado automático'),
@@ -177,7 +180,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         },
                       ),
                     ),
-                    const Divider(height: 40),
+                    const Divider(
+                      height: 40,
+                      color: StyleApp.onBackgroundColor,
+                    ),
                   ],
                 ),
               ),
