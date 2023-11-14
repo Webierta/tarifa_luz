@@ -2,7 +2,7 @@ Información detallada sobre la tarifa de la energía eléctrica en el mercado r
 
 Esta App ofrece información general y detallada sobre el precio de la electricidad y las horas más baratas y más caras a lo largo de un día para facilitar el ajuste de los hábitos de consumo buscando el ahorro en la factura de la luz.
 
-En definitiva, esta App trata de ayudar a gestionar el consumo eléctrico de forma más eficiente, y todo ello con una aplicación gratuita y sin publicidad, de código abierto y respetuosa con la seguridad y privacidad de sus usarios (no recopila ninguna información ni realiza ningún seguimiento ni requiere permisos extraños o innecesarios).
+En definitiva, esta App trata de ayudar a gestionar el consumo eléctrico de forma más eficiente, y todo ello con una aplicación gratuita y sin publicidad, de código abierto y respetuosa con la seguridad y privacidad de sus usuarios (no recopila ninguna información ni realiza ningún seguimiento ni requiere permisos extraños o innecesarios).
 
 Funciones principales:
 
