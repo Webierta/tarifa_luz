@@ -1,0 +1,21 @@
+Detailed information on the electricity rate in the regulated market (PVPC) in Spain for efficient management of electricity consumption.
+
+This App offers general and detailed information about the price of electricity and the cheapest and most expensive hours throughout a day to facilitate the adjustment of consumption habits in search of savings on the electricity bill.
+
+In short, this App tries to help manage electricity consumption more efficiently, and all this with a free application without advertising, open source and respectful of the security and privacy of its users (it does not collect any information or carry out any tracking nor does it require strange or unnecessary permissions).
+
+Principal functions:
+
+* Synchronizes the latest prices available in the regulated market via the Internet.
+* Allows you to consult electricity prices for any date (based on the new tariff system).
+* Highlights the most expensive and cheapest hours of the day and represents the data in graphs and tables (daily price evolution and hours sorted by price).
+* Archives the values obtained and allows offline consultation.
+* Calculator of the cheapest time slots according to the duration entered by the user.
+* Obtain information on the generation balance between renewable and non-renewable energies.
+* More features coming soon...
+
+The App has been adapted to the new electricity rate system that has been applied since June 1, 2021. One of the main changes introduced by the regulations is that all customers covered by the PVPC are grouped under the same toll rate called 2.0. TD, which replaces the previous three (the default rate 2.0 A, the night rate 2.0 DHA, and the electric vehicle rate 2.0 DHS).
+
+This new 2.0 TD rate has a time discrimination in three periods: peak, flat and valley that are defined according to the day of the week, the time of day and the geographical territory (different for Ceuta and Melilla).
+
+The App includes a tool that calculates and orders the cheapest time slots of the day (average prices) for a specific time interval. For example, it is useful to know the best time of day to run the washer and dryer consecutively.
