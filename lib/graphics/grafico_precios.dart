@@ -1,36 +1,27 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
-import 'package:tarifa_luz/models/datos.dart';
+import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 
-class GraficoPrecio extends StatefulWidget {
-  final Datos data;
-  final String fecha;
-  const GraficoPrecio({
-    super.key,
-    required this.data,
-    required this.fecha,
-  });
-
+class GraficoPrecios extends StatefulWidget {
+  final BoxData boxData;
+  const GraficoPrecios({required this.boxData, super.key});
   @override
-  State<GraficoPrecio> createState() => _GraficoPrecioState();
+  State<GraficoPrecios> createState() => _GraficoPreciosState();
 }
 
-class _GraficoPrecioState extends State<GraficoPrecio>
+class _GraficoPreciosState extends State<GraficoPrecios>
     with TickerProviderStateMixin {
   List<double> precios = [];
-  //late int _selectedItem;
-  late int horaValor;
+  int horaValor = -1;
+  final now = DateTime.now().toLocal();
 
   @override
   void initState() {
-    precios = List.from(widget.data.preciosHora);
-    horaValor = -1;
-    //DateTime hoy = DateTime.now().toLocal();
-    //int hora = hoy.hour;
-    //_selectedItem = hora;
+    precios = List.from(widget.boxData.preciosHora);
+    //horaValor = -1;
     super.initState();
   }
 
@@ -38,13 +29,10 @@ class _GraficoPrecioState extends State<GraficoPrecio>
     return double.parse((precio).toStringAsFixed(4));
   }
 
-  final now = DateTime.now().toLocal();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('PVPC ${widget.fecha}')),
+      appBar: AppBar(title: Text('PVPC ${widget.boxData.fechaddMMyy}')),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(10, 40, 10, 20),
         child: BarChart(
@@ -63,20 +51,6 @@ class _GraficoPrecioState extends State<GraficoPrecio>
                 sideTitles: SideTitles(
                   showTitles: true,
                   getTitlesWidget: (value, meta) {
-                    /* return Text(
-                      meta.formattedValue,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
-                      ),
-                    ); */
-                    /* if (int.parse(meta.formattedValue) == 23) {
-                      return Text(
-                        '24',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                      );
-                    } */
                     if (int.parse(meta.formattedValue).isEven) {
                       if (int.parse(meta.formattedValue) == now.hour + 1) {
                         return CircleAvatar(
@@ -96,20 +70,8 @@ class _GraficoPrecioState extends State<GraficoPrecio>
                         ),
                       );
                     }
-                    /* if (int.parse(meta.formattedValue) == now.hour + 1) {
-                      return CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Text(
-                          meta.formattedValue,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.background,
-                          ),
-                        ),
-                      );
-                    } */
                     return const Text('');
                   },
-                  //interval: 20,
                 ),
               ),
               topTitles: const AxisTitles(
@@ -125,7 +87,7 @@ class _GraficoPrecioState extends State<GraficoPrecio>
             extraLinesData: ExtraLinesData(
               horizontalLines: [
                 HorizontalLine(
-                  y: widget.data.calcularPrecioMedio(widget.data.preciosHora),
+                  y: widget.boxData.precioMedio,
                   strokeWidth: 1,
                   color: Theme.of(context).colorScheme.onBackground,
                   label: HorizontalLineLabel(
@@ -136,15 +98,16 @@ class _GraficoPrecioState extends State<GraficoPrecio>
                     ),
                     alignment: Alignment.topLeft,
                     labelResolver: (_) =>
-                        'Media: ${cuatroDec(widget.data.calcularPrecioMedio(widget.data.preciosHora))}',
+                        'Media: ${cuatroDec(widget.boxData.precioMedio)}',
                   ),
                 )
               ],
             ),
             barGroups: precios.asMap().entries.map(
               (precio) {
-                Periodo periodo = Tarifa.getPeriodo(
-                    widget.data.getDataTime(widget.data.fecha, precio.key));
+                DateTime fechaHour =
+                    widget.boxData.fecha.copyWith(hour: precio.key);
+                Periodo periodo = Tarifa.getPeriodo(fechaHour);
                 return BarChartGroupData(
                   x: precio.key + 1,
                   barRods: [

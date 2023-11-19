@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 
-import 'package:tarifa_luz/models/datos.dart';
+import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
-import 'package:tarifa_luz/widgets/tabs/head_tab.dart';
+import 'package:tarifa_luz/tabs/head_tab.dart';
 
-class RangeTab extends StatefulWidget {
-  final String fecha;
-  final Datos data;
-  const RangeTab({
-    super.key,
-    required this.fecha,
-    required this.data,
-  });
-
+class TimelapseTab extends StatefulWidget {
+  final BoxData boxData;
+  const TimelapseTab({required this.boxData, super.key});
   @override
-  State<RangeTab> createState() => _RangeTabState();
+  State<TimelapseTab> createState() => _TimelapseTabState();
 }
 
-class _RangeTabState extends State<RangeTab> {
+class _TimelapseTabState extends State<TimelapseTab> {
   Duration duration = const Duration(hours: 0, minutes: 00);
   var horas = 0;
   var minutos = 0;
@@ -26,36 +20,20 @@ class _RangeTabState extends State<RangeTab> {
   Map<Duration, double> mapPreciosSorted = {};
   bool calculando = false;
 
-  upHoras() {
-    if (horas < 24) {
-      setState(() => horas++);
-    } else {
-      setState(() => horas = 0);
-    }
+  void upHoras() {
+    horas < 24 ? setState(() => horas++) : setState(() => horas = 0);
   }
 
-  upMin() {
-    if (minutos < 55) {
-      setState(() => minutos += 5);
-    } else {
-      setState(() => minutos = 0);
-    }
+  void upMin() {
+    minutos < 55 ? setState(() => minutos += 5) : setState(() => minutos = 0);
   }
 
-  downHoras() {
-    if (horas > 0) {
-      setState(() => horas--);
-    } else {
-      setState(() => horas = 24);
-    }
+  void downHoras() {
+    horas > 0 ? setState(() => horas--) : setState(() => horas = 24);
   }
 
-  downMin() {
-    if (minutos > 0) {
-      setState(() => minutos -= 5);
-    } else {
-      setState(() => minutos = 55);
-    }
+  void downMin() {
+    minutos > 0 ? setState(() => minutos -= 5) : setState(() => minutos = 55);
   }
 
   void reset() {
@@ -76,7 +54,7 @@ class _RangeTabState extends State<RangeTab> {
   void getPreciosFranjas() {
     Map<Duration, double> mapInicioPrecios = {};
     List<double> preciosFranjas = [];
-    List<double> preciosHora = widget.data.preciosHora;
+    List<double> preciosHora = widget.boxData.preciosHora;
     var startList = List<Duration>.generate(
         franjas,
         (int index) =>
@@ -159,10 +137,9 @@ class _RangeTabState extends State<RangeTab> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Column(
-        //mainAxisSize: MainAxisSize.max,
         children: [
           HeadTab(
-            fecha: widget.fecha,
+            fecha: widget.boxData.fechaddMMyy,
             titulo: 'Franjas horarias más baratas',
           ),
           const Text('Selecciona la duración (HH:MM)'),
@@ -178,10 +155,8 @@ class _RangeTabState extends State<RangeTab> {
                   color: Colors.white,
                 ),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                //color: StyleApp.backgroundColor,
               ),
               child: Column(
-                //mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -197,32 +172,6 @@ class _RangeTabState extends State<RangeTab> {
                           child: FittedBox(
                             child: Text(
                               '${horas.toString().padLeft(2, '0')} : ${minutos.toString().padLeft(2, '0')}',
-                              /* style: GoogleFonts.cairoPlay(
-                                textStyle: const TextStyle(
-                                  fontSize: 50,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    Shadow(
-                                      color: Colors.white,
-                                      blurRadius: 2.0,
-                                      offset: Offset(2.0, 2.0),
-                                    )
-                                  ],
-                                ),
-                              ), */
-                              /* style: const TextStyle(
-                                fontFamily: 'CairoPlay',
-                                fontSize: 50,
-                                color: Colors.yellowAccent,
-                                fontWeight: FontWeight.w100,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.white,
-                                    blurRadius: 2,
-                                    offset: Offset(1.5, 1.5),
-                                  )
-                                ],
-                              ), */
                               style: Theme.of(context)
                                   .textTheme
                                   .displayMedium!
@@ -300,7 +249,6 @@ class _RangeTabState extends State<RangeTab> {
               franjas: franjas,
               mapPreciosSorted: mapPreciosSorted,
             ),
-          //else const Placeholder(color: Colors.transparent),
         ],
       ),
     );
@@ -376,7 +324,6 @@ class ContainerListView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<double> preciosOrdenados = mapPreciosSorted.values.toList();
     List<Duration> listaKeys = mapPreciosSorted.keys.toList();
-    //final Color backgroundColor = ThemeApp(context).StyleApp.backgroundColor;
     return Container(
       constraints: BoxConstraints(maxHeight: 100.0 * franjas),
       child: ListView.separated(
@@ -385,14 +332,10 @@ class ContainerListView extends StatelessWidget {
                 color: StyleApp.backgroundColor.withOpacity(0.2),
               ),
           physics: const NeverScrollableScrollPhysics(),
-          //cacheExtent: 10000.0 * franjas.value,
           shrinkWrap: true,
           itemCount: franjas,
           itemBuilder: (context, index) {
-            //List<double> preciosOrdenados = mapPreciosSorted?.values?.toList();
             var precioOrdenado = preciosOrdenados[index];
-            //List<Duration> listaKeys = mapPreciosSorted?.keys?.toList();
-            // TITULO CON HORAS Y MINUTOS DE CADA FRANJA
             var timeFranja = listaKeys[index];
             var horaInicioFranja = timeFranja.inHours;
             var minInicioFranja =
@@ -425,10 +368,6 @@ class ContainerListView extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.only(left: 20),
               decoration: BoxDecoration(
-                /* border: const Border(
-                  bottom: BorderSide(width: 0.8, color: Colors.grey),
-                  left: BorderSide(width: 10.0, color: Colors.grey),
-                ), */
                 gradient: LinearGradient(
                   stops: const [0.04, 0.02], // const [0.02, 0.02],
                   colors: [StyleApp.backgroundColor.withOpacity(0.5), color],
@@ -452,7 +391,6 @@ class ContainerListView extends StatelessWidget {
                 title: Text(
                   '$horaInicioFranja:${minInicioFranja.toString().padLeft(2, '0')} - '
                   '$horaLapso:${minLapso.toString().padLeft(2, '0')}',
-                  //style: Theme.of(context).textTheme.titleLarge,
                 ),
                 subtitle: Text(
                   '${(precioOrdenado.toStringAsFixed(5))} €/kWh',

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:tarifa_luz/theme/style_app.dart';
 
 class InfoTokenScreen extends StatelessWidget {
   const InfoTokenScreen({super.key});

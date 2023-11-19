@@ -21,7 +21,6 @@ class GeneracionBalance extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 10),
       child: DropdownButton<double>(
-        //value: _renovableValue,
         underline: Container(height: 0),
         isExpanded: true,
         hint: Row(
@@ -32,11 +31,10 @@ class GeneracionBalance extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Text(generacion.tipo,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                      )),
+                  child: Text(
+                    generacion.tipo,
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                  ),
                 ),
               ),
             ),
@@ -79,8 +77,8 @@ class GeneracionBalance extends StatelessWidget {
                           ],
                         ),
                         LinearProgressIndicator(
-                          value: (double.tryParse(calcularPorcentaje(value)) ??
-                                  100) /
+                          value: ((double.tryParse(calcularPorcentaje(value)) ??
+                                  100)) /
                               100,
                           backgroundColor: Colors.black12,
                           color: Colors.white,

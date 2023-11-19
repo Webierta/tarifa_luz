@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:tarifa_luz/screens/about_screen.dart';
 import 'package:tarifa_luz/screens/donate_screen.dart';
+import 'package:tarifa_luz/screens/home_screen.dart';
 import 'package:tarifa_luz/screens/iconografia_screen.dart';
 import 'package:tarifa_luz/screens/info_screen.dart';
 import 'package:tarifa_luz/screens/settings_screen.dart';
@@ -22,14 +23,6 @@ class AppDrawer extends StatelessWidget {
             end: Alignment.bottomLeft,
             stops: [0.2, 0.5, 0.8, 0.7],
             colors: [
-              /* Theme.of(context).colorScheme.primaryContainer.withOpacity(0.1),
-              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
-              Theme.of(context).colorScheme.primary.withOpacity(0.8),
-              Theme.of(context).colorScheme.primary.withOpacity(0.7), */
-              /* Theme.of(context).colorScheme.primary.withOpacity(0.1),
-              Theme.of(context).colorScheme.primary.withOpacity(0.5),
-              Theme.of(context).colorScheme.primary.withOpacity(0.8),
-              Theme.of(context).colorScheme.primary.withOpacity(0.7), */
               StyleApp.primaryColorOpacity01,
               StyleApp.primaryColorOpacity05,
               StyleApp.primaryColorOpacity08,
@@ -61,7 +54,10 @@ class AppDrawer extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineSmall!
-                                  .copyWith(color: StyleApp.accentColor),
+                                  .copyWith(
+                                    fontWeight: FontWeight.w100,
+                                    color: StyleApp.accentColor,
+                                  ),
                             ),
                           ),
                         ),
@@ -94,7 +90,15 @@ class AppDrawer extends StatelessWidget {
                   ListTile(
                     leading: const Icon(Icons.home),
                     title: const Text('Inicio'),
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
@@ -173,17 +177,6 @@ class AppDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  /* const DividerDrawer(),
-                  ListTile(
-                    leading: const Icon(Icons.exit_to_app),
-                    title: const Text('Salir'),
-                    onTap: () async {
-                      Navigator.of(context).pop();
-                      //DatabaseHelper database = DatabaseHelper();
-                      //await database.close();
-                      //SystemNavigator.pop();
-                    },
-                  ), */
                 ],
               ),
             ),

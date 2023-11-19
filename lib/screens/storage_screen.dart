@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:tarifa_luz/database/database.dart';
+import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/database/storage.dart';
-import 'package:tarifa_luz/screens/main_screen.dart';
+import 'package:tarifa_luz/screens/home_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 
 class StorageScreen extends StatefulWidget {
@@ -13,11 +13,11 @@ class StorageScreen extends StatefulWidget {
 
 class _StorageScreenState extends State<StorageScreen> {
   Storage storage = Storage();
-  List<Database> dataBaseSort = [];
+  List<BoxData> listBoxData = [];
 
   @override
   void initState() {
-    dataBaseSort = [...storage.sortByDate];
+    listBoxData = [...storage.listBoxDataSort];
     super.initState();
   }
 
@@ -26,7 +26,6 @@ class _StorageScreenState extends State<StorageScreen> {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
         return AlertDialog(
           title: const Text(
             'Eliminar datos',
@@ -69,14 +68,13 @@ class _StorageScreenState extends State<StorageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
     return WillPopScope(
       onWillPop: () {
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainScreen(isFirstLaunch: false),
+            builder: (context) => const HomeScreen(isFirstLaunch: false),
           ),
         );
         return Future.value(true);
@@ -87,12 +85,12 @@ class _StorageScreenState extends State<StorageScreen> {
           actions: [
             IconButton(
               onPressed: () async {
-                if (dataBaseSort.isEmpty) {
+                if (listBoxData.isEmpty) {
                   showSnack('Archivo sin datos. Nada que hacer');
                 } else {
                   if (await confirmDelete() == true) {
-                    storage.deleteDataBase();
-                    setState(() => dataBaseSort.clear());
+                    storage.clearBox();
+                    setState(() => listBoxData.clear());
                   }
                 }
               },
@@ -105,7 +103,7 @@ class _StorageScreenState extends State<StorageScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             decoration: StyleApp.mainDecoration,
             height: double.infinity,
-            child: dataBaseSort.isEmpty
+            child: listBoxData.isEmpty
                 ? Center(
                     child: Text(
                       'Archivo vacío',
@@ -138,10 +136,12 @@ class _StorageScreenState extends State<StorageScreen> {
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: dataBaseSort.length,
+                          itemCount: listBoxData.length,
                           itemBuilder: (BuildContext context, int index) {
-                            Database item = dataBaseSort[index];
-                            String itemFecha = item.fecha;
+                            //Database item = dataBaseSort[index];
+                            //String itemFecha = item.fecha;
+                            BoxData item = listBoxData[index];
+                            String itemFecha = item.fechaddMMyy;
                             return Dismissible(
                               key: ValueKey(itemFecha),
                               direction: DismissDirection.endToStart,
@@ -165,10 +165,10 @@ class _StorageScreenState extends State<StorageScreen> {
                               onDismissed: (direction) {
                                 showSnack(
                                     'Los datos del día ${item.fecha} han sido eliminados');
-                                dataBaseSort.remove(item);
-                                storage.deleteData(item);
+                                listBoxData.remove(item);
+                                storage.deleteBoxData(item);
                                 setState(() {
-                                  dataBaseSort = [...storage.sortByDate];
+                                  listBoxData = [...storage.listBoxDataSort];
                                 });
                               },
                               child: Card(
@@ -176,8 +176,9 @@ class _StorageScreenState extends State<StorageScreen> {
                                   onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => MainScreen(
-                                        fecha: itemFecha,
+                                      builder: (context) => HomeScreen(
+                                        //fecha: itemFecha,
+                                        fecha: item.fecha,
                                         isFirstLaunch: false,
                                       ),
                                     ),

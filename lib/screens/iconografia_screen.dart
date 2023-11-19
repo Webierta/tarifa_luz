@@ -153,6 +153,10 @@ class IconografiaScreen extends StatelessWidget {
                   'Rangos de precios (€/kWh):',
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
+                Text(
+                  '(fondo de celdas de tablas y semáforo)',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
                 Card(
                   elevation: 4.0,
                   //color: Colors.blue[50],
@@ -188,7 +192,7 @@ class IconografiaScreen extends StatelessWidget {
                               horizontal: 4,
                             ),
                             decoration: const BoxDecoration(
-                              color: Color(0xFFFFFDE7),
+                              color: Color(0xFFFFF9C4),
                               border: Border(
                                 bottom: BorderSide(),
                                 top: BorderSide(),

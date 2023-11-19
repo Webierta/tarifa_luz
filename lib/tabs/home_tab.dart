@@ -1,70 +1,47 @@
 import 'package:flutter/material.dart';
 
-import 'package:tarifa_luz/models/datos.dart';
-import 'package:tarifa_luz/models/datos_generacion.dart';
+import 'package:tarifa_luz/database/box_data.dart';
+import 'package:tarifa_luz/graphics/grafico_home.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
-import 'package:tarifa_luz/widgets/datos_hoy.dart';
 import 'package:tarifa_luz/widgets/generacion_balance.dart';
 import 'package:tarifa_luz/widgets/generacion_error.dart';
-import 'package:tarifa_luz/widgets/graficos/grafico_main.dart';
+import 'package:tarifa_luz/tabs/head_home_tab.dart';
 import 'package:tarifa_luz/widgets/list_tile_fecha.dart';
 
-class MainTab extends StatelessWidget {
-  final String fecha;
-  final Datos data;
-  final DatosGeneracion? dataGeneracion;
+class HomeTab extends StatelessWidget {
+  final BoxData boxData;
+  const HomeTab({required this.boxData, super.key});
 
-  const MainTab(
-      {super.key,
-      required this.fecha,
-      required this.data,
-      this.dataGeneracion});
+  Periodo get periodoMin {
+    int hora = boxData.getHour(boxData.preciosHora, boxData.precioMin);
+    DateTime f = boxData.fecha.copyWith(hour: hora);
+    return Tarifa.getPeriodo(f);
+  }
 
-  Periodo get periodoMin => Tarifa.getPeriodo(data.getDataTime(
-        data.fecha,
-        data.getHour(
-          data.preciosHora,
-          data.precioMin(data.preciosHora),
-        ),
-      ));
+  Periodo get periodoMax {
+    int hora = boxData.getHour(boxData.preciosHora, boxData.precioMax);
+    DateTime f = boxData.fecha.copyWith(hour: hora);
+    return Tarifa.getPeriodo(f);
+  }
 
-  Periodo get periodoMax => Tarifa.getPeriodo(data.getDataTime(
-        data.fecha,
-        data.getHour(
-          data.preciosHora,
-          data.precioMax(data.preciosHora),
-        ),
-      ));
-
-  double get desviacionMin =>
-      data.precioMin(data.preciosHora) -
-      data.calcularPrecioMedio(data.preciosHora);
-
-  double get desviacionMax =>
-      data.precioMax(data.preciosHora) -
-      data.calcularPrecioMedio(data.preciosHora);
-
-  String get horaPeriodoMin => data.getHora(
-        data.preciosHora,
-        data.precioMin(data.preciosHora),
+  /* String get horaPeriodoMin => boxData.getHora(
+        boxData.preciosHora,
+        boxData.precioMin,
       );
 
-  String get horaPeriodoMax => data.getHora(
-        data.preciosHora,
-        data.precioMax(data.preciosHora),
-      );
+  String get horaPeriodoMax => boxData.getHora(
+        boxData.preciosHora,
+        boxData.precioMax,
+      ); */
 
-  String get precioPeriodoMin =>
-      data.precioMin(data.preciosHora).toStringAsFixed(5);
-
-  String get precioPeriodoMax =>
-      data.precioMax(data.preciosHora).toStringAsFixed(5);
+  double get desviacionMin => boxData.precioMin - boxData.precioMedio;
+  double get desviacionMax => boxData.precioMax - boxData.precioMedio;
 
   double get total {
-    return (dataGeneracion!.generacion[Generacion.renovable.texto] ?? 0) +
-        (dataGeneracion!.generacion[Generacion.noRenovable.texto] ?? 0);
+    return (boxData.generacion[Generacion.renovable.texto] ?? 0) +
+        (boxData.generacion[Generacion.noRenovable.texto] ?? 0);
   }
 
   Map<String, double> sortedMap(Map<String, double> mapDataGeneracion) {
@@ -74,47 +51,33 @@ class MainTab extends StatelessWidget {
       ..sort((e1, e2) => (e2.value).compareTo((e1.value))));
   }
 
-  /* Map<String, double> sortedMapRenovables() {
-    var mapRenovables = <String, double>{};
-    mapRenovables = Map.from(dataGeneracion!.mapRenovables);
-    return Map.fromEntries(mapRenovables.entries.toList()
-      ..sort((e1, e2) => (e2.value).compareTo((e1.value))));
-  }
-
-  Map<String, double> sortedMapNoRenovables() {
-    var mapNoRenovables = <String, double>{};
-    mapNoRenovables = Map.from(dataGeneracion!.mapNoRenovables);
-    return Map.fromEntries(mapNoRenovables.entries.toList()
-      ..sort((e1, e2) => (e2.value).compareTo((e1.value))));
-  } */
-
   String calcularPorcentaje(double valor) {
     return ((valor * 100) / total).toStringAsFixed(1);
   }
 
   double valueLinearProgress(String typo) {
-    return (double.tryParse(
-                calcularPorcentaje(dataGeneracion!.generacion[typo] ?? 100)) ??
-            100) /
-        100;
+    var g = typo == 'Generación renovable'
+        ? sortedMap(boxData.mapRenovables!)
+        : sortedMap(boxData.mapNoRenovables!);
+    return (double.tryParse(calcularPorcentaje(g[typo] ?? 100)) ?? 100) / 100;
   }
 
   @override
   Widget build(BuildContext context) {
     double altoScreen = MediaQuery.of(context).size.height;
-    //final Color onBackgroundColor = ThemeApp(context).onBackgroundColor;
+
     return Padding(
       padding: const EdgeInsets.only(top: 24),
       child: Column(
         children: [
-          DatosHoy(dataHoy: data, fecha: fecha),
+          HeadHomeTab(boxData: boxData),
           const SizedBox(height: 20),
-          GraficoMain(dataHoy: data, fecha: fecha),
+          GraficoHome(boxData: boxData),
           SizedBox(height: altoScreen / 20),
           Column(
             children: [
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 6),
+                padding: EdgeInsets.only(left: 6),
                 child: Row(
                   children: [
                     Icon(
@@ -129,6 +92,9 @@ class MainTab extends StatelessWidget {
                         color: StyleApp.onBackgroundColor,
                         fontSize: 16,
                       ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
                     ),
                   ],
                 ),
@@ -144,8 +110,8 @@ class MainTab extends StatelessWidget {
                     children: [
                       ListTileFecha(
                         periodo: periodoMin,
-                        hora: horaPeriodoMin,
-                        precio: precioPeriodoMin,
+                        hora: boxData.horaPrecioMin, // horaPeriodoMin
+                        precio: boxData.precioMin.toStringAsFixed(5),
                         desviacion: desviacionMin,
                       ),
                       Divider(
@@ -157,8 +123,8 @@ class MainTab extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 8.0),
                         child: ListTileFecha(
                           periodo: periodoMax,
-                          hora: horaPeriodoMax,
-                          precio: precioPeriodoMax,
+                          hora: boxData.horaPrecioMax, // horaPeriodoMax,
+                          precio: boxData.precioMax.toStringAsFixed(5),
                           desviacion: desviacionMax,
                         ),
                       ),
@@ -170,7 +136,7 @@ class MainTab extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
-                          'Precio Medio: ${(data.calcularPrecioMedio(data.preciosHora)).toStringAsFixed(5)} €/kWh',
+                          'Precio Medio: ${(boxData.precioMedio).toStringAsFixed(5)} €/kWh',
                           style: const TextStyle(
                             color: StyleApp.onBackgroundColor,
                           ),
@@ -184,7 +150,7 @@ class MainTab extends StatelessWidget {
           ),
           SizedBox(height: altoScreen / 20),
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6),
+            padding: EdgeInsets.only(left: 6),
             child: Row(
               children: [
                 Icon(
@@ -210,21 +176,19 @@ class MainTab extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 14),
               width: double.infinity,
               decoration: StyleApp.kBoxDeco,
-              child: (dataGeneracion == null ||
-                          dataGeneracion?.status == StatusGeneracion.error) ||
-                      (dataGeneracion?.generacion.isEmpty ?? true) ||
-                      (dataGeneracion?.mapRenovables.isEmpty ?? true) ||
-                      (dataGeneracion?.mapNoRenovables.isEmpty ?? true) ||
-                      (!dataGeneracion!.generacion
+              child: (boxData.mapRenovables == null ||
+                      boxData.mapNoRenovables == null ||
+                      (boxData.mapRenovables?.isEmpty ?? true) ||
+                      (boxData.mapRenovables?.isEmpty ?? true) ||
+                      (!boxData.generacion
                           .containsKey(Generacion.renovable.texto)) ||
-                      !dataGeneracion!.generacion
-                          .containsKey(Generacion.noRenovable.texto)
+                      !boxData.generacion
+                          .containsKey(Generacion.noRenovable.texto))
                   ? const GeneracionError()
                   : Column(
                       children: [
                         GeneracionBalance(
-                          sortedMap: sortedMap(dataGeneracion!.mapRenovables),
-                          //sortedMap: sortedMapRenovables(),
+                          sortedMap: sortedMap(boxData.mapRenovables!),
                           generacion: Generacion.renovable,
                           total: total,
                         ),
@@ -236,8 +200,7 @@ class MainTab extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         GeneracionBalance(
-                          sortedMap: sortedMap(dataGeneracion!.mapNoRenovables),
-                          //sortedMap: sortedMapNoRenovables(),
+                          sortedMap: sortedMap(boxData.mapNoRenovables!),
                           generacion: Generacion.noRenovable,
                           total: total,
                         ),
@@ -252,10 +215,7 @@ class MainTab extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: Text(
-                              DateTime.now()
-                                          .difference(
-                                              DateTime.parse(data.fecha))
-                                          .inDays >=
+                              DateTime.now().difference(boxData.fecha).inDays >=
                                       1
                                   ? 'Datos programados'
                                   : 'Datos previstos',

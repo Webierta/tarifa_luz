@@ -1,34 +1,33 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database.dart';
+part of 'box_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class DatabaseAdapter extends TypeAdapter<Database> {
+class BoxDataAdapter extends TypeAdapter<BoxData> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  Database read(BinaryReader reader) {
+  BoxData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Database(
-      fecha: fields[0] as String,
+    return BoxData(
+      fecha: fields[0] as DateTime,
       preciosHora: (fields[1] as List).cast<double>(),
       mapRenovables: (fields[2] as Map?)?.cast<String, double>(),
       mapNoRenovables: (fields[3] as Map?)?.cast<String, double>(),
-      generacion: (fields[4] as Map?)?.cast<String, double>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, Database obj) {
+  void write(BinaryWriter writer, BoxData obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.fecha)
       ..writeByte(1)
@@ -36,9 +35,7 @@ class DatabaseAdapter extends TypeAdapter<Database> {
       ..writeByte(2)
       ..write(obj.mapRenovables)
       ..writeByte(3)
-      ..write(obj.mapNoRenovables)
-      ..writeByte(4)
-      ..write(obj.generacion);
+      ..write(obj.mapNoRenovables);
   }
 
   @override
@@ -47,7 +44,7 @@ class DatabaseAdapter extends TypeAdapter<Database> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DatabaseAdapter &&
+      other is BoxDataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

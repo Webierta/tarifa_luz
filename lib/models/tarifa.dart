@@ -7,9 +7,20 @@ class Tarifa {
     if (precio < 0.10) {
       return const Color(0xFFDCEDC8);
     } else if (precio < 0.15) {
-      return const Color(0xFFFFFDE7);
+      //return const Color(0xFFFFFDE7);
+      return const Color(0xFFFFF9C4);
     } else {
       return const Color(0xFFFFCDD2);
+    }
+  }
+
+  static String getSemaforo(double precio) {
+    if (precio < 0.10) {
+      return 'semaforo_verde.png';
+    } else if (precio < 0.15) {
+      return 'semaforo_amarillo.png';
+    } else {
+      return 'semaforo_rojo.png';
     }
   }
 
@@ -35,27 +46,38 @@ class Tarifa {
     }
   }
 
-  static Icon getIconCara(List<double> preciosHoras, double valor,
-      {double size = 40.0}) {
+  static Widget getIconCara(List<double> preciosHoras, double valor,
+      {double sizeIcon = 40.0, double radius = 20}) {
     List<double> preciosAs = List.from(preciosHoras);
     preciosAs.sort();
     if (preciosAs.indexWhere((v) => v == valor) < 8) {
-      return Icon(
-        Icons.sentiment_very_satisfied, //stars, // grade, //flash_on,
-        size: size,
-        color: Colors.green[700],
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: Colors.green[700],
+        child: Icon(
+          Icons.sentiment_very_satisfied_sharp, //stars, // grade, //flash_on,
+          size: sizeIcon,
+          color: Colors.white,
+        ),
       );
     } else if (preciosAs.indexWhere((v) => v == valor) > 15) {
-      return Icon(
-        Icons.sentiment_very_dissatisfied, //warning,
-        size: size,
-        color: Colors.deepOrange[700],
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: Colors.deepOrange[700],
+        child: Icon(
+          Icons.sentiment_very_dissatisfied, //warning,
+          size: sizeIcon,
+          color: Colors.white,
+        ),
       );
     } else {
-      return Icon(
-        Icons.sentiment_neutral,
-        size: size,
-        color: Colors.amber[700],
+      return CircleAvatar(
+        radius: radius,
+        foregroundColor: Colors.amber[700],
+        child: Icon(
+          Icons.sentiment_neutral_sharp,
+          size: sizeIcon,
+        ),
       );
     }
   }
@@ -84,7 +106,8 @@ class Tarifa {
     }
     /* Periodo punta: De lunes a viernes de 10 a 14 h y de 18 a 22 h.
     Periodo llano: De lunes a viernes de 8 a 10 h., de 14 a 18 h. y de 22 a 24 h.
-    Periodo valle: De lunes a viernes de 24 h. a 8 h. y todas las horas de fines de semana y festivos nacionales de fecha fija yel 6 de enero).
+    Periodo valle: De lunes a viernes de 24 h. a 8 h. y todas las horas de fines de semana y
+    festivos nacionales de fecha fija yel 6 de enero).
        */
   }
 

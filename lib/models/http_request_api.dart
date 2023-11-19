@@ -1,25 +1,27 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
+import 'dart:math' show Random;
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:xml/xml.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:tarifa_luz/models/datos_pvpc.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 
-class Datos {
+class HttpRequestApi {
   String fecha = '';
   List<double> preciosHora = <double>[];
+  Map<String, double> mapRenovables = <String, double>{};
+  Map<String, double> mapNoRenovables = <String, double>{};
   Status status = Status.none;
+  StatusGeneracion statusGeneracion = StatusGeneracion.error;
 
-  /* double roundDouble(double value, int places) {
-    double mod = pow(10.0, places) as double; //.toDouble();
-    return ((value * mod).round().toDouble() / mod);
-  } */
+  Map<String, double> get generacion => {
+        ...mapRenovables,
+        ...mapNoRenovables,
+      };
 
   Future getPreciosHoras(String fecha) async {
     var url = 'https://api.esios.ree.es/archives/70/download_json?date=$fecha';
@@ -133,58 +135,48 @@ class Datos {
     }
   }
 
-  double calcularPrecioMedio(List<double> precios) {
-    return precios.reduce((a, b) => a + b) / precios.length;
-  }
-
-  double precioMin(List<double> precios) {
-    if (precios.isNotEmpty) {
-      return precios.reduce((curr, next) => curr < next ? curr : next);
-    }
-    return 0;
-  }
-
-  double precioMax(List<double> precios) {
-    return precios.reduce((curr, next) => curr > next ? curr : next);
-  }
-
-  String getHora(List<double> precios, double precio) {
-    int pos = precios.indexOf(precio);
-    return '${pos}h - ${pos + 1}h';
-  }
-
-  int getHour(List<double> precios, double precio, [start = 0]) {
-    return precios.indexOf(precio, start);
-  }
-
-  DateTime getDataTime(String fecha, int hora) {
-    //var hora = getHour(precios, precio);
-    var fechaString = '$fecha $hora';
-    DateTime date = DateFormat('yyyy-MM-dd H').parse(fechaString);
-    return date;
-  }
-
-  double getPrecio(List<double> precios, int hora) {
-    return precios[hora];
-  }
-
-  Map<int, double> ordenarPrecios(List<double> listaPrecios) {
-    /* if (listaPrecios.isEmpty) {
-      return <int, double>{};
-    } */
-
-    Map<int, double> mapPrecios = listaPrecios.asMap();
-
-    var sortedKeys = mapPrecios.keys.toList(growable: false)
-      ..sort((k1, k2) => mapPrecios[k1]!.compareTo(mapPrecios[k2]!));
-    /* Map<int, double> mapPreciosSorted = Map.fromIterable(
-      sortedKeys,
-      key: (k) => k,
-      value: (k) => mapPrecios[k],
-    ); */
-    Map<int, double> mapPreciosSorted = {
-      for (var k in sortedKeys) k: mapPrecios[k]!
+  getDatosGeneracion(String fecha) async {
+    var url =
+        'https://apidatos.ree.es/es/datos/balance/balance-electrico?start_date=${fecha}T00:00&end_date=${fecha}T23:59&time_trunc=day';
+    //https://apidatos.ree.es/es/datos/balance/balance-electrico?start_date=2021-07-28T00:00&end_date=2021-07-28T23:59&time_trunc=day
+    Map<String, String> headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Host': 'apidatos.ree.es',
     };
-    return mapPreciosSorted;
+    try {
+      var response = await http
+          .get(Uri.parse(url), headers: headers)
+          .timeout(const Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        Map<String, dynamic> objJson = jsonDecode(response.body);
+        var renovablesValor = <String, double>{};
+        var noRenovablesValor = <String, double>{};
+        var included = objJson['included'];
+        for (var item in included) {
+          if (item['type'] == 'Renovable') {
+            var renovables = item['attributes']['content'];
+            for (var renovable in renovables) {
+              renovablesValor[renovable['type'].toString()] =
+                  renovable['attributes']['total'].toDouble();
+            }
+          }
+          if (item['type'] == 'No-Renovable') {
+            var noRenovables = item['attributes']['content'];
+            for (var noRenovable in noRenovables) {
+              noRenovablesValor[noRenovable['type'].toString()] =
+                  noRenovable['attributes']['total'].toDouble();
+            }
+          }
+          mapRenovables = Map.from(renovablesValor);
+          mapNoRenovables = Map.from(noRenovablesValor);
+          statusGeneracion = StatusGeneracion.ok;
+        }
+      } else {
+        statusGeneracion = StatusGeneracion.error;
+      }
+    } catch (e) {
+      statusGeneracion = StatusGeneracion.error;
+    }
   }
 }

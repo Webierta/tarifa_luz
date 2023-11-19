@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/shared_prefs.dart';
 import 'package:tarifa_luz/screens/info_token_screen.dart';
-import 'package:tarifa_luz/screens/main_screen.dart';
+import 'package:tarifa_luz/screens/home_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -17,7 +17,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   String token = '';
   bool tokenVisible = false;
   bool autoGetData = true;
-  bool autoSave = true;
+  //bool autoSave = true;
 
   @override
   void initState() {
@@ -30,7 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       token = sharedPrefs.token;
       autoGetData = sharedPrefs.autoGetData;
-      autoSave = sharedPrefs.autoSave;
+      //autoSave = sharedPrefs.autoSave;
     });
     controllerToken.text = token;
   }
@@ -49,10 +49,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     sharedPrefs.autoGetData = value;
   }
 
-  void setAutoSave(bool value) {
+  /* void setAutoSave(bool value) {
     setState(() => autoSave = value);
     sharedPrefs.autoSave = value;
-  }
+  } */
 
   final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
@@ -79,95 +79,85 @@ class _SettingsScreenState extends State<SettingsScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MainScreen(isFirstLaunch: false),
+            builder: (context) => const HomeScreen(isFirstLaunch: false),
           ),
         );
         return Future.value(true);
       },
       child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Ajustes'),
-          ),
-          body: SafeArea(
-            child: Container(
-              decoration: StyleApp.mainDecoration,
-              padding: const EdgeInsets.all(20),
-              height: double.infinity,
-              child: SingleChildScrollView(
-                //padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                child: Column(
-                  //mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      //horizontalTitleGap: 0,
-                      //titleAlignment: ListTileTitleAlignment.top,
-                      title: TextField(
-                        controller: controllerToken,
-                        obscureText: !tokenVisible,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(4.0),
+        appBar: AppBar(
+          title: const Text('Ajustes'),
+        ),
+        body: SafeArea(
+          child: Container(
+            decoration: StyleApp.mainDecoration,
+            padding: const EdgeInsets.all(20),
+            height: double.infinity,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    title: TextField(
+                      controller: controllerToken,
+                      obscureText: !tokenVisible,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                        ),
+                        labelText: 'Token',
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            tokenVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                           ),
-                          labelText: 'Token',
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              tokenVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                            ),
-                            onPressed: () {
-                              if (tokenVisible) {
-                                FocusScope.of(context).unfocus();
-                              }
-                              setState(() => tokenVisible = !tokenVisible);
-                            },
-                          ),
+                          onPressed: () {
+                            if (tokenVisible) {
+                              FocusScope.of(context).unfocus();
+                            }
+                            setState(() => tokenVisible = !tokenVisible);
+                          },
                         ),
                       ),
-                      subtitle: TextButton.icon(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const InfoTokenScreen(),
-                          ),
-                        ),
-                        icon: const Icon(Icons.info_outline),
-                        label: const Text('Info sobre el token'),
-                        style: TextButton.styleFrom(
-                          alignment: Alignment.bottomLeft,
+                    ),
+                    subtitle: TextButton.icon(
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const InfoTokenScreen(),
                         ),
                       ),
-                      /* trailing: IconButton(
-                        onPressed: setToken,
-                        icon: const Icon(Icons.save),
-                        // check_circle_outline_outlined
-                        color: Theme.of(context).colorScheme.primary,
-                        iconSize: 32,
-                      ), */
-                    ),
-                    const Divider(
-                      height: 40,
-                      color: StyleApp.onBackgroundColor,
-                    ),
-                    ListTile(
-                      horizontalTitleGap: 8,
-                      title: const Text('Sincronización automática'),
-                      subtitle: const Text(
-                          'Al abrir la aplicación se consultan los últimos datos disponibles'),
-                      trailing: Switch(
-                        thumbIcon: thumbIcon,
-                        value: autoGetData,
-                        onChanged: (bool value) {
-                          setAutoGetData(value);
-                        },
+                      icon: const Icon(Icons.info_outline),
+                      label: const Text('Info sobre el token'),
+                      style: TextButton.styleFrom(
+                        alignment: Alignment.bottomLeft,
                       ),
                     ),
-                    const Divider(
-                      height: 40,
-                      color: StyleApp.onBackgroundColor,
+                  ),
+                  const Divider(
+                    height: 40,
+                    color: StyleApp.onBackgroundColor,
+                  ),
+                  ListTile(
+                    horizontalTitleGap: 8,
+                    title: const Text('Sincronización automática'),
+                    subtitle: const Text(
+                      'Al abrir la aplicación se consultan los últimos datos disponibles',
                     ),
-                    ListTile(
+                    trailing: Switch(
+                      thumbIcon: thumbIcon,
+                      value: autoGetData,
+                      onChanged: (bool value) {
+                        setAutoGetData(value);
+                      },
+                    ),
+                  ),
+                  const Divider(
+                    height: 40,
+                    color: StyleApp.onBackgroundColor,
+                  ),
+                  /* ListTile(
                       horizontalTitleGap: 8,
                       title: const Text('Guardado automático'),
                       subtitle: const Text(
@@ -179,16 +169,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           setAutoSave(value);
                         },
                       ),
-                    ),
-                    const Divider(
-                      height: 40,
-                      color: StyleApp.onBackgroundColor,
-                    ),
-                  ],
-                ),
+                    ), */
+                ],
               ),
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

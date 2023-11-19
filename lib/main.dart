@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:tarifa_luz/screens/main_screen.dart';
+import 'package:tarifa_luz/database/box_data.dart';
+import 'package:tarifa_luz/screens/home_screen.dart';
 import 'package:tarifa_luz/theme/theme_app.dart';
 import 'package:tarifa_luz/utils/constantes.dart';
-import 'package:tarifa_luz/database/database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(DatabaseAdapter());
-  await Hive.openBox<Database>(boxPVPC);
-  runApp(const PrecioLuz());
+  Hive.registerAdapter(BoxDataAdapter());
+  await Hive.openBox<BoxData>(boxStore);
+  runApp(const TarifaLuz());
 }
 
-class PrecioLuz extends StatelessWidget {
-  const PrecioLuz({super.key});
+class TarifaLuz extends StatelessWidget {
+  const TarifaLuz({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class PrecioLuz extends StatelessWidget {
         //typography: Typography.whiteRedwoodCity,
         //scaffoldBackgroundColor: Colors.transparent,
       ),
-      home: const MainScreen(isFirstLaunch: true),
+      home: const HomeScreen(isFirstLaunch: true),
     );
   }
 }

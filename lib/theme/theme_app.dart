@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:google_fonts/google_fonts.dart';
 
 class ThemeApp {
   final BuildContext context;
@@ -19,7 +18,7 @@ class ThemeApp {
       const TextTheme().apply(fontFamily: 'Lato').merge(Typography().white); */
   TextTheme get textTheme => const TextTheme().apply(fontFamily: 'CairoPlay');
 
-  String get fontFamily => 'CairoPlay'; // 'Lato'; 'CairoPlay'
+  String get fontFamily => 'CairoPlay';
 
   TextStyle get bodyLarge => Theme.of(context).textTheme.bodyLarge!;
   TextStyle get titleSmall => Theme.of(context).textTheme.titleSmall!;

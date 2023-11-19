@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:tarifa_luz/models/datos.dart';
+import 'package:tarifa_luz/database/box_data.dart';
+import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
-import 'package:tarifa_luz/models/tarifa.dart';
-import 'package:tarifa_luz/widgets/tabs/head_tab.dart';
+import 'package:tarifa_luz/tabs/head_tab.dart';
 
-class TablaTab extends StatelessWidget {
-  final int page;
-  final String fecha;
-  final String titulo;
-  final Datos data;
-  const TablaTab(
-      {super.key,
-      required this.page,
-      required this.fecha,
-      required this.titulo,
-      required this.data});
+class PreciosTab extends StatelessWidget {
+  final int tab;
+  final BoxData boxData;
+  const PreciosTab({required this.tab, required this.boxData, super.key});
 
-  Color getColorPeriodo(int index) {
-    final Periodo periodo =
-        Tarifa.getPeriodo(data.getDataTime(data.fecha, index));
-    if (periodo == Periodo.valle) {
-      return const Color(0xFF81C784);
-    } else if (periodo == Periodo.punta) {
-      return const Color(0xFFE57373);
-    } else {
-      return Colors.amberAccent;
-    }
-  }
+  String get titulo => tab == 1
+      ? 'Evolución diaria del Precio €/kWh'
+      : 'Horas por Precio €/kWh ascendente';
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +21,7 @@ class TablaTab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Column(
         children: <Widget>[
-          HeadTab(fecha: fecha, titulo: titulo),
+          HeadTab(fecha: boxData.fechaddMMyy, titulo: titulo),
           ListView.separated(
               separatorBuilder: (context, index) => Divider(
                     height: 0.2,
@@ -44,27 +29,26 @@ class TablaTab extends StatelessWidget {
                   ),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: data.preciosHora.length,
+              itemCount: boxData.preciosHora.length,
               itemBuilder: (context, index) {
                 List<double> precios;
                 int indice;
-                if (page == 2) {
-                  precios = data.preciosHora;
+                if (tab == 1) {
+                  precios = boxData.preciosHora;
                   indice = index;
                 } else {
-                  //var listaPrecios = List.from(data.preciosHora);
-                  List<double> listaPrecios = data.preciosHora;
+                  List<double> listaPrecios = boxData.preciosHora;
                   Map<int, double> mapPreciosOrdenados =
-                      data.ordenarPrecios(listaPrecios);
+                      boxData.ordenarPrecios(listaPrecios);
                   precios = mapPreciosOrdenados.values.toList();
                   var listaKeys = mapPreciosOrdenados.keys.toList();
                   indice = listaKeys[index];
                 }
                 Color color = Tarifa.getColorFondo(precios[index]);
-                Periodo periodo =
-                    Tarifa.getPeriodo(data.getDataTime(data.fecha, indice));
+                DateTime fechaHour = boxData.fecha.copyWith(hour: indice);
+                Periodo periodo = Tarifa.getPeriodo(fechaHour);
                 Color colorPeriodo = Tarifa.getColorPeriodo(periodo);
-                double precioMedio = data.calcularPrecioMedio(data.preciosHora);
+                double precioMedio = boxData.precioMedio;
                 double desviacion = precios[index] - precioMedio;
 
                 BorderRadius borderRadius = const BorderRadius.all(Radius.zero);
@@ -73,7 +57,7 @@ class TablaTab extends StatelessWidget {
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   );
-                } else if (index == data.preciosHora.length - 1) {
+                } else if (index == boxData.preciosHora.length - 1) {
                   borderRadius = const BorderRadius.only(
                     bottomLeft: Radius.circular(10),
                     bottomRight: Radius.circular(10),
@@ -84,10 +68,6 @@ class TablaTab extends StatelessWidget {
                   clipBehavior: Clip.hardEdge,
                   padding: const EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
-                    /* border: Border(
-                      bottom: const BorderSide(width: 0.8, color: Colors.grey),
-                      left: BorderSide(width: 10.0, color: _colorPeriodo),
-                    ), */
                     gradient: LinearGradient(
                       stops: const [0.04, 0.02], //const [0.02, 0.02],
                       colors: [colorPeriodo, color],
@@ -96,7 +76,7 @@ class TablaTab extends StatelessWidget {
                     color: color,
                   ),
                   child: ListTile(
-                    leading: page == 2
+                    leading: tab == 1
                         ? Tarifa.getIconCara(precios, precios[index])
                         : Text(
                             '${index + 1}',
@@ -104,17 +84,13 @@ class TablaTab extends StatelessWidget {
                               color: StyleApp.backgroundColor,
                             ),
                           ),
-                    title: page == 2
+                    title: tab == 1
                         ? Text(
                             (precios[index]).toStringAsFixed(5),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
                                 .copyWith(color: StyleApp.backgroundColor),
-                            /* style: TextStyle(
-                              color: backgroundColor,
-                              fontWeight: FontWeight.bold,
-                            ), */
                           )
                         : Text(
                             '${indice}h - ${indice + 1}h',
@@ -123,7 +99,7 @@ class TablaTab extends StatelessWidget {
                                 .titleLarge!
                                 .copyWith(color: StyleApp.backgroundColor),
                           ),
-                    subtitle: page == 2
+                    subtitle: tab == 1
                         ? Text(
                             '${index}h - ${index + 1}h',
                             style: Theme.of(context)
@@ -143,7 +119,6 @@ class TablaTab extends StatelessWidget {
                         Flexible(
                           child: Icon(
                             desviacion > 0 ? Icons.upload : Icons.download,
-                            //size: 45,
                             color: desviacion > 0 ? Colors.red : Colors.green,
                           ),
                         ),

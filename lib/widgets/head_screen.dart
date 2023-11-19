@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:tarifa_luz/theme/style_app.dart';
 
 class HeadScreen extends StatelessWidget {
@@ -15,10 +16,8 @@ class HeadScreen extends StatelessWidget {
             child: FittedBox(
               child: Text(
                 'Tarifa Luz',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(color: StyleApp.accentColor),
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    fontWeight: FontWeight.w100, color: StyleApp.accentColor),
               ),
             ),
           ),
