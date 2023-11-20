@@ -57,6 +57,17 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+        applicationVariants.all{
+            // this method is use to rename your all apk weather
+            // it may be signed or unsigned(debug apk)
+            variant ->
+                variant.outputs.each{                   
+                    output->
+                        // def name = "PrecioLuz.apk"
+                        def name = "TarifaLuz-${variant.versionName}.apk"                      
+                        output.outputFileName = name
+                }
+       }
     }
 }
 
