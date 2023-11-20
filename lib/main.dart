@@ -20,8 +20,6 @@ class TarifaLuz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ThemeApp themeApp = ThemeApp(context);
-    //print(Theme.of(context).colorScheme.secondaryContainer.toString());
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TarifaLuz',
@@ -29,12 +27,12 @@ class TarifaLuz extends StatelessWidget {
       supportedLocales: const [Locale('es', 'ES')],
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: themeApp.colorScheme,
+        colorScheme: ThemeApp.colorScheme,
         //fontFamily: themeApp.fontFamily,
-        textTheme: themeApp.textTheme,
-        floatingActionButtonTheme: themeApp.floatingActionButtonTheme,
-        dialogTheme: themeApp.dialogTheme,
-        bottomNavigationBarTheme: themeApp.bottomNavigationBarTheme,
+        textTheme: ThemeApp.textTheme,
+        floatingActionButtonTheme: ThemeApp.floatingActionButtonTheme,
+        dialogTheme: ThemeApp.dialogTheme,
+        bottomNavigationBarTheme: ThemeApp.bottomNavigationBarTheme,
         //typography: Typography.whiteRedwoodCity,
         //scaffoldBackgroundColor: Colors.transparent,
       ),

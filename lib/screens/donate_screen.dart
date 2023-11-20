@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:tarifa_luz/theme/style_app.dart';
-import 'package:tarifa_luz/theme/theme_app.dart';
 import 'package:tarifa_luz/widgets/head_screen.dart';
 
 const String btcAddress = '15ZpNzqbYFx9P7wg4U438JMwZr2q3W6fkS';
@@ -17,8 +16,6 @@ class DonateScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeApp themeApp = ThemeApp(context);
-
     Future<void> launchURL(String url) async {
       if (!await launchUrl(Uri.parse(url),
           mode: LaunchMode.externalApplication)) {
@@ -49,13 +46,13 @@ class DonateScreen extends StatelessWidget {
                   child: Text(
                     'Esta App es Software libre y de Código Abierto. Por favor considera colaborar '
                     'para mantener activo el desarrollo de esta App.',
-                    style: themeApp.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 const SizedBox(height: 20.0),
                 Text.rich(
                   TextSpan(
-                    style: themeApp.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
                     children: [
                       const TextSpan(
                           text:
@@ -79,7 +76,7 @@ class DonateScreen extends StatelessWidget {
                   child: Text(
                     'Puedes colaborar con el desarrollo de ésta y otras aplicaciones con una pequeña '
                     'aportación a mi monedero de Bitcoins o vía PayPal.',
-                    style: themeApp.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ),
                 Align(
@@ -88,7 +85,7 @@ class DonateScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Text(
                       'Scan this QR code with your wallet application:',
-                      style: themeApp.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ),
@@ -102,7 +99,7 @@ class DonateScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: Text(
                       'Or copy the BTC Wallet Address:',
-                      style: themeApp.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ),
@@ -178,7 +175,7 @@ class DonateScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 20.0, bottom: 10.0),
                     child: Text(
                       'Donate via Paypal (open the PayPal payment website):',
-                      style: themeApp.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
                 ),

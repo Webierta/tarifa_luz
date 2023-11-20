@@ -291,7 +291,6 @@ class _HomeScreenState extends State<HomeScreen> {
       mainBody = MainBodyStarted(stringProgress: httpStatus.textProgress);
     } else if (httpStatus == HttpStatus.completed &&
         listBoxData.isNotEmpty &&
-        listBoxData.isNotEmpty &&
         newBoxData != null) {
       mainBody = SizedBox(
         width: double.infinity,
@@ -416,6 +415,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       icon: Icon(Icons.lightbulb_outline),
                       activeIcon: Icon(Icons.upgrade),
                       label: 'PVPC',
+                      //backgroundColor: Colors.amber,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.euro_symbol),
