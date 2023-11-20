@@ -20,7 +20,17 @@ Esta app se comparte libremente bajo las condiciones de la GNU General Public Li
 
 Si te gusta esta aplicación, por favor considera hacer una donación. Gracias.
 
-CRÉDITOS ICONOS
+CRÉDITOS
 
-Colourful Education icon set (Free for commercial use) de Zeeshan Ahmed (https://www.iconfinder.com/zeeicons).
-New Year Resolutions! icon set (Creative Commons Attribution 3.0 Unported) de Laura Reen (http://laurareen.com/).
+Imágenes: 
+* Colourful Education icon set (Free for commercial use) de Zeeshan Ahmed (https://www.iconfinder.com/zeeicons).
+* New Year Resolutions! icon set (Creative Commons Attribution 3.0 Unported) de Laura Reen (http://laurareen.com/).
+* Traffic lights set by macrovector (https://www.freepik.com/author/macrovector) on Freepik (Free license).
+
+Fuente:
+* Cairo Play Font. Designed by Mohamed Gaber, Accademia di Belle Arti di Urbino. These fonts are licensed under the Open Font License.
+
+Dependencias: Flutter packages:
+* fl_chart by flutter4fun.com (MIT License).
+* hive by isar.dev (Apache License Version 2.0).
+* xml by lukas-renggli.ch (MIT License).
