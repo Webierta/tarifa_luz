@@ -111,10 +111,6 @@ class Tarifa {
        */
   }
 
-  static String getPeriodoNombre(Periodo periodo) {
-    return periodo.nombre;
-  }
-
   static Color getColorPeriodo(Periodo periodo) {
     if (periodo == Periodo.valle) {
       return const Color(0xFF81C784);

@@ -72,8 +72,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
         setToken();
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         Navigator.push(
@@ -82,7 +83,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             builder: (context) => const HomeScreen(isFirstLaunch: false),
           ),
         );
-        return Future.value(true);
       },
       child: Scaffold(
         appBar: AppBar(

@@ -15,7 +15,6 @@ class HeadHomeTab extends StatelessWidget {
 
     double precioNow = boxData.getPrecio(boxData.preciosHora, now.hour);
     Periodo periodoAhora = Tarifa.getPeriodo(boxData.fecha);
-    String periodoAhoraNombre = Tarifa.getPeriodoNombre(periodoAhora);
 
     String semaforo = Tarifa.getSemaforo(precioNow);
 
@@ -190,7 +189,7 @@ class HeadHomeTab extends StatelessWidget {
               ),
               onPressed: null,
               icon: Tarifa.getIconPeriodo(periodoAhora),
-              label: Text('P. $periodoAhoraNombre'),
+              label: Text('P. ${periodoAhora.name.toUpperCase()}'),
             ),
             subtitle: TextButton.icon(
               style: TextButton.styleFrom(

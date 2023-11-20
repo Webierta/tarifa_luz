@@ -33,16 +33,6 @@ extension HttpStatusEx on HttpStatus {
 
 enum Periodo { llano, valle, punta }
 
-extension PeriodoEx on Periodo {
-  String get nombre {
-    return switch (this) {
-      Periodo.llano => 'LLANO',
-      Periodo.valle => 'VALLE',
-      Periodo.punta => 'PUNTA',
-    };
-  }
-}
-
 enum Generacion { renovable, noRenovable }
 
 extension GeneracionExt on Generacion {

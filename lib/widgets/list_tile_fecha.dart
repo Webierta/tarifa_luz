@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:tarifa_luz/utils/estados.dart';
@@ -24,7 +23,7 @@ class ListTileFecha extends StatelessWidget {
         children: [
           Tarifa.getIconPeriodo(periodo),
           Text(
-            describeEnum(periodo).toUpperCase(),
+            periodo.name.toUpperCase(),
             style: const TextStyle(
               fontSize: 10,
               color: Colors.white,

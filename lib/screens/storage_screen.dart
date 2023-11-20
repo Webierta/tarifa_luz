@@ -68,8 +68,9 @@ class _StorageScreenState extends State<StorageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         Navigator.push(
           context,
@@ -77,7 +78,6 @@ class _StorageScreenState extends State<StorageScreen> {
             builder: (context) => const HomeScreen(isFirstLaunch: false),
           ),
         );
-        return Future.value(true);
       },
       child: Scaffold(
         appBar: AppBar(
