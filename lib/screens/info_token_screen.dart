@@ -9,6 +9,16 @@ class InfoTokenScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> launchURL(String url) async {
+      if (!await launchUrl(Uri.parse(url),
+          mode: LaunchMode.externalApplication)) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Could not launch $url'),
+        ));
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Info Token'),
@@ -24,7 +34,7 @@ class InfoTokenScreen extends StatelessWidget {
               children: [
                 Text(
                   'La aplicación dispone de dos métodos para ejecutar '
-                  'la consulta de datos: con al API oficial (recomendado) '
+                  'la consulta de datos: con la API oficial (recomendado) '
                   'y desde un archivo.',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
@@ -36,22 +46,18 @@ class InfoTokenScreen extends StatelessWidget {
                       const TextSpan(
                         text:
                             'Para utilizar la API se necesita autentificarse con un código '
-                            'de acceso personal (token) gestionado por el ',
+                            'de acceso personal (token) gestionado por el '
+                            'Sistema de Información del Operador del Sistema (e·sios) desde ',
                       ),
                       TextSpan(
                         style: const TextStyle(
                           color: Colors.lightBlueAccent,
                           decoration: TextDecoration.underline,
                         ),
-                        text:
-                            'Sistema de Información del Operador del Sistema (e·sios).',
+                        text: 'API para descarga de información.',
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => launchUrl(
-                                Uri(
-                                    path:
-                                        'https://www.esios.ree.es/es/pagina/api'),
-                                mode: LaunchMode.externalApplication,
-                              ),
+                          ..onTap = () => launchURL(
+                              'https://www.esios.ree.es/es/pagina/api'),
                       ),
                     ],
                   ),
