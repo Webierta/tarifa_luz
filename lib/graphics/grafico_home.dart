@@ -34,7 +34,7 @@ class GraficoHome extends StatelessWidget {
       clipper: StyleApp.kBorderClipper,
       child: Container(
         //padding: const EdgeInsets.all(20),
-        padding: const EdgeInsets.fromLTRB(2, 20, 20, 2),
+        padding: const EdgeInsets.fromLTRB(0, 20, 20, 2),
         width: double.infinity,
         height: altoScreen / 3,
         decoration: StyleApp.kBoxDeco,
@@ -72,7 +72,12 @@ class GraficoHome extends StatelessWidget {
                       //space: 4,
                       child: meta.formattedValue.endsWith('5') ||
                               meta.formattedValue.endsWith('0')
-                          ? Text(meta.formattedValue)
+                          ? FittedBox(
+                              child: Text(
+                                meta.formattedValue,
+                                style: const TextStyle(fontSize: 10),
+                              ),
+                            )
                           : const SizedBox(width: 0, height: 0),
                     );
                   },

@@ -47,7 +47,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
     return Scaffold(
       appBar: AppBar(title: Text('PVPC ${widget.boxData.fechaddMMyy}')),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+        padding: const EdgeInsets.fromLTRB(0, 40, 10, 20),
         child: BarChart(
           BarChartData(
             borderData: FlBorderData(
@@ -102,10 +102,15 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                   getTitlesWidget: (value, meta) {
                     return SideTitleWidget(
                       axisSide: meta.axisSide,
-                      //space: 4,
+                      space: 4,
                       child: meta.formattedValue.endsWith('5') ||
                               meta.formattedValue.endsWith('0')
-                          ? Text(meta.formattedValue)
+                          ? FittedBox(
+                              child: Text(
+                                meta.formattedValue,
+                                style: const TextStyle(fontSize: 10),
+                              ),
+                            )
                           : const SizedBox(width: 0, height: 0),
                     );
                   },
