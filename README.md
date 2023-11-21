@@ -20,7 +20,7 @@ En definitiva, esta App trata de ayudar a gestionar el consumo eléctrico de for
 * Obtiene información sobre el balance de generación entre energías renovables y no renovables.
 * Próximamente más funciones...
 
-<img src="https://github.com/Webierta/tarifa_luz/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/Captura1.png" width="200">
+<img src="https://github.com/Webierta/tarifa_luz/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot1.png" width="200">
 
 La App se ha adaptado al nuevo sistema de la tarifa eléctrica que se aplica desde el 1 de junio de 2021. Uno de los principales cambios que introduce la normativa es que todos los clientes acogidos al PVPC se agrupan bajo una misma tarifa de peaje denominada 2.0 TD, que sustituye a las tres anteriores (la tarifa por defecto 2.0 A, la tarifa nocturna 2.0 DHA, y la de vehículo eléctrico 2.0 DHS).
 
