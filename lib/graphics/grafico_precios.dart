@@ -29,6 +29,19 @@ class _GraficoPreciosState extends State<GraficoPrecios>
     return double.parse((precio).toStringAsFixed(4));
   }
 
+  List<HorizontalLine> getExtraLinesY() {
+    List<HorizontalLine> horizontalLines = [];
+    for (double i = 0; i < 0.50; i += 0.05) {
+      horizontalLines.add(HorizontalLine(
+        y: i,
+        strokeWidth: 1,
+        dashArray: [2, 2],
+        color: Colors.white30,
+      ));
+    }
+    return horizontalLines;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +63,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
               bottomTitles: AxisTitles(
                 sideTitles: SideTitles(
                   showTitles: true,
+                  //interval: 2,
                   getTitlesWidget: (value, meta) {
                     if (int.parse(meta.formattedValue).isEven) {
                       if (int.parse(meta.formattedValue) == now.hour + 1) {
@@ -80,8 +94,22 @@ class _GraficoPreciosState extends State<GraficoPrecios>
               rightTitles: const AxisTitles(
                 sideTitles: SideTitles(showTitles: false),
               ),
-              leftTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
+              leftTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  reservedSize: 40,
+                  interval: 0.05,
+                  getTitlesWidget: (value, meta) {
+                    return SideTitleWidget(
+                      axisSide: meta.axisSide,
+                      //space: 4,
+                      child: meta.formattedValue.endsWith('5') ||
+                              meta.formattedValue.endsWith('0')
+                          ? Text(meta.formattedValue)
+                          : const SizedBox(width: 0, height: 0),
+                    );
+                  },
+                ),
               ),
             ),
             extraLinesData: ExtraLinesData(
@@ -89,20 +117,21 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                 HorizontalLine(
                   y: widget.boxData.precioMedio,
                   strokeWidth: 1,
-                  color: Theme.of(context).colorScheme.onBackground,
+                  dashArray: [4, 4],
+                  color: Colors.blue[100],
                   label: HorizontalLineLabel(
                     show: true,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
+                    padding: const EdgeInsets.only(left: 10, bottom: 4),
                     alignment: Alignment.topLeft,
                     labelResolver: (_) =>
                         'Media: ${cuatroDec(widget.boxData.precioMedio)}',
                   ),
-                )
+                ),
+                ...getExtraLinesY(),
               ],
             ),
+            minY: widget.boxData.precioMin - (widget.boxData.precioMedio / 4),
+            maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 3),
             barGroups: precios.asMap().entries.map(
               (precio) {
                 DateTime fechaHour =
@@ -125,7 +154,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                         topLeft: Radius.circular(6),
                         topRight: Radius.circular(6),
                       ),
-                    )
+                    ),
                   ],
                 );
               },
