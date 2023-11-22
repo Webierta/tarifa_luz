@@ -9,12 +9,22 @@ import 'package:tarifa_luz/screens/settings_screen.dart';
 import 'package:tarifa_luz/screens/storage_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/constantes.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    /* Future<void> launchURL(String url) async {
+      if (!await launchUrl(Uri.parse(url),
+          mode: LaunchMode.externalApplication)) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Could not launch $url'),
+        ));
+      }
+    } */
     return Drawer(
       child: Container(
         decoration: const BoxDecoration(
@@ -190,6 +200,29 @@ class AppDrawer extends StatelessWidget {
                     ),
               ),
             ),
+            /* InkWell(
+              onTap: () {
+                launchURL('https://lacorrientecoop.es/');
+              },
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
+                color: Colors.white,
+                child: Container(
+                  height: 150,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fitWidth,
+                      image: AssetImage('assets/images/logo_corriente.jpg'),
+                    ),
+                  ),
+                  child: const Text(
+                    'Patrocinador',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+              ),
+            ), */
           ],
         ),
       ),
