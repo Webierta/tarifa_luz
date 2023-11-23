@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
@@ -29,6 +30,7 @@ class GraficoHome extends StatelessWidget {
   Widget build(BuildContext context) {
     final double altoScreen = MediaQuery.of(context).size.height;
     final now = DateTime.now().toLocal();
+    bool puntoRojo = DateFormat('dd/MM/yy').format(now) == boxData.fechaddMMyy;
 
     return ClipPath(
       clipper: StyleApp.kBorderClipper,
@@ -133,7 +135,7 @@ class GraficoHome extends StatelessWidget {
                 dotData: FlDotData(
                   show: true,
                   getDotPainter: (p0, p1, p2, p3) {
-                    if (p3 == now.hour) {
+                    if (p3 == now.hour && puntoRojo) {
                       return FlDotCirclePainter(
                         color: Colors.red,
                         radius: 6,
