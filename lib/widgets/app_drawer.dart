@@ -112,7 +112,7 @@ class AppDrawer extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.storage),
-                    title: const Text('Histórico'),
+                    title: const Text('Archivo'),
                     onTap: () {
                       Navigator.of(context).pop();
                       Navigator.push(

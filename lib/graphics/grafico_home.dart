@@ -33,10 +33,9 @@ class GraficoHome extends StatelessWidget {
     return ClipPath(
       clipper: StyleApp.kBorderClipper,
       child: Container(
-        //padding: const EdgeInsets.all(20),
         padding: const EdgeInsets.fromLTRB(0, 20, 20, 2),
         width: double.infinity,
-        height: altoScreen / 3,
+        height: altoScreen / 2.5,
         decoration: StyleApp.kBoxDeco,
         child: LineChart(
           LineChartData(

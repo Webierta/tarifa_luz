@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/database/storage.dart';
+import 'package:tarifa_luz/graphics/grafico_compare.dart';
 import 'package:tarifa_luz/screens/home_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 
@@ -14,11 +15,33 @@ class StorageScreen extends StatefulWidget {
 class _StorageScreenState extends State<StorageScreen> {
   Storage storage = Storage();
   List<BoxData> listBoxData = [];
+  Map<BoxData, bool> boxDataIsChecked = {};
 
   @override
   void initState() {
     listBoxData = [...storage.listBoxDataSort];
+    boxDataIsChecked = {for (var e in listBoxData) e: false};
     super.initState();
+  }
+
+  List<BoxData> get getBoxDataTrue {
+    List<BoxData> listBoxDataTrue = [];
+    for (var e in boxDataIsChecked.entries) {
+      if (e.value == true) {
+        listBoxDataTrue.add(e.key);
+      }
+    }
+    return listBoxDataTrue;
+  }
+
+  int get trueChecked {
+    int isCheckedTrue = 0;
+    for (var box in boxDataIsChecked.values) {
+      if (box == true) {
+        isCheckedTrue++;
+      }
+    }
+    return isCheckedTrue;
   }
 
   Future<bool> confirmDelete() async {
@@ -90,7 +113,10 @@ class _StorageScreenState extends State<StorageScreen> {
                 } else {
                   if (await confirmDelete() == true) {
                     storage.clearBox();
-                    setState(() => listBoxData.clear());
+                    setState(() {
+                      listBoxData.clear();
+                      boxDataIsChecked.clear();
+                    });
                   }
                 }
               },
@@ -128,7 +154,11 @@ class _StorageScreenState extends State<StorageScreen> {
                               .copyWith(color: StyleApp.onBackgroundColor),
                         ),
                         const Text(
-                          'No requiere conexión a internet',
+                          'No requiere conexión a internet.',
+                          style: TextStyle(color: StyleApp.onBackgroundColor),
+                        ),
+                        const Text(
+                          'Marca de 2 a 4 para comparar.',
                           style: TextStyle(color: StyleApp.onBackgroundColor),
                         ),
                         const SizedBox(height: 20),
@@ -142,6 +172,7 @@ class _StorageScreenState extends State<StorageScreen> {
                             //String itemFecha = item.fecha;
                             BoxData item = listBoxData[index];
                             String itemFecha = item.fechaddMMyy;
+
                             return Dismissible(
                               key: ValueKey(itemFecha),
                               direction: DismissDirection.endToStart,
@@ -164,30 +195,48 @@ class _StorageScreenState extends State<StorageScreen> {
                               ),
                               onDismissed: (direction) {
                                 showSnack(
-                                    'Los datos del día ${item.fecha} han sido eliminados');
+                                    'Los datos del día ${item.fechaddMMyy} han sido eliminados');
                                 listBoxData.remove(item);
                                 storage.deleteBoxData(item);
                                 setState(() {
                                   listBoxData = [...storage.listBoxDataSort];
+                                  boxDataIsChecked.remove(item);
                                 });
                               },
                               child: Card(
                                 child: ListTile(
-                                  onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => HomeScreen(
-                                        //fecha: itemFecha,
-                                        fecha: item.fecha,
-                                        isFirstLaunch: false,
+                                  onTap: () {
+                                    ScaffoldMessenger.of(context)
+                                        .removeCurrentSnackBar();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => HomeScreen(
+                                          fecha: item.fecha,
+                                          isFirstLaunch: false,
+                                        ),
                                       ),
-                                    ),
+                                    );
+                                  },
+                                  leading: Checkbox(
+                                    value: boxDataIsChecked[item],
+                                    onChanged: (bool? value) {
+                                      if (value == true) {
+                                        trueChecked < 4
+                                            ? setState(() =>
+                                                boxDataIsChecked[item] = true)
+                                            : showSnack('Máximo 4 fechas.');
+                                      } else if (value == false) {
+                                        setState(() =>
+                                            boxDataIsChecked[item] = false);
+                                      }
+                                    },
                                   ),
-                                  leading: const Icon(Icons.today),
                                   title: Text(
                                     itemFecha,
                                     style: const TextStyle(
-                                        color: StyleApp.onBackgroundColor),
+                                      color: StyleApp.onBackgroundColor,
+                                    ),
                                   ),
                                   trailing: const Icon(Icons.arrow_forward_ios),
                                 ),
@@ -200,6 +249,24 @@ class _StorageScreenState extends State<StorageScreen> {
                   ),
           ),
         ),
+        floatingActionButton: trueChecked > 1 && listBoxData.isNotEmpty
+            ? FloatingActionButton(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          GraficoCompare(boxDataList: getBoxDataTrue),
+                    ),
+                  );
+                },
+                child: const Icon(
+                  Icons.area_chart_rounded,
+                  size: 42,
+                ),
+              )
+            : null,
       ),
     );
   }
