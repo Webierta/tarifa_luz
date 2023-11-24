@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:tarifa_luz/database/box_data.dart';
+import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 
 class GraficoHome extends StatelessWidget {
@@ -35,7 +36,7 @@ class GraficoHome extends StatelessWidget {
     return ClipPath(
       clipper: StyleApp.kBorderClipper,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(0, 20, 20, 2),
+        padding: const EdgeInsets.fromLTRB(0, 30, 10, 0),
         width: double.infinity,
         height: altoScreen / 2.5,
         decoration: StyleApp.kBoxDeco,
@@ -115,8 +116,35 @@ class GraficoHome extends StatelessWidget {
                 ...getExtraLinesY(),
               ],
             ),
-            minY: boxData.precioMin - (boxData.precioMedio / 4),
-            maxY: boxData.precioMax + (boxData.precioMedio / 3),
+            //minY: boxData.precioMin - (boxData.precioMedio / 4),
+            minY: 0,
+            //maxY: boxData.precioMax + (boxData.precioMedio / 3),
+            //maxY: boxData.precioMax + (boxData.precioMedio / 2),
+            //maxY: boxData.precioMax + 0.05,
+
+            lineTouchData: LineTouchData(
+              enabled: true,
+              touchTooltipData: LineTouchTooltipData(
+                fitInsideHorizontally: true,
+                fitInsideVertically: true,
+                tooltipBgColor: Colors.black54,
+                getTooltipItems: (touchedSpots) {
+                  return touchedSpots.map(
+                    (LineBarSpot touchedSpot) {
+                      String horas =
+                          '${touchedSpot.spotIndex}-${touchedSpot.spotIndex + 1} h';
+                      double precio =
+                          boxData.preciosHora[touchedSpot.spotIndex];
+                      return LineTooltipItem(
+                        '$horas\n${cuatroDec(precio)}',
+                        TextStyle(color: Tarifa.getColorBorder(precio)),
+                      );
+                    },
+                  ).toList();
+                },
+              ),
+            ),
+
             lineBarsData: [
               LineChartBarData(
                 spots: boxData.preciosHora

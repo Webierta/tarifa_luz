@@ -120,7 +120,7 @@ class _GraficoCompareState extends State<GraficoCompare> {
               ),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(0, 40, 10, 0),
+                  padding: const EdgeInsets.fromLTRB(0, 30, 10, 0),
                   width: double.infinity,
                   child: LineChart(
                     LineChartData(
@@ -142,7 +142,7 @@ class _GraficoCompareState extends State<GraficoCompare> {
                               if (int.parse(meta.formattedValue).isEven) {
                                 return Text(meta.formattedValue);
                               }
-                              return const Text('');
+                              return const SizedBox(height: 0, width: 0);
                             },
                           ),
                         ),
@@ -193,7 +193,15 @@ class _GraficoCompareState extends State<GraficoCompare> {
                         ],
                       ),
                       minY: 0,
-                      maxY: getMaxY(),
+                      //maxY: getMaxY(),
+                      lineTouchData: const LineTouchData(
+                        enabled: true,
+                        touchTooltipData: LineTouchTooltipData(
+                          fitInsideHorizontally: true,
+                          fitInsideVertically: true,
+                          tooltipBgColor: Colors.black54,
+                        ),
+                      ),
                       lineBarsData: [
                         for (BoxData boxData in widget.boxDataList)
                           //for (int index = 0; index < boxDataList.length; index++)

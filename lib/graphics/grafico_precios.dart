@@ -46,7 +46,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
       appBar: AppBar(title: Text('PVPC ${widget.boxData.fechaddMMyy}')),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 40, 10, 10),
+          padding: const EdgeInsets.fromLTRB(0, 30, 10, 10),
           child: BarChart(
             BarChartData(
               borderData: FlBorderData(
@@ -65,7 +65,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                     //interval: 2,
                     getTitlesWidget: (value, meta) {
                       if (int.parse(meta.formattedValue).isEven) {
-                        if (int.parse(meta.formattedValue) == now.hour + 1) {
+                        /* if (int.parse(meta.formattedValue) == now.hour + 1) {
                           return CircleAvatar(
                             backgroundColor: Colors.white,
                             child: Text(
@@ -75,7 +75,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                               ),
                             ),
                           );
-                        }
+                        } */
                         return Text(
                           meta.formattedValue,
                           style: TextStyle(
@@ -83,7 +83,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                           ),
                         );
                       }
-                      return const Text('');
+                      return const SizedBox(height: 0, width: 0);
                     },
                   ),
                 ),
@@ -101,7 +101,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                     getTitlesWidget: (value, meta) {
                       return SideTitleWidget(
                         axisSide: meta.axisSide,
-                        space: 4,
+                        //space: 4,
                         child: meta.formattedValue.endsWith('5') ||
                                 meta.formattedValue.endsWith('0')
                             ? FittedBox(
@@ -134,8 +134,28 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                   ...getExtraLinesY(),
                 ],
               ),
-              minY: widget.boxData.precioMin - (widget.boxData.precioMedio / 4),
-              maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 3),
+              //minY: widget.boxData.precioMin - (widget.boxData.precioMedio / 4),
+              minY: 0,
+              //maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 2),
+              //maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 3),
+
+              barTouchData: BarTouchData(
+                enabled: true,
+                touchTooltipData: BarTouchTooltipData(
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
+                    tooltipBgColor: Colors.black54,
+                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                      DateTime fechaHour =
+                          widget.boxData.fecha.copyWith(hour: groupIndex);
+                      Periodo periodo = Tarifa.getPeriodo(fechaHour);
+                      return BarTooltipItem(
+                        '$groupIndex-${groupIndex + 1} h\n${rod.toY}',
+                        TextStyle(color: Tarifa.getColorPeriodo(periodo)),
+                      );
+                    }),
+              ),
+
               barGroups: precios.asMap().entries.map(
                 (precio) {
                   DateTime fechaHour =
@@ -146,7 +166,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                     barRods: [
                       BarChartRodData(
                         toY: cuatroDec(precio.value),
-                        width: 20,
+                        width: MediaQuery.of(context).size.width / 26,
                         color: Tarifa.getColorPeriodo(periodo),
                         /* borderSide: precio.key == now.hour
                             ? const BorderSide(
