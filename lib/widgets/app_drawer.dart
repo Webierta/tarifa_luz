@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tarifa_luz/screens/about_screen.dart';
+import 'package:tarifa_luz/screens/bono_social.dart';
 import 'package:tarifa_luz/screens/donate_screen.dart';
 import 'package:tarifa_luz/screens/home_screen.dart';
 import 'package:tarifa_luz/screens/iconografia_screen.dart';
@@ -181,8 +182,21 @@ class AppDrawer extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const DonateScreen(), // TestScreen(),
+                          builder: (context) => const DonateScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  const DividerDrawer(),
+                  ListTile(
+                    leading: const Icon(Icons.savings_outlined),
+                    title: const Text('Bono Social'),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BonoSocial(),
                         ),
                       );
                     },
