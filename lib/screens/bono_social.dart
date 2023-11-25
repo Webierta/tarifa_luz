@@ -40,148 +40,157 @@ class BonoSocial extends StatelessWidget {
           ),
         ),
         body: SafeArea(
-          child: Container(
-            decoration: StyleApp.mainDecoration,
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-            child: TabBarView(
-              //physics: const NeverScrollableScrollPhysics(),
-              children: <Widget>[
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          '¿Qué es?',
-                          style: headlineLarge,
-                        ),
-                        const SizedBox(height: 20),
-                        const BonoSocialDescription(),
-                      ],
-                    ),
-                  ),
+          child: Stack(
+            children: [
+              OverflowBox(
+                maxWidth: 800,
+                maxHeight: 800,
+                child: Icon(
+                  Icons.electrical_services,
+                  size: 800,
+                  color: Colors.black.withAlpha(150),
                 ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Requisitos',
-                          style: headlineLarge,
+              ),
+              Container(
+                decoration: StyleApp.mainDecoration,
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: TabBarView(
+                  //physics: const NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Column(
+                          children: [
+                            Text('¿Qué es?', style: headlineLarge),
+                            const SizedBox(height: 20),
+                            const BonoSocialDescription(),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        const StepperBonoSocial(),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Text(
-                            'Cómo solicitarlo',
-                            style: headlineLarge,
-                          ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Column(
+                          children: [
+                            Text('Requisitos', style: headlineLarge),
+                            const SizedBox(height: 20),
+                            const StepperBonoSocial(),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        const Text('Enlaces externos:'),
-                        const SizedBox(height: 20),
-                        TextButton.icon(
-                          onPressed: () {
-                            launchURL(
-                              context: context,
-                              url:
-                                  'https://www.cnmc.es/bono-social#dirigir-solicitud',
-                            );
-                          },
-                          icon: const Icon(Icons.contact_support),
-                          label: const Text('Comercializadores de referencia'),
-                        ),
-                        const SizedBox(height: 20),
-                        TextButton.icon(
-                          onPressed: () {
-                            launchURL(
-                              context: context,
-                              url:
-                                  'https://www.cnmc.es/bono-social#que-documentacion',
-                            );
-                          },
-                          icon: const Icon(Icons.description),
-                          label: const Text('Documentación'),
-                        ),
-                        const SizedBox(height: 20),
-                        const BonoSocialTramite(),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Text(
-                            'Enlaces de interés',
-                            style: headlineLarge,
-                          ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                'Cómo solicitarlo',
+                                style: headlineLarge,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            const Text('Enlaces externos:'),
+                            const SizedBox(height: 20),
+                            TextButton.icon(
+                              onPressed: () {
+                                launchURL(
+                                  context: context,
+                                  url:
+                                      'https://www.cnmc.es/bono-social#dirigir-solicitud',
+                                );
+                              },
+                              icon: const Icon(Icons.contact_support),
+                              label: const Text(
+                                'Comercializadores de referencia',
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            TextButton.icon(
+                              onPressed: () {
+                                launchURL(
+                                  context: context,
+                                  url:
+                                      'https://www.cnmc.es/bono-social#que-documentacion',
+                                );
+                              },
+                              icon: const Icon(Icons.description),
+                              label: const Text('Documentación'),
+                            ),
+                            const SizedBox(height: 20),
+                            const BonoSocialTramite(),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        TextButton(
-                          onPressed: () {
-                            launchURL(
-                              context: context,
-                              url: 'https://www.bonosocial.gob.es/',
-                            );
-                          },
-                          child: const Text(
-                              'Bono social eléctrico. Página oficial'),
-                        ),
-                        const SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () {
-                            launchURL(
-                              context: context,
-                              url: 'https://civio.es/bono-social/',
-                            );
-                          },
-                          child: const Text('Fundación Civio'),
-                        ),
-                        const SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () {
-                            launchURL(
-                              context: context,
-                              url: 'https://www.cnmc.es/bono-social',
-                            );
-                          },
-                          child: const Text(
-                              'Comisión Nacional de los Mercados y la Competencia'),
-                        ),
-                        const SizedBox(height: 10),
-                        TextButton(
-                          onPressed: () {
-                            launchURL(
-                              context: context,
-                              url:
-                                  'https://www.boe.es/eli/es/rd/2017/10/06/897/con',
-                            );
-                          },
-                          child: const Text(
-                              'Real Decreto 897/2017 de 6 de octubre'),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                              child: Text(
+                                'Enlaces de interés',
+                                style: headlineLarge,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            TextButton(
+                              onPressed: () {
+                                launchURL(
+                                  context: context,
+                                  url: 'https://www.bonosocial.gob.es/',
+                                );
+                              },
+                              child: const Text(
+                                  'Bono social eléctrico. Página oficial'),
+                            ),
+                            const SizedBox(height: 10),
+                            TextButton(
+                              onPressed: () {
+                                launchURL(
+                                  context: context,
+                                  url: 'https://civio.es/bono-social/',
+                                );
+                              },
+                              child: const Text('Fundación Civio'),
+                            ),
+                            const SizedBox(height: 10),
+                            TextButton(
+                              onPressed: () {
+                                launchURL(
+                                  context: context,
+                                  url: 'https://www.cnmc.es/bono-social',
+                                );
+                              },
+                              child: const Text(
+                                  'Comisión Nacional de los Mercados y la Competencia'),
+                            ),
+                            const SizedBox(height: 10),
+                            TextButton(
+                              onPressed: () {
+                                launchURL(
+                                  context: context,
+                                  url:
+                                      'https://www.boe.es/eli/es/rd/2017/10/06/897/con',
+                                );
+                              },
+                              child: const Text(
+                                  'Real Decreto 897/2017 de 6 de octubre'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -195,25 +204,23 @@ class BonoSocialDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'El Bono Social es un mecanismo de descuento en la factura eléctrica '
-          'fijado por el Gobierno (Real Decreto 897/2017 de 6 de octubre), '
-          'con el fin de proteger a determinados colectivos '
-          'de consumidores económica o socialmente más vulnerables.',
+          'El Bono Social es un mecanismo de protección social que reconoce el derecho a un descuento '
+          'en la factura eléctrica (Real Decreto 897/2017 de 6 de octubre), con el fin de proteger '
+          'a determinados colectivos de consumidores económica o socialmente más vulnerables.',
         ),
         SizedBox(height: 20),
         Text(
-          'El descuento del Bono Social se aplica sobre el PVPC (precio voluntario '
-          'para el pequeño consumidor) tanto sobre el término de energía como de '
-          'potencia. En el término de energía, existe un límite máximo anual de '
-          'energía con derecho a descuento.',
+          'El descuento del Bono Social se aplica sobre el PVPC (precio voluntario para el pequeño '
+          'consumidor) tanto sobre el término de energía como de potencia, aunque en el término de '
+          'energía existe un límite máximo anual con derecho a descuento.',
         ),
         SizedBox(height: 20),
         Text(
-          'El descuento aplicable al consumidor vulnerable es del 25% sobre el '
-          'PVPC. En el caso de reunir las condiciones de consumidor vulnerable '
-          'severo, el descuento será del 40%.',
+          'El descuento aplicable al consumidor vulnerable es del 25% sobre el PVPC. En el caso '
+          'de reunir las condiciones de consumidor vulnerable severo, el descuento será del 40%.',
         ),
       ],
     );
@@ -226,6 +233,7 @@ class BonoSocialTramite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Desde la recepción de la solicitud junto con la documentación completa, '
@@ -234,25 +242,22 @@ class BonoSocialTramite extends StatelessWidget {
         ),
         SizedBox(height: 20),
         Text(
-          'El bono social se devengará a partir del primer día del ciclo de '
-          'facturación en el que tenga lugar la recepción de la solicitud '
-          'completa y se aplicará en la primera factura recibida tras la solicitud, '
-          'siempre y cuando haya sido emitida al menos a los 15 días hábiles de la '
-          'recepción de dicha solicitud. En caso contrario, la aplicación empezará '
+          'El bono social se devengará a partir del primer día del ciclo de facturación en el que '
+          'tenga lugar la recepción de la solicitud completa y se aplicará en la primera factura '
+          'recibida tras la solicitud, siempre y cuando haya sido emitida al menos a los 15 días '
+          'hábiles de la recepción de dicha solicitud. En caso contrario, la aplicación empezará '
           'en la factura inmediatamente posterior.',
         ),
         SizedBox(height: 20),
         Text(
-          'El bono social solicitado se aplicará durante el plazo de dos '
-          'años, siempre que con anterioridad no se produzca la pérdida de alguna de '
-          'las condiciones que dan derechos a su percepción.',
+          'El bono social solicitado se aplicará durante el plazo de dos años, siempre que con '
+          'anterioridad no se produzca la pérdida de alguna de las condiciones que dan derechos a su percepción.',
         ),
         SizedBox(height: 20),
         Text(
-          'En términos generales, si se siguen cumpliendo los requisitos '
-          'que dieron derecho a la percepción del bono social, su renovación es '
-          'automática cada dos años de forma indefinida (excepto en el caso de '
-          'familias numerosas).',
+          'En términos generales, si se siguen cumpliendo los requisitos que dieron derecho a la '
+          'percepción del bono social, su renovación es automática cada dos años de forma '
+          'indefinida (excepto en el caso de familias numerosas).',
         ),
       ],
     );
@@ -326,31 +331,43 @@ class _StepperBonoSocialState extends State<StepperBonoSocial> {
         setState(() => _index = index);
       },
       steps: <Step>[
-        Step(
-          title: const Text('Que el titular sea persona física'),
-          content: Container(
+        const Step(
+          title: Text('Que el titular sea persona física'),
+          content: Align(
             alignment: Alignment.centerLeft,
-            child: const Text(
-                'El Bono Social está destinado a particulares y no a empresas.'),
+            child: Text(
+              'El Bono Social está destinado a particulares y no a empresas.',
+            ),
           ),
         ),
         const Step(
           title: Text('Vivienda habitual'),
-          content: Text(
+          content: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
               'El Punto de Suministro para el que se solicita la aplicación del '
-              'Bono Social debe ser el de la vivienda habitual.'),
+              'Bono Social debe ser el de la vivienda habitual.',
+            ),
+          ),
         ),
         const Step(
           title: Text('Mercado regulado: PVPC'),
-          content: Text(
+          content: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
               'Tener contratada la tarifa regulada del precio voluntario para el '
-              'pequeño consumidor (PVPC) a través de una comercializadora de referencia.'),
+              'pequeño consumidor (PVPC) a través de una comercializadora de referencia.',
+            ),
+          ),
         ),
         const Step(
           title: Text('Potencia'),
-          content: Text(
-              'La potencia contratada del punto de suministro debe ser igual o '
-              'inferior a 10 kW.'),
+          content: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'La potencia contratada del punto de suministro debe ser igual o inferior a 10 kW.',
+            ),
+          ),
         ),
         Step(
           title: const Text('Consumidor vulnerable'),
