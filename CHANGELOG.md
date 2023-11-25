@@ -2,6 +2,12 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
+## [Unreleased]
+
+### Fixed
+
+- Firma app: firma de apk para que actualice sin desinstalar
+
 ## [3.2.3] - 2023-11-25
 
 ### Added
