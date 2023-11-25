@@ -2,7 +2,7 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
-## [Unreleased]
+## [3.2.3] - 2023-11-25
 
 ### Added
 
