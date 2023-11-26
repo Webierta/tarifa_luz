@@ -136,7 +136,7 @@ class _GraficoPreciosState extends State<GraficoPrecios>
               ),
               //minY: widget.boxData.precioMin - (widget.boxData.precioMedio / 4),
               minY: 0,
-              //maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 2),
+              maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 2),
               //maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 3),
 
               barTouchData: BarTouchData(

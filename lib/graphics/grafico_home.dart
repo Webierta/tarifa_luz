@@ -119,7 +119,7 @@ class GraficoHome extends StatelessWidget {
             //minY: boxData.precioMin - (boxData.precioMedio / 4),
             minY: 0,
             //maxY: boxData.precioMax + (boxData.precioMedio / 3),
-            //maxY: boxData.precioMax + (boxData.precioMedio / 2),
+            maxY: boxData.precioMax + (boxData.precioMedio / 2),
             //maxY: boxData.precioMax + 0.05,
 
             lineTouchData: LineTouchData(

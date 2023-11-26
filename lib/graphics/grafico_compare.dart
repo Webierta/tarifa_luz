@@ -193,7 +193,7 @@ class _GraficoCompareState extends State<GraficoCompare> {
                         ],
                       ),
                       minY: 0,
-                      //maxY: getMaxY(),
+                      maxY: getMaxY(),
                       lineTouchData: const LineTouchData(
                         enabled: true,
                         touchTooltipData: LineTouchTooltipData(

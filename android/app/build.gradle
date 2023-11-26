@@ -73,17 +73,6 @@ android {
             // signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
         }
-        applicationVariants.all{
-            // this method is use to rename your all apk weather
-            // it may be signed or unsigned(debug apk)
-            variant ->
-                variant.outputs.each{                   
-                    output->
-                        def name = "TarifaLuz.apk"
-                        //def name = "TarifaLuz-${variant.versionName}.apk"                      
-                        output.outputFileName = name
-                }
-       }
     }
 }
 

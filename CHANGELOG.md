@@ -2,11 +2,17 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
-## [Unreleased]
+## [3.2.5] - 2023-11-26
 
 ### Fixed
 
-- Firma app: firma de apk para que actualice sin desinstalar
+- Firma app: firma de apk para que actualice sin desinstalar.
+- Gráficos: Máximo valor en Eje Y (duplicado).
+
+### Changed
+
+- Archivo apk renombrado a app-release.apk (eliminado applicationVariants en build.gradle).
+- Update changelog: enlaces a comparación de versiones.
 
 ## [3.2.3] - 2023-11-25
 
@@ -111,3 +117,10 @@ Este archivo registra y documenta los cambios más notables a lo largo del desar
 
 - Fork del Proyecto del mismo autor [Precio Luz](https://github.com/Webierta/precio-luz): código renovado.
 
+[3.2.5]: https://github.com/Webierta/tarifa_luz/compare/v3.2.3...v3.2.5
+[3.2.3]: https://github.com/Webierta/tarifa_luz/compare/v3.2.2...v3.2.3
+[3.2.2]: https://github.com/Webierta/tarifa_luz/compare/v3.2.1...v3.2.2
+[3.2.1]: https://github.com/Webierta/tarifa_luz/compare/v3.2.0...v3.2.1
+[3.2.0]: https://github.com/Webierta/tarifa_luz/compare/v3.0.1...v3.2.0
+[3.0.1]: https://github.com/Webierta/tarifa_luz/compare/v3.0.0...v3.0.1
+[3.0.0]: https://github.com/Webierta/tarifa_luz/releases/tag/v3.0.0
