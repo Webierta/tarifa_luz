@@ -27,9 +27,15 @@ class _GraficoPreciosState extends State<GraficoPrecios>
     return double.parse((precio).toStringAsFixed(4));
   }
 
+  double getMaxY() {
+    return double.parse(
+        (widget.boxData.precioMax + (widget.boxData.precioMax / 5))
+            .toStringAsFixed(2));
+  }
+
   List<HorizontalLine> getExtraLinesY() {
     List<HorizontalLine> horizontalLines = [];
-    for (double i = 0; i < 0.50; i += 0.05) {
+    for (double i = 0; i < widget.boxData.precioMax + 0.05; i += 0.05) {
       horizontalLines.add(HorizontalLine(
         y: i,
         strokeWidth: 1,
@@ -102,11 +108,15 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                       return SideTitleWidget(
                         axisSide: meta.axisSide,
                         //space: 4,
-                        child: meta.formattedValue.endsWith('5') ||
-                                meta.formattedValue.endsWith('0')
+                        child: double.parse(meta.formattedValue)
+                                    .toStringAsFixed(2)
+                                    .endsWith('0') ||
+                                double.parse(meta.formattedValue)
+                                    .toStringAsFixed(2)
+                                    .endsWith('5')
                             ? FittedBox(
                                 child: Text(
-                                  meta.formattedValue,
+                                  meta.formattedValue.substring(0, 4),
                                   style: const TextStyle(fontSize: 10),
                                 ),
                               )
@@ -134,11 +144,8 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                   ...getExtraLinesY(),
                 ],
               ),
-              //minY: widget.boxData.precioMin - (widget.boxData.precioMedio / 4),
               minY: 0,
-              maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 2),
-              //maxY: widget.boxData.precioMax + (widget.boxData.precioMedio / 3),
-
+              maxY: getMaxY(),
               barTouchData: BarTouchData(
                 enabled: true,
                 touchTooltipData: BarTouchTooltipData(
@@ -155,7 +162,6 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                       );
                     }),
               ),
-
               barGroups: precios.asMap().entries.map(
                 (precio) {
                   DateTime fechaHour =
