@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:tarifa_luz/eprel/energy_label.dart';
 import 'package:tarifa_luz/screens/about_screen.dart';
 import 'package:tarifa_luz/screens/bono_social.dart';
 import 'package:tarifa_luz/screens/donate_screen.dart';
@@ -10,7 +11,6 @@ import 'package:tarifa_luz/screens/settings_screen.dart';
 import 'package:tarifa_luz/screens/storage_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/constantes.dart';
-//import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -162,6 +162,33 @@ class AppDrawer extends StatelessWidget {
                   ),
                   const DividerDrawer(),
                   ListTile(
+                    leading: const Icon(Icons.beenhere_outlined),
+                    title: const Text('Etiqueta energética'),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EnergyLabel(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.savings_outlined),
+                    title: const Text('Bono social'),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BonoSocial(),
+                        ),
+                      );
+                    },
+                  ),
+                  const DividerDrawer(),
+                  ListTile(
                     leading: const Icon(Icons.code),
                     title: const Text('About'),
                     onTap: () {
@@ -183,20 +210,6 @@ class AppDrawer extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => const DonateScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  const DividerDrawer(),
-                  ListTile(
-                    leading: const Icon(Icons.savings_outlined),
-                    title: const Text('Bono Social'),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BonoSocial(),
                         ),
                       );
                     },
