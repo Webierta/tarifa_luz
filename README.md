@@ -18,6 +18,8 @@ En definitiva, esta App trata de ayudar a gestionar el consumo eléctrico de for
 * Archiva los valores obtenidos y permite su consulta offline.
 * Calculadora de las franjas de tiempo más baratas según la duración introducida por el usuario.
 * Obtiene información sobre el balance de generación entre energías renovables y no renovables.
+* Herramienta para obtener la etiqueta energética de los aparatos eléctricos.
+* Infomación básica del Bono social.
 * Próximamente más funciones...
 
 <img src="https://github.com/Webierta/tarifa_luz/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot1.png" width="200">
@@ -26,4 +28,9 @@ La App se ha adaptado al nuevo sistema de la tarifa eléctrica que se aplica des
 
 Esta nueva tarifa 2.0 TD cuenta con una discriminación horaria en tres periodos: punta, llano y valle que se definen según el día de la semana, la hora del día y el territorio geográfico (distinto para Ceuta y Melilla).
 
-La App incluye una herramienta que calcula y ordena las franjas horarias más baratas del día (precios medios) para un intervalo determinado de tiempo. Por ejemplo, es útil para saber el mejor momento del día para poner consecutivamente la lavadora y la secadora.
+Además, la App Tarifa Luz incluye varias herramientas para contribuir al ahorro energético:
+
+* Una calculadora que mide y ordena las franjas horarias más baratas del día (precios medios) para un intervalo determinado de tiempo. Por ejemplo, es útil para saber el mejor momento del día para poner consecutivamente la lavadora y la secadora.
+* Una herramienta para obtener la etiqueta energética de los aparatos eléctricos.
+* Información básica sobre el Bono social en la tarifa eléctrica.
+
