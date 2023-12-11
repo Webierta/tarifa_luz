@@ -12,7 +12,7 @@ Nuestra herramienta accede a la base pública de EPREL para guiar a los usuarios
 
 Para acceder a esta base de datos el usuario deber seleccionar primero la categoría del producto consultado, y luego indicar la marca (no distingue mayúsculas o minúsculas) y el modelo (distingue mayúsculas y minúsculas). Introduciendo los tres primeros caracteres del modelo, el buscador localiza modelos similares de esa marca.
 
-La información obtenida se ofrece condensada gráficamente en la llamada Etiqueta Energética, y permite guardar / imprimir y compartir la imagen de la etiqueta. En la mayoría de los casos esta imagen se genera en formato pdf, aunque a veces se obtiene en formatos png o svg.
+El resultado final es la llamada Etiqueta Energética, una imagen que condensa gráficamente información relevante sobre el producto consultado. En la mayoría de los casos esta imagen se genera como una archivo pdf, aunque otras veces se obtiene en formatos png o svg.
 
 Si se quiere disponer de la etiqueta obtenida para futuros usos, se recomienda almacenarla o compartirla para evitar consultas redundantes. El uso indiscriminado o excesivo de la base de datos puede conllevar que EPREL suspenda el acceso sin previo aviso.
 

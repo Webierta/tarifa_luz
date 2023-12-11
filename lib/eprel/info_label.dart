@@ -20,11 +20,14 @@ class InfoLabel extends StatelessWidget {
             child: Column(
               children: [
                 Image.asset('assets/images/eprel/EPREL.jpg'),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 20.0),
                 const ReadFile(archivo: 'assets/files/info_label.txt'),
-                Text(
-                  'Modelos de etiqueta energética para algunas categorías de productos:',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Modelos de etiqueta energética para algunas categorías de productos:',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                 ),
                 const SizedBox(height: 10.0),
                 AspectRatio(
@@ -32,6 +35,7 @@ class InfoLabel extends StatelessWidget {
                   child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
+                      //controller: controller,
                       physics: const ClampingScrollPhysics(),
                       itemCount: 6,
                       itemBuilder: (BuildContext context, int index) => Card(
