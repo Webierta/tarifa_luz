@@ -6,6 +6,7 @@ const String boxStore = 'boxStore';
 const String keyToken = 'keyToken';
 const String keyAutoGetData = 'keyAutoGetData';
 //const String keyAutoSave = 'keyAutoSave';
+const String keyMaxArchivo = 'keyMaxArchivo';
 
 const String ddMMyyyy = 'dd/MM/yyyy';
 const String yyyyMMdd = 'yyyy-MM-dd';

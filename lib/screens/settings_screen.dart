@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:tarifa_luz/screens/home_screen.dart';
+import 'package:tarifa_luz/screens/info_token_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/shared_prefs.dart';
-import 'package:tarifa_luz/screens/info_token_screen.dart';
-import 'package:tarifa_luz/screens/home_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -18,6 +17,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool tokenVisible = false;
   bool autoGetData = true;
   //bool autoSave = true;
+  int maxArchivo = 0;
+  String maxArchivoText = 'Sin límite';
 
   @override
   void initState() {
@@ -31,6 +32,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       token = sharedPrefs.token;
       autoGetData = sharedPrefs.autoGetData;
       //autoSave = sharedPrefs.autoSave;
+      maxArchivo = sharedPrefs.maxArchivo;
+      maxArchivoText = getMaxArchivoText(maxArchivo);
     });
     controllerToken.text = token;
   }
@@ -47,6 +50,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void setAutoGetData(bool value) {
     setState(() => autoGetData = value);
     sharedPrefs.autoGetData = value;
+  }
+
+  void setMaxArchivo(int value) {
+    setState(() {
+      maxArchivo = value;
+      maxArchivoText = getMaxArchivoText(maxArchivo);
+    });
+    sharedPrefs.maxArchivo = value;
+  }
+
+  String getMaxArchivoText(int max) {
+    return switch (max) {
+      0 => 'Sin límite',
+      7 => '7 fechas',
+      30 => '30 fechas',
+      _ => 'Sin límite',
+    };
   }
 
   /* void setAutoSave(bool value) {
@@ -151,6 +171,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onChanged: (bool value) {
                         setAutoGetData(value);
                       },
+                    ),
+                  ),
+                  const Divider(
+                    height: 40,
+                    color: StyleApp.onBackgroundColor,
+                  ),
+                  ListTile(
+                    title: const Text('Límite en archivo'),
+                    subtitle: const Text(
+                        'Autoelimina los datos más antiguos. Si el archivo alcanza este límite, '
+                        'las consultas de fechas previas no quedan almacenadas'),
+                    trailing: PopupMenuButton<int>(
+                      initialValue: maxArchivo,
+                      icon: Text(
+                        maxArchivoText,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      onSelected: (int value) {
+                        setMaxArchivo(value);
+                      },
+                      itemBuilder: (BuildContext context) => [
+                        const PopupMenuItem<int>(
+                          value: 0,
+                          child: Text('Sin límite'),
+                        ),
+                        const PopupMenuItem<int>(
+                          value: 7,
+                          child: Text('7 fechas'),
+                        ),
+                        const PopupMenuItem<int>(
+                          value: 30,
+                          child: Text('30 fechas'),
+                        ),
+                      ],
                     ),
                   ),
                   const Divider(

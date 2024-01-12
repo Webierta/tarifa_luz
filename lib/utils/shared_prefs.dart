@@ -1,11 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:tarifa_luz/utils/constantes.dart';
 
 class SharedPrefs {
   static SharedPreferences? _sharedPrefs;
   static const String _token = keyToken;
   static const String _autoGetData = keyAutoGetData;
+  static const String _maxArchivo = keyMaxArchivo;
   //static const String _autoSave = keyAutoSave;
 
   init() async {
@@ -17,6 +17,9 @@ class SharedPrefs {
 
   bool get autoGetData => _sharedPrefs?.getBool(_autoGetData) ?? true;
   set autoGetData(bool value) => _sharedPrefs?.setBool(_autoGetData, value);
+
+  int get maxArchivo => _sharedPrefs?.getInt(_maxArchivo) ?? 0;
+  set maxArchivo(int value) => _sharedPrefs?.setInt(_maxArchivo, value);
 
   //bool get autoSave => _sharedPrefs?.getBool(_autoSave) ?? true;
   //set autoSave(bool value) => _sharedPrefs?.setBool(_autoSave, value);

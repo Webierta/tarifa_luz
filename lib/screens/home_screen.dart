@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/database/storage.dart';
 import 'package:tarifa_luz/graphics/grafico_precios.dart';
@@ -79,6 +78,13 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (widget.fecha == null && storage.listBoxData.isNotEmpty) {
       fecha = storage.lastFecha;
       boxDataSelect = storage.getBoxData(fecha);
+
+      if (sharedPrefs.maxArchivo != 0) {
+        while (storage.listBoxData.length > sharedPrefs.maxArchivo) {
+          storage.deleteFirst();
+        }
+      }
+
       loadBoxData();
     } else {
       fecha = hoy;
@@ -156,6 +162,11 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         boxDataSelect = storage.getBoxData(fechaSelect!);
       });
+      if (sharedPrefs.maxArchivo != 0) {
+        while (storage.listBoxData.length > sharedPrefs.maxArchivo) {
+          storage.deleteFirst();
+        }
+      }
       loadBoxData();
     }
   }

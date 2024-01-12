@@ -1,6 +1,5 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/utils/constantes.dart';
 
@@ -43,6 +42,12 @@ class Storage {
   void deleteBoxData(BoxData boxData) {
     final String fechaKey = DateFormat('yyyy-MM-dd').format(boxData.fecha);
     box.delete(fechaKey);
+  }
+
+  void deleteFirst() {
+    if (box.values.isNotEmpty) {
+      box.deleteAt(0);
+    }
   }
 
   void clearBox() {
