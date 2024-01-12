@@ -10,6 +10,12 @@ Esta App ofrece información general y detallada sobre el precio de la electrici
 
 En definitiva, esta App trata de ayudar a gestionar el consumo eléctrico de forma más eficiente, y todo ello con una aplicación gratuita y sin publicidad, de código abierto y respetuosa con la seguridad y privacidad de sus usuarios (no recopila ninguna información ni realiza ningún seguimiento ni requiere permisos extraños o innecesarios).
 
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+     alt="Get it on IzzyOnDroid"
+     height="80">](https://apt.izzysoft.de/fdroid/index/apk/com.github.webierta.tarifa_luz)
+
+Or get the latest APK from the [Releases Section](https://github.com/Webierta/tarifa_luz/releases/latest).
+
 ## Funciones principales:
 
 * Sincroniza vía internet los últimos precios disponibles en el mercado regulado.
