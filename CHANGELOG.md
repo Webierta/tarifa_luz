@@ -2,6 +2,12 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
+## [4.0.1] - 2024-01-12
+
+### Added
+
+- Nueva herramienta de autolimpieza en Ajustes para limitar datos archivados.
+
 ## [4.0.0] - 2023-12-11
 
 ### Fixed
@@ -127,6 +133,8 @@ Este archivo registra y documenta los cambios más notables a lo largo del desar
 
 - Fork del Proyecto del mismo autor [Precio Luz](https://github.com/Webierta/precio-luz): código renovado.
 
+[4.0.1]: https://github.com/Webierta/tarifa_luz/compare/v4.0.0...v4.0.1
+[4.0.0]: https://github.com/Webierta/tarifa_luz/compare/v3.2.5...v4.0.0
 [3.2.5]: https://github.com/Webierta/tarifa_luz/compare/v3.2.3...v3.2.5
 [3.2.3]: https://github.com/Webierta/tarifa_luz/compare/v3.2.2...v3.2.3
 [3.2.2]: https://github.com/Webierta/tarifa_luz/compare/v3.2.1...v3.2.2
