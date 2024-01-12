@@ -6,6 +6,8 @@ Para la descarga de esos datos se utiliza principalmente la API oficial de REE, 
 
 Esta aplicación no tiene ninguna vinculación oficial con REE.
 
+Para la obtención de la etiqueta energética, esta aplicación se conecta a la base de datos EPREL (Registro de la Comisión Europea de productos para el etiquetado energético).
+
 GARANTÍA, SEGURIDAD Y PRIVACIDAD
 
 No puede garantizarse que el contenido ofrecido esté libre de errores, ya sean errores en el servidor de REE o en el proceso de acceso a los datos o en su tratamiento, por lo que la información presentada no cuenta con ninguna garantía, ni explícita ni implícita. El usuario acepta expresamente conocer esta circunstancia. La utilización de la información obtenida por esta App se realizará por parte del usuario bajo su propia cuenta y riesgo, correspondiéndole en exclusiva a él responder frente a terceros por daños que pudieran derivarse de ella.
@@ -22,7 +24,9 @@ Si te gusta esta aplicación, por favor considera hacer una donación. Gracias.
 
 CRÉDITOS
 
-Imágenes: 
+Imágenes:
+* EPREL (Registro europeo de productos para el etiquetado energético). Licencia Creative Commons Atribución 4.0 Internacional (CC BY 4.0).
+* Proyecto Label 2020, financiado por el Programa Horizon 2020 de la Unión Europea.
 * Colourful Education icon set (Free for commercial use) de Zeeshan Ahmed (https://www.iconfinder.com/zeeicons).
 * New Year Resolutions! icon set (Creative Commons Attribution 3.0 Unported) de Laura Reen (http://laurareen.com/).
 * Traffic lights set by macrovector (https://www.freepik.com/author/macrovector) on Freepik (Free license).
@@ -30,7 +34,9 @@ Imágenes:
 Fuente:
 * Cairo Play Font. Designed by Mohamed Gaber, Accademia di Belle Arti di Urbino. These fonts are licensed under the Open Font License.
 
-Dependencias: Flutter packages:
+Dependencias. Flutter packages:
 * fl_chart by flutter4fun.com (MIT License).
 * hive by isar.dev (Apache License Version 2.0).
 * xml by lukas-renggli.ch (MIT License).
+* printing by nfet.net (Apache License 2.0).
+* flutter_svg by dnfield.dev (MIT License).

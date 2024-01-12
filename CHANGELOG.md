@@ -2,6 +2,16 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
+## [4.0.0] - 2023-12-11
+
+### Fixed
+
+- Bugfix: Eje Y graficos
+
+### Added
+
+- Nueva herramienta Etiqueta Energética.
+
 ## [3.2.5] - 2023-11-26
 
 ### Fixed

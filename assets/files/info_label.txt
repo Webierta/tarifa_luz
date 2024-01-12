@@ -1,0 +1,29 @@
+REGISTRO EUROPEO DE PRODUCTOS PARA EL ETIQUETADO ENERGÉTICO
+
+Las etiquetas energéticas fueron introducidas por primera vez en 1994 para un limitado grupo de electrodomésticos, ampliado en 2004. Desde el 1 de enero de 2019 los fabricantes e importadores establecidos en la UE deben registrar algunas categorías de productos en el Registro Europeo de Productos para el Etiquetado Energético (EPREL), una gran base de datos creada y operada por la Comisión Europea.
+
+En marzo de 2021 se estableció un nuevo etiquetado energético con el objetivo de identificar de manera más clara los electrodomésticos más eficientes, sistema que progresivamente se ha ido implantando en distintas categorías de productos.
+
+En mayo de 2022 se publicó la base de datos para acceso y consulta pública. Esta base de datos ofrece información detallada sobre la eficiencia energética de esos aparatos, además de otros datos relevantes como, por ejemplo, consumo de agua o emisión de ruido.
+
+CONSULTA DE LA BASE DE DATOS
+
+Nuestra herramienta accede a la base pública de EPREL para guiar a los usuarios hacia los modelos más eficientes desde el punto de vista energético y contribuir a fomentar el ahorro, lo que a su vez debería alentar a los fabricantes a desarrollar nuevos modelos más eficientes y participar en la reducción del consumo de energía.
+
+Para acceder a esta base de datos el usuario deber seleccionar primero la categoría del producto consultado, y luego indicar la marca (no distingue mayúsculas o minúsculas) y el modelo (distingue mayúsculas y minúsculas). Introduciendo los tres primeros caracteres del modelo, el buscador localiza modelos similares de esa marca.
+
+El resultado final es la llamada Etiqueta Energética, una imagen que condensa gráficamente información relevante sobre el producto consultado. En la mayoría de los casos esta imagen se genera como una archivo pdf, aunque otras veces se obtiene en formatos png o svg.
+
+Si se quiere disponer de la etiqueta obtenida para futuros usos, se recomienda almacenarla o compartirla para evitar consultas redundantes. El uso indiscriminado o excesivo de la base de datos puede conllevar que EPREL suspenda el acceso sin previo aviso.
+
+ETIQUETA ENERGÉTICA
+
+Básicamente la etiqueta energética identifica la clase a la que pertenece un aparato eléctrico. Es una manera práctica y muy visual de identificar cuán eficiente es un determinado electrodoméstico en comparación con el resto.
+
+El modelo de etiqueta ha ido cambiando en los últimos años. Así por ejemplo se ha reordenado la escala de clase energética eliminando categorías como A+, A++ y A+++. Como resultado de este reescalado, los electrodomésticos más eficientes (que antes pertenecían a la clase A+++), ahora quedan asignados como mucho a la clase B. Algunos productos no han completado la conversión al nuevo modelo y todavía muestran las etiquetas del sistema anterior. Por otra parte, estas nuevas etiquetas serán revisadas siguiendo el ritmo de las futuras mejoras tecnológicas en eficiencia energética.
+
+La actual escala A-G se aplica a refrigeradores, congeladores, refrigeradores para el almacenaje de vino, lavavajillas, lavadoras, lavadoras-secadoras y pantallas electrónicas, por lo que estos productos ya no pueden ser comercializados con el etiquetado antiguo. Para otros grupos de productos, la escala A-G se está introduciendo paulatinamente.
+
+Actualmente la etiqueta califica la eficacia energética del producto en una escala de mejor a peor desde la A a la G (del color verde al rojo) y, en función de la categoría, ofrece información adicional del producto.
+
+Las etiquetas actuales también cuentan con un código QR vinculado a la base de datos de la Unión Europea que sirve para enlazar con más información sobre el producto.

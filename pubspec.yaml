@@ -1,7 +1,7 @@
 name: tarifa_luz
 description: Detailed information by hours on the price of electricity in Spain (PVPC) for efficient management of electricity consumption.
 publish_to: 'none'
-version: 3.2.5+34
+version: 4.0.0+35
 
 environment:
   sdk: '>=3.1.5 <4.0.0'
@@ -13,10 +13,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   #google_fonts: ^6.1.0
+  flutter_svg: ^2.0.9
   hive: ^2.2.3
   hive_flutter: ^1.1.0  
   http: ^1.1.0
   intl: ^0.18.1
+  printing: ^5.11.1
   shared_preferences: ^2.2.2
   url_launcher: ^6.2.1
   xml: ^6.3.0
@@ -42,6 +44,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/images/eprel/
+    - assets/images/eprel/categorias/
+    - assets/images/eprel/etiquetas/
     - assets/files/
     - assets/google_fonts/
   fonts:
