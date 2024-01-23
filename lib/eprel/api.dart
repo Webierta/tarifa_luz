@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
 
+import 'package:http/http.dart' as http;
 import 'package:tarifa_luz/eprel/konstants.dart';
 import 'package:tarifa_luz/eprel/product_groups.dart';
 
@@ -37,7 +37,7 @@ class Api {
 
   Future<void> getEprelRegistrationNumber() async {
     if (K.eprelToken.isEmpty) {
-      status = StatusEprel.networkError;
+      status = StatusEprel.error;
       return;
     }
     String urlProductGroups = '/products/$productGroups';
