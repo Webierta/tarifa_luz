@@ -17,6 +17,8 @@ class _GraficoPreciosState extends State<GraficoPrecios>
   List<double> precios = [];
   final now = DateTime.now().toLocal();
 
+  int? touchedBarIndex;
+
   @override
   void initState() {
     precios = List.from(widget.boxData.preciosHora);
@@ -148,6 +150,8 @@ class _GraficoPreciosState extends State<GraficoPrecios>
               maxY: getMaxY(),
               barTouchData: BarTouchData(
                 enabled: true,
+                touchExtraThreshold: const EdgeInsets.symmetric(horizontal: 0, vertical: maxY),
+                longPressDuration: const Duration(),
                 touchTooltipData: BarTouchTooltipData(
                     fitInsideHorizontally: true,
                     fitInsideVertically: true,
@@ -158,22 +162,35 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                       Periodo periodo = Tarifa.getPeriodo(fechaHour);
                       return BarTooltipItem(
                         '$groupIndex-${groupIndex + 1} h\n${rod.toY}',
-                        TextStyle(color: Tarifa.getColorPeriodo(periodo)),
+                        TextStyle(color: Tarifa.getColorPeriodo(periodo), fontSize: 18, fontWeight: FontWeight.bold),
                       );
                     }),
+                touchCallback: (FlTouchEvent test, BarTouchResponse? touchResponse) {
+                    final touchedIndex = touchResponse!.spot!.spot.x.toInt()-1;
+                    setState(() {
+                      touchedBarIndex = touchedIndex;
+                    });
+                }
               ),
               barGroups: precios.asMap().entries.map(
                 (precio) {
                   DateTime fechaHour =
                       widget.boxData.fecha.copyWith(hour: precio.key);
                   Periodo periodo = Tarifa.getPeriodo(fechaHour);
+
+                  // Make the bar color whiter when touched
+                  Color barColor = Tarifa.getColorPeriodo(periodo);
+                  if (touchedBarIndex == precio.key) {
+                    barColor = Color.lerp(barColor, Colors.white, 0.5) ?? Colors.white;
+                  }
+
                   return BarChartGroupData(
                     x: precio.key + 1,
                     barRods: [
                       BarChartRodData(
                         toY: cuatroDec(precio.value),
                         width: MediaQuery.of(context).size.width / 26,
-                        color: Tarifa.getColorPeriodo(periodo),
+                        color: barColor,
                         /* borderSide: precio.key == now.hour
                             ? const BorderSide(
                                 color: Colors.white,
@@ -190,12 +207,15 @@ class _GraficoPreciosState extends State<GraficoPrecios>
                         ),
                       ),
                     ],
+                  showingTooltipIndicators: touchedBarIndex == precio.key
+                      ? [0] // Show tooltip for the last touched bar
+                      : [],
                   );
                 },
               ).toList(),
             ),
             swapAnimationCurve: Curves.easeInOutCubic,
-            swapAnimationDuration: const Duration(milliseconds: 1000),
+            swapAnimationDuration: const Duration(milliseconds: 100),
           ),
         ),
       ),
