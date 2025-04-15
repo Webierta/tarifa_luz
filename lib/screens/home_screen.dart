@@ -328,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     FloatingActionButton? floatingActionButton() {
-      if (currentTab == 0) {
+      if (currentTab == 3) {
         return FloatingActionButton(
           onPressed: () {
             setState(() => isFirstLaunch = false);
@@ -338,7 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       }
 
-      if (currentTab == 1) {
+      if (currentTab == 0) {
         return FloatingActionButton(
           onPressed: () {
             Navigator.push(
