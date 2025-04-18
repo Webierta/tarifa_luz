@@ -143,6 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (httpRequestApi.status != Status.ok) {
       if (!context.mounted) return;
+      if (!mounted) return;
       CheckStatusError(httpRequestApi.status, context).showError();
       // setState(() => httpStatus = HttpStatus.completed);
       // resetHomeScreen()
@@ -327,8 +328,8 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     }
 
-    FloatingActionButton? floatingActionButton() {
-      if (currentTab == 0) {
+    //FloatingActionButton? floatingActionButton() {
+    /*if (currentTab == 0) {
         return FloatingActionButton(
           onPressed: () {
             setState(() => isFirstLaunch = false);
@@ -336,10 +337,39 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: const Icon(Icons.update, size: 42),
         );
+      }*/
+    Widget? floatingActionButton() {
+      if (currentTab == 0) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton.small(
+              heroTag: null,
+              onPressed: () {
+                setState(() => isFirstLaunch = false);
+                httpBoxData();
+              },
+              child: const Icon(Icons.update, size: 28),
+            ),
+            const SizedBox(height: 8),
+            FloatingActionButton.small(
+              heroTag: null,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GraficoPrecios(boxData: newBoxData!),
+                  ),
+                );
+              },
+              child: const Icon(Icons.bar_chart, size: 28),
+            ),
+          ],
+        );
       }
 
-      if (currentTab == 1) {
-        return FloatingActionButton(
+      if (currentTab == 1 || currentTab == 2) {
+        return FloatingActionButton.small(
           onPressed: () {
             Navigator.push(
               context,
@@ -348,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           },
-          child: const Icon(Icons.bar_chart, size: 42),
+          child: const Icon(Icons.bar_chart, size: 28),
         );
       }
       return null;
@@ -356,7 +386,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tarifa Luz'),
+        title: const Text(
+          'Tarifa Luz',
+          style: TextStyle(color: StyleApp.accentColor),
+        ),
         actions: [
           IconButton(
             onPressed:

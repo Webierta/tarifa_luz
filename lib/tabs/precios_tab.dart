@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
+import 'package:tarifa_luz/tabs/head_tab.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
-import 'package:tarifa_luz/tabs/head_tab.dart';
 
 class PreciosTab extends StatelessWidget {
   final int tab;
@@ -25,7 +24,8 @@ class PreciosTab extends StatelessWidget {
           ListView.separated(
               separatorBuilder: (context, index) => Divider(
                     height: 0.2,
-                    color: StyleApp.backgroundColor.withOpacity(0.2),
+                    //color: StyleApp.backgroundColor.withOpacity(0.2),
+                    color: StyleApp.backgroundColor.withAlpha(20),
                   ),
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -69,7 +69,8 @@ class PreciosTab extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      stops: const [0.04, 0.02], //const [0.02, 0.02],
+                      //stops: const [0.04, 0.02],
+                      stops: const [0.04, 0.04],
                       colors: [colorPeriodo, color],
                     ),
                     borderRadius: borderRadius,

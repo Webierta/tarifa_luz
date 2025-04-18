@@ -1,7 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
@@ -75,8 +74,8 @@ class GraficoHome extends StatelessWidget {
                   interval: 0.05,
                   getTitlesWidget: (value, meta) {
                     return SideTitleWidget(
-                      axisSide: meta.axisSide,
-                      //space: 4,
+                      //axisSide: meta.axisSide,
+                      meta: meta,
                       child: double.parse(meta.formattedValue)
                                   .toStringAsFixed(2)
                                   .endsWith('0') ||
@@ -101,7 +100,8 @@ class GraficoHome extends StatelessWidget {
               drawVerticalLine: true,
               getDrawingVerticalLine: (value) {
                 return FlLine(
-                  color: Colors.grey.withOpacity(0.4),
+                  //color: Colors.grey.withOpacity(0.4),
+                  color: Colors.grey.withAlpha(40),
                   strokeWidth: 0.8,
                   dashArray: [2, 2],
                 );
@@ -132,7 +132,8 @@ class GraficoHome extends StatelessWidget {
               touchTooltipData: LineTouchTooltipData(
                 fitInsideHorizontally: true,
                 fitInsideVertically: true,
-                tooltipBgColor: Colors.black54,
+                //tooltipBgColor: Colors.black54,
+                getTooltipColor: ((touchedSpot) => Colors.black54),
                 getTooltipItems: (touchedSpots) {
                   return touchedSpots.map(
                     (LineBarSpot touchedSpot) {
@@ -185,8 +186,10 @@ class GraficoHome extends StatelessWidget {
                   show: true,
                   gradient: LinearGradient(
                     colors: [
-                      Colors.white.withOpacity(0.5),
-                      Colors.white.withOpacity(0),
+                      //Colors.white.withOpacity(0.5),
+                      //Colors.white.withOpacity(0),
+                      Colors.white.withAlpha(100),
+                      Colors.white.withAlpha(0),
                     ],
                     stops: const [0.5, 1.0],
                     begin: Alignment.topCenter,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/theme/style_app.dart';
 
 class IconografiaScreen extends StatelessWidget {
@@ -9,13 +8,15 @@ class IconografiaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Divider divider = Divider(
       height: 0.1,
-      color: Theme.of(context).colorScheme.background.withOpacity(0.2),
+      //color: Theme.of(context).colorScheme.background.withOpacity(0.2),
+      color: Theme.of(context).colorScheme.surface.withAlpha(20),
     );
 
     TextStyle labelMediumDark = Theme.of(context)
         .textTheme
         .labelMedium!
-        .copyWith(color: Theme.of(context).colorScheme.background);
+        .copyWith(color: Theme.of(context).colorScheme.surface);
+    //.copyWith(color: Theme.of(context).colorScheme.background);
 
     const Color backgroundCard = StyleApp.blueGrey50;
 
@@ -279,7 +280,8 @@ class ContainerPeriodo extends StatelessWidget {
         // ),
         color: StyleApp.blueGrey50,
         gradient: LinearGradient(
-          stops: const [0.04, 0.02],
+          //stops: const [0.04, 0.02],
+          stops: const [0.04, 0.04],
           //colors: [color, const Color(0xFFE3F2FD)],
           colors: [color, StyleApp.blueGrey50],
         ),
@@ -292,7 +294,8 @@ class ContainerPeriodo extends StatelessWidget {
             Text(
               texto,
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.background,
+                    //color: Theme.of(context).colorScheme.background,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
             ),
             const SizedBox(width: 10),

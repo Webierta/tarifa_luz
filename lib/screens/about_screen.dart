@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/constantes.dart';
 import 'package:tarifa_luz/utils/read_file.dart';
@@ -27,14 +26,15 @@ class AboutScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
-                  'Copyleft 2020-2023\nJesús Cuerda (Webierta)',
+                  'Copyleft 2020-2025\nJesús Cuerda (Webierta)',
                   style: Theme.of(context).textTheme.titleMedium,
                   textAlign: TextAlign.center,
                 ),
                 const FittedBox(
                   child: Text('All Wrongs Reserved. Licencia GPLv3'),
                 ),
-                Divider(color: Theme.of(context).colorScheme.onBackground),
+                //Divider(color: Theme.of(context).colorScheme.onBackground),
+                Divider(color: Theme.of(context).colorScheme.onSurface),
                 const SizedBox(height: 10.0),
                 const ReadFile(archivo: 'assets/files/about.txt'),
               ],

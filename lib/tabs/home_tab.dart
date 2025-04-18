@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/graphics/grafico_home.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
+import 'package:tarifa_luz/tabs/head_home_tab.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 import 'package:tarifa_luz/widgets/generacion_balance.dart';
 import 'package:tarifa_luz/widgets/generacion_error.dart';
-import 'package:tarifa_luz/tabs/head_home_tab.dart';
 import 'package:tarifa_luz/widgets/list_tile_fecha.dart';
 
 class HomeTab extends StatelessWidget {
@@ -115,7 +114,8 @@ class HomeTab extends StatelessWidget {
                         desviacion: desviacionMin,
                       ),
                       Divider(
-                        color: StyleApp.onBackgroundColor.withOpacity(0.5),
+                        //color: StyleApp.onBackgroundColor.withOpacity(0.5),
+                        color: StyleApp.onBackgroundColor.withAlpha(50),
                         indent: 20,
                         endIndent: 20,
                       ),
@@ -129,7 +129,8 @@ class HomeTab extends StatelessWidget {
                         ),
                       ),
                       Divider(
-                        color: StyleApp.onBackgroundColor.withOpacity(0.5),
+                        //color: StyleApp.onBackgroundColor.withOpacity(0.5),
+                        color: StyleApp.onBackgroundColor.withAlpha(50),
                         indent: 20,
                         endIndent: 20,
                       ),
@@ -221,7 +222,8 @@ class HomeTab extends StatelessWidget {
                                   : 'Datos previstos',
                               style: TextStyle(
                                 color:
-                                    StyleApp.onBackgroundColor.withOpacity(0.8),
+                                    //StyleApp.onBackgroundColor.withOpacity(0.8),
+                                    StyleApp.onBackgroundColor.withAlpha(180),
                               ),
                             ),
                           ),
@@ -235,12 +237,15 @@ class HomeTab extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0),
             child: Column(
               children: [
-                Divider(color: StyleApp.onBackgroundColor.withOpacity(0.5)),
+                //Divider(color: StyleApp.onBackgroundColor.withOpacity(0.5)),
+                Divider(color: StyleApp.onBackgroundColor.withAlpha(50)),
                 Text('Fuente: REE (e·sios y REData)',
                     style: TextStyle(
-                      color: StyleApp.onBackgroundColor.withOpacity(0.5),
+                      //color: StyleApp.onBackgroundColor.withOpacity(0.5),
+                      color: StyleApp.onBackgroundColor.withAlpha(100),
                     )),
-                Divider(color: StyleApp.onBackgroundColor.withOpacity(0.5)),
+                //Divider(color: StyleApp.onBackgroundColor.withOpacity(0.5)),
+                Divider(color: StyleApp.onBackgroundColor.withAlpha(50)),
               ],
             ),
           ),

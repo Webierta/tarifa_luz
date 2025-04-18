@@ -1,10 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/widgets/head_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String btcAddress = '15ZpNzqbYFx9P7wg4U438JMwZr2q3W6fkS';
 const String urlPayPal =
@@ -39,7 +38,8 @@ class DonateScreen extends StatelessWidget {
               children: [
                 const HeadScreen(),
                 const Icon(Icons.favorite_border, size: 60),
-                Divider(color: Theme.of(context).colorScheme.onBackground),
+                //Divider(color: Theme.of(context).colorScheme.onBackground),
+                Divider(color: Theme.of(context).colorScheme.onSurface),
                 const SizedBox(height: 10.0),
                 Align(
                   alignment: Alignment.topLeft,
@@ -110,7 +110,8 @@ class DonateScreen extends StatelessWidget {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(8.0)),
                       border: Border.all(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        //color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         style: BorderStyle.solid,
                       ),
                     ),
@@ -145,10 +146,10 @@ class DonateScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             border: Border(
                                 left: BorderSide(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onBackground,
-                                    style: BorderStyle.solid)),
+                              //color: Theme.of(context).colorScheme.onBackground,
+                              color: Theme.of(context).colorScheme.onSurface,
+                              style: BorderStyle.solid,
+                            )),
                           ),
                           child: IconButton(
                             icon: const Icon(Icons.copy),

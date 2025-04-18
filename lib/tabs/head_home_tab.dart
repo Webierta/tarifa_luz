@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/utils/estados.dart';
@@ -175,9 +174,11 @@ class HeadHomeTab extends StatelessWidget {
             title: TextButton.icon(
               style: TextButton.styleFrom(
                 disabledBackgroundColor:
-                    Theme.of(context).colorScheme.background.withOpacity(0.2),
+                    //Theme.of(context).colorScheme.background.withOpacity(0.2),
+                    Theme.of(context).colorScheme.surface.withAlpha(20),
                 disabledForegroundColor:
-                    Theme.of(context).colorScheme.onBackground,
+                    //Theme.of(context).colorScheme.onBackground,
+                    Theme.of(context).colorScheme.onSurface,
                 textStyle: Theme.of(context).textTheme.labelLarge,
                 side: BorderSide(
                   color: Theme.of(context).colorScheme.primary,
@@ -194,9 +195,11 @@ class HeadHomeTab extends StatelessWidget {
             subtitle: TextButton.icon(
               style: TextButton.styleFrom(
                 disabledBackgroundColor:
-                    Theme.of(context).colorScheme.background.withOpacity(0.2),
+                    //Theme.of(context).colorScheme.background.withOpacity(0.2),
+                    Theme.of(context).colorScheme.surface.withAlpha(20),
                 disabledForegroundColor:
-                    Theme.of(context).colorScheme.onBackground,
+                    //Theme.of(context).colorScheme.onBackground,
+                    Theme.of(context).colorScheme.onSurface,
                 textStyle: Theme.of(context).textTheme.labelLarge,
                 side: BorderSide(
                   color: Theme.of(context).colorScheme.primary,

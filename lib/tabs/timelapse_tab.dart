@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/models/tarifa.dart';
-import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/tabs/head_tab.dart';
+import 'package:tarifa_luz/theme/style_app.dart';
 
 class TimelapseTab extends StatefulWidget {
   final BoxData boxData;
@@ -294,7 +293,8 @@ class Loading extends StatelessWidget {
             Text(
               'Calculando...',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground,
+                //color: Theme.of(context).colorScheme.onBackground,
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const LinearProgressIndicator(
@@ -329,7 +329,8 @@ class ContainerListView extends StatelessWidget {
       child: ListView.separated(
           separatorBuilder: (context, index) => Divider(
                 height: 0.2,
-                color: StyleApp.backgroundColor.withOpacity(0.2),
+                //color: StyleApp.backgroundColor.withOpacity(0.2),
+                color: StyleApp.backgroundColor.withAlpha(20),
               ),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
@@ -369,8 +370,10 @@ class ContainerListView extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  stops: const [0.04, 0.02], // const [0.02, 0.02],
-                  colors: [StyleApp.backgroundColor.withOpacity(0.5), color],
+                  //stops: const [0.04, 0.02],
+                  stops: const [0.04, 0.04],
+                  //colors: [StyleApp.backgroundColor.withOpacity(0.5), color],
+                  colors: [StyleApp.blueGrey, color],
                 ),
                 borderRadius: borderRadius,
                 color: color,

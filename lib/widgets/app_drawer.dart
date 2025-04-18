@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/eprel/energy_label.dart';
 import 'package:tarifa_luz/screens/about_screen.dart';
 import 'package:tarifa_luz/screens/bono_social.dart';
@@ -217,13 +216,17 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(),
+            Divider(
+              color: Theme.of(context).colorScheme.surface.withAlpha(100),
+            ),
             Container(
               padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
               child: Text(
                 'Versión $kVersion',
                 style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                      color: Theme.of(context).colorScheme.background,
+                      //color: Theme.of(context).colorScheme.background,
+                      color:
+                          Theme.of(context).colorScheme.surface.withAlpha(100),
                     ),
               ),
             ),
@@ -263,7 +266,8 @@ class DividerDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Theme.of(context).colorScheme.onBackground,
+      //color: Theme.of(context).colorScheme.onBackground,
+      color: Theme.of(context).colorScheme.onSurface,
       thickness: 0.4,
       indent: 20,
       endIndent: 20,

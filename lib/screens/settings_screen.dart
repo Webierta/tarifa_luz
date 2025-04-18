@@ -74,10 +74,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     sharedPrefs.autoSave = value;
   } */
 
-  final MaterialStateProperty<Icon?> thumbIcon =
+  /* final MaterialStateProperty<Icon?> thumbIcon =
       MaterialStateProperty.resolveWith<Icon?>(
     (Set<MaterialState> states) {
       if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check);
+      }
+      return const Icon(Icons.close);
+    },
+  ); */
+
+  final WidgetStateProperty<Icon?> thumbIcon =
+      WidgetStateProperty.resolveWith<Icon?>(
+    (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return const Icon(Icons.check);
       }
       return const Icon(Icons.close);
@@ -94,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (bool didPop, Object? result) {
         setToken();
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         Navigator.push(
@@ -104,6 +114,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         );
       },
+      /* onPopInvoked: (didPop) {
+        setToken();
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(isFirstLaunch: false),
+          ),
+        );
+      }, */
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Ajustes'),

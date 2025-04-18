@@ -1,6 +1,5 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 
 const List<Color> colores = [
@@ -128,7 +127,8 @@ class _GraficoCompareState extends State<GraficoCompare> {
                         border: Border(
                           bottom: BorderSide(
                             width: 1,
-                            color: Theme.of(context).colorScheme.onBackground,
+                            //color: Theme.of(context).colorScheme.onBackground,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -159,8 +159,8 @@ class _GraficoCompareState extends State<GraficoCompare> {
                             interval: 0.05,
                             getTitlesWidget: (value, meta) {
                               return SideTitleWidget(
-                                axisSide: meta.axisSide,
-                                //space: 4,
+                                //axisSide: meta.axisSide,
+                                meta: meta,
                                 child: meta.formattedValue.endsWith('5') ||
                                         meta.formattedValue.endsWith('0')
                                     ? FittedBox(
@@ -181,7 +181,8 @@ class _GraficoCompareState extends State<GraficoCompare> {
                         drawVerticalLine: true,
                         getDrawingVerticalLine: (value) {
                           return FlLine(
-                            color: Colors.grey.withOpacity(0.4),
+                            //color: Colors.grey.withOpacity(0.4),
+                            color: Colors.grey.withAlpha(40),
                             strokeWidth: 0.8,
                             dashArray: [2, 2],
                           );
@@ -194,12 +195,13 @@ class _GraficoCompareState extends State<GraficoCompare> {
                       ),
                       minY: 0,
                       maxY: getMaxY(),
-                      lineTouchData: const LineTouchData(
+                      lineTouchData: LineTouchData(
                         enabled: true,
                         touchTooltipData: LineTouchTooltipData(
                           fitInsideHorizontally: true,
                           fitInsideVertically: true,
-                          tooltipBgColor: Colors.black54,
+                          //tooltipBgColor: Colors.black54,
+                          getTooltipColor: ((touchedSpot) => Colors.black54),
                         ),
                       ),
                       lineBarsData: [
@@ -227,10 +229,12 @@ class _GraficoCompareState extends State<GraficoCompare> {
                                   true,
                               gradient: LinearGradient(
                                 colors: [
+                                  //getColor(widget.boxDataList.indexOf(boxData)).withOpacity(0.5),
+                                  //getColor(widget.boxDataList.indexOf(boxData)).withOpacity(0),
                                   getColor(widget.boxDataList.indexOf(boxData))
-                                      .withOpacity(0.5),
+                                      .withAlpha(50),
                                   getColor(widget.boxDataList.indexOf(boxData))
-                                      .withOpacity(0),
+                                      .withAlpha(0),
                                 ],
                                 stops: const [0.5, 1.0],
                                 begin: Alignment.topCenter,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/theme/style_app.dart';
 import 'package:tarifa_luz/utils/read_file.dart';
 import 'package:tarifa_luz/widgets/head_screen.dart';
@@ -21,7 +20,8 @@ class InfoScreen extends StatelessWidget {
                 Image.asset('assets/images/ic_launcher.png'),
                 const HeadScreen(),
                 //const Icon(Icons.info_outline, size: 60),
-                Divider(color: Theme.of(context).colorScheme.onBackground),
+                //Divider(color: Theme.of(context).colorScheme.onBackground),
+                Divider(color: Theme.of(context).colorScheme.onSurface),
                 const SizedBox(height: 10.0),
                 const ReadFile(archivo: 'assets/files/info.txt'),
               ],

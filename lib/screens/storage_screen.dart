@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/database/box_data.dart';
 import 'package:tarifa_luz/database/storage.dart';
 import 'package:tarifa_luz/graphics/grafico_compare.dart';
@@ -93,7 +92,7 @@ class _StorageScreenState extends State<StorageScreen> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (bool didPop, Object? result) {
         ScaffoldMessenger.of(context).removeCurrentSnackBar();
         Navigator.push(
           context,
@@ -102,6 +101,15 @@ class _StorageScreenState extends State<StorageScreen> {
           ),
         );
       },
+      /* onPopInvoked: (didPop) {
+        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(isFirstLaunch: false),
+          ),
+        );
+      }, */
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Archivo'),
@@ -183,7 +191,8 @@ class _StorageScreenState extends State<StorageScreen> {
                                   color: Theme.of(context)
                                       .colorScheme
                                       .error
-                                      .withOpacity(0.5),
+                                      .withAlpha(50),
+                                  //.withOpacity(0.5),
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(10),
                                   ),

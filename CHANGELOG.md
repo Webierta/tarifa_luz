@@ -2,6 +2,17 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
+## [5.0.1] - 2025-04-18
+
+### Changed
+
+- Actualizadas dependencias.
+- Mejoras de usabilidad (gracias a AgiBla).
+
+### Fixed
+
+- Corregidos pequeños bugs.
+
 ## [4.0.2] - 2024-01-23
 
 ### Fixed
@@ -139,6 +150,7 @@ Este archivo registra y documenta los cambios más notables a lo largo del desar
 
 - Fork del Proyecto del mismo autor [Precio Luz](https://github.com/Webierta/precio-luz): código renovado.
 
+[5.0.1]: https://github.com/Webierta/tarifa_luz/compare/v4.0.2...v5.0.1
 [4.0.2]: https://github.com/Webierta/tarifa_luz/compare/v4.0.1...v4.0.2
 [4.0.1]: https://github.com/Webierta/tarifa_luz/compare/v4.0.0...v4.0.1
 [4.0.0]: https://github.com/Webierta/tarifa_luz/compare/v3.2.5...v4.0.0

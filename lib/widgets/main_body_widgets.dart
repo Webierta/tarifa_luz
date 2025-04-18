@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:tarifa_luz/screens/home_screen.dart';
 import 'package:tarifa_luz/screens/settings_screen.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
@@ -89,7 +88,8 @@ class MainBodyStarted extends StatelessWidget {
           Text(
             stringProgress,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
+                  //color: Theme.of(context).colorScheme.onBackground,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
           ),
           const SizedBox(height: 16),
