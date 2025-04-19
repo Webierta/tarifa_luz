@@ -121,6 +121,9 @@ output.json
 # Keystore files
 *.keystore
 *.env
+# Environment related files
+.env
+env.g.dart
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
