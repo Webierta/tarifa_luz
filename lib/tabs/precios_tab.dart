@@ -78,7 +78,11 @@ class PreciosTab extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: tab == 1
-                        ? Tarifa.getIconCara(precios, precios[index])
+                        //? Tarifa.getIconCara(precios, precios[index])
+                        ? Text(
+                            Tarifa.getEmojiCara(precios, precios[index]),
+                            style: TextStyle(fontSize: 30),
+                          )
                         : Text(
                             '${index + 1}',
                             style: const TextStyle(

@@ -1,4 +1,4 @@
-const String kVersion = '5.0.1';
+const String kVersion = '5.1.0';
 
 const String boxPVPC = 'pvpc';
 const String boxStore = 'boxStore';

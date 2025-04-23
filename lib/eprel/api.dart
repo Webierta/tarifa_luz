@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:tarifa_luz/eprel/konstants.dart';
-import 'package:tarifa_luz/eprel/product_groups.dart';
+
+import 'product_groups.dart';
+import '../env/env.dart';
 
 enum StatusEprel {
   stopped,
@@ -34,9 +35,10 @@ class Api {
   StatusEprel status = StatusEprel.stopped;
   String label = '';
   FormatLabel formatLabel = FormatLabel.pdf;
+  static const String urlProduction = 'https://eprel.ec.europa.eu/api';
 
   Future<void> getEprelRegistrationNumber() async {
-    if (K.eprelToken.isEmpty) {
+    if (Env.eprelToken.isEmpty) {
       status = StatusEprel.error;
       return;
     }
@@ -47,14 +49,14 @@ class Api {
     String filterModelo = 'modelIdentifier=$modelo';
     String oldProducts = 'includeOldProducts=true';
     final String url =
-        '${K.urlProduction}$urlProductGroups?$limite&$filterMarca&$filterModelo&$oldProducts';
+        '$urlProduction$urlProductGroups?$limite&$filterMarca&$filterModelo&$oldProducts';
 
     Map<String, String> headers = {
       //'Accept': 'application/json; application/vnd.esios-api-v1+json',
       //'Host': 'public-energy-label-acceptance.ec.europa.eu',
       //'Host': 'eprel.ec.europa.eu',
       'User-Agent': 'Mozilla/5.0',
-      'x-api-key': K.eprelToken,
+      'x-api-key': Env.eprelToken,
       //'Cookie': '',
     };
 
@@ -130,7 +132,7 @@ class Api {
     String noRedirect = 'noRedirect=true';
     //String format = 'format=${formatLabel.formato}'; // PDF / PNG / SVG
     String format = 'format=${formatLabel.name.toUpperCase()}';
-    String url = '${K.urlProduction}$urlProduct?$noRedirect&$format';
+    String url = '$urlProduction$urlProduct?$noRedirect&$format';
 
     if (productGroups == ProductGroups.ovens.name && numberCavitiesHornos > 1) {
       String instance = 'instance=1'; // ONLY FOR DOMESTIC OVENS

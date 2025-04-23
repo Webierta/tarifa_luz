@@ -40,3 +40,6 @@ Dependencias. Flutter packages:
 * xml by lukas-renggli.ch (MIT License).
 * printing by nfet.net (Apache License 2.0).
 * flutter_svg by dnfield.dev (MIT License).
+* geekyants_flutter_gauges by geekyants.com (MIT License).
+* envied by cinibulk.dev (MIT License).
+* shared_preferences (BSD-3-Clause License).

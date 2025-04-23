@@ -9,6 +9,8 @@ import 'package:tarifa_luz/widgets/generacion_balance.dart';
 import 'package:tarifa_luz/widgets/generacion_error.dart';
 import 'package:tarifa_luz/widgets/list_tile_fecha.dart';
 
+import '../indicadores/indicador_horas.dart';
+
 class HomeTab extends StatelessWidget {
   final BoxData boxData;
   const HomeTab({required this.boxData, super.key});
@@ -63,30 +65,90 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double altoScreen = MediaQuery.of(context).size.height;
-
+    final double altoScreen = MediaQuery.of(context).size.height;
+    //final double anchoScreen = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.only(top: 24),
       child: Column(
         children: [
           HeadHomeTab(boxData: boxData),
           const SizedBox(height: 20),
-          GraficoHome(boxData: boxData),
-          SizedBox(height: altoScreen / 20),
           Column(
             children: [
               const Padding(
                 padding: EdgeInsets.only(left: 6),
                 child: Row(
                   children: [
-                    Icon(
+                    /*Icon(
                       Icons.access_time,
                       color: StyleApp.onBackgroundColor,
                       size: 24,
-                    ),
-                    SizedBox(width: 4),
+                    ),*/
+                    //SizedBox(width: 4),
                     Text(
-                      'Precios mínimo y máximo',
+                      '🕒 Horas y Períodos',
+                      style: TextStyle(
+                        color: StyleApp.onBackgroundColor,
+                        fontSize: 16,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 4),
+              AspectRatio(
+                aspectRatio: 5 / 4,
+                child: IndicadorHoras(boxData: boxData),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 6),
+                child: Row(
+                  children: [
+                    /*Icon(
+                      Icons.show_chart,
+                      color: StyleApp.onBackgroundColor,
+                      size: 24,
+                    ),
+                    SizedBox(width: 4),*/
+                    Text(
+                      '📈 Evolución diaria del precio',
+                      style: TextStyle(
+                        color: StyleApp.onBackgroundColor,
+                        fontSize: 16,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
+                    ),
+                  ],
+                ),
+              ),
+              GraficoHome(boxData: boxData),
+            ],
+          ),
+          SizedBox(height: 20),
+          Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(left: 6),
+                child: Row(
+                  children: [
+                    /*Icon(
+                      Icons.timer,
+                      color: StyleApp.onBackgroundColor,
+                      size: 24,
+                    ),
+                    SizedBox(width: 4),*/
+                    Text(
+                      '💲 Horas más barata y más cara',
                       style: TextStyle(
                         color: StyleApp.onBackgroundColor,
                         fontSize: 16,
@@ -149,19 +211,19 @@ class HomeTab extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: altoScreen / 20),
+          SizedBox(height: 20),
           const Padding(
             padding: EdgeInsets.only(left: 6),
             child: Row(
               children: [
-                Icon(
+                /*Icon(
                   Icons.bolt,
                   color: StyleApp.onBackgroundColor,
                   size: 24,
                 ),
-                SizedBox(width: 4),
+                SizedBox(width: 4),*/
                 Text(
-                  'Balance Generación',
+                  '⚡ Balance Generación',
                   style: TextStyle(
                     color: StyleApp.onBackgroundColor,
                     fontSize: 16,

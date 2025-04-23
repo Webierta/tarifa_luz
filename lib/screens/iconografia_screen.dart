@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarifa_luz/models/tarifa.dart';
 import 'package:tarifa_luz/theme/style_app.dart';
 
 class IconografiaScreen extends StatelessWidget {
@@ -112,10 +113,14 @@ class IconografiaScreen extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       ListTile(
-                        leading: Icon(
+                        /*leading: Icon(
                           Icons.sentiment_very_satisfied,
                           size: 30,
                           color: Colors.green[700],
+                        ),*/
+                        leading: Text(
+                          RangoHoras.baratas.emoji,
+                          style: TextStyle(fontSize: 32),
                         ),
                         title: Text(
                           '8 horas más baratas',
@@ -124,10 +129,14 @@ class IconografiaScreen extends StatelessWidget {
                       ),
                       divider,
                       ListTile(
-                        leading: Icon(
+                        /*leading: Icon(
                           Icons.sentiment_neutral,
                           size: 30,
                           color: Colors.amber[700],
+                        ),*/
+                        leading: Text(
+                          RangoHoras.intermedias.emoji,
+                          style: TextStyle(fontSize: 32),
                         ),
                         title: Text(
                           '8 horas intermedias',
@@ -136,10 +145,14 @@ class IconografiaScreen extends StatelessWidget {
                       ),
                       divider,
                       ListTile(
-                        leading: Icon(
+                        /*leading: Icon(
                           Icons.sentiment_very_dissatisfied,
                           size: 30,
                           color: Colors.deepOrange[700],
+                        ),*/
+                        leading: Text(
+                          RangoHoras.caras.emoji,
+                          style: TextStyle(fontSize: 32),
                         ),
                         title: Text(
                           '8 horas más caras',
@@ -155,7 +168,7 @@ class IconografiaScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 Text(
-                  '(fondo de celdas de tablas y semáforo)',
+                  '(barra vertical y celdas de tablas)',
                   style: Theme.of(context).textTheme.labelSmall,
                 ),
                 Card(

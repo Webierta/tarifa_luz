@@ -2,6 +2,22 @@
 
 Este archivo registra y documenta los cambios más notables a lo largo del desarrollo del proyecto.
 
+## [5.1.0] - 2025-04-23
+
+### Added
+
+- Nuevos indicadores gráficos (reloj interactivo y barra con rango de precios que sustituye al semáforo).
+
+### Changed
+
+- Cambios de diseño para mejorar la presentación de la información y facilitar la interpretación de símbolos e iconos.
+- Algunos iconos han sido sustituidos por emojis.
+- Cambios en el proceso interno de acceso a token EPREL.
+
+### Fixed
+
+- Corregidos pequeños bugs.
+
 ## [5.0.1] - 2025-04-18
 
 ### Changed
@@ -150,6 +166,7 @@ Este archivo registra y documenta los cambios más notables a lo largo del desar
 
 - Fork del Proyecto del mismo autor [Precio Luz](https://github.com/Webierta/precio-luz): código renovado.
 
+[5.1.0]: https://github.com/Webierta/tarifa_luz/compare/v5.0.1...v5.1.0
 [5.0.1]: https://github.com/Webierta/tarifa_luz/compare/v4.0.2...v5.0.1
 [4.0.2]: https://github.com/Webierta/tarifa_luz/compare/v4.0.1...v4.0.2
 [4.0.1]: https://github.com/Webierta/tarifa_luz/compare/v4.0.0...v4.0.1
