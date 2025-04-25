@@ -42,6 +42,7 @@ class IndicadorPrecios extends StatelessWidget {
     final precioMax = double.parse(boxData.precioMax.toStringAsFixed(4));
 
     return LinearGauge(
+      //fillExtend: true,
       rulers: RulerStyle(
         rulerPosition: RulerPosition.right,
         showPrimaryRulers: true,
@@ -84,10 +85,12 @@ class IndicadorPrecios extends StatelessWidget {
           shape: PointerShape.triangle,
           //color: Tarifa.getColorBorder(boxData.getPrecio(precios, hora)),
           color: Colors.white,
+          //height: 14,
+          //width: 14,
           pointerPosition: PointerPosition.left,
           //showLabel: true,
         ),
-        Pointer(
+        /*Pointer(
           value:
               double.parse(boxData.getPrecio(precios, hora).toStringAsFixed(4)),
           pointerPosition: PointerPosition.right,
@@ -95,7 +98,7 @@ class IndicadorPrecios extends StatelessWidget {
           color: Colors.white,
           shape: PointerShape.triangle,
           //showLabel: true,
-        ),
+        ),*/
         Pointer(
           value: precioMin,
           pointerPosition: PointerPosition.right,
@@ -105,7 +108,8 @@ class IndicadorPrecios extends StatelessWidget {
           showLabel: true,
           labelStyle: TextStyle(
             //fontSize: 14,
-            color: Colors.green,
+            color: Colors.green, // green,
+            //backgroundColor: Colors.green,
           ),
         ),
         Pointer(

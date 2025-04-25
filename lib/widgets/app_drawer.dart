@@ -83,7 +83,7 @@ class AppDrawer extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          'Copyleft 2020-2023',
+                          'Copyleft 2020-2025',
                           style: Theme.of(context).textTheme.labelSmall,
                         ),
                         Text(

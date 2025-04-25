@@ -18,8 +18,6 @@ class HeadHomeTab extends StatelessWidget {
     Periodo periodoAhora =
         Tarifa.getPeriodo(boxData.fecha.copyWith(hour: now.hour));
 
-    //String semaforo = Tarifa.getSemaforo(precioNow);
-
     var desviacion = boxData.preciosHora[now.hour] - boxData.precioMedio;
 
     //Color color = Tarifa.getColorCara(boxData.preciosHora, precioNow);
@@ -33,104 +31,89 @@ class HeadHomeTab extends StatelessWidget {
       return preciosOrdenados.indexOf(precioNow) + 1;
     }*/
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          //flex: 4,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FittedBox(
-                fit: BoxFit.contain,
-                child: Text(
-                  '${boxData.fechaddMMyy} a las ${DateFormat('HH:mm').format(now)}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+    return IntrinsicHeight(
+      child: Row(
+        //crossAxisAlignment: CrossAxisAlignment.start,
+        //crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text(
+                    '${boxData.fechaddMMyy} a las ${DateFormat('HH:mm').format(now)}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
-              ),
-              //const SizedBox(height: 20),
-              FittedBox(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      precioNow.toStringAsFixed(5),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 80,
-                        fontWeight: FontWeight.w100,
+                const SizedBox(height: 10),
+                FittedBox(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        precioNow.toStringAsFixed(5),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 80,
+                          fontWeight: FontWeight.w100,
+                        ),
                       ),
-                    ),
-                    const Text(
-                      '€/kWh',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
+                      const Text(
+                        '€/kWh',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              //const SizedBox(height: 10),
-              FittedBox(
-                child: Row(
-                  children: [
-                    Tarifa.getIconPeriodo(periodoAhora),
-                    const SizedBox(width: 5),
-                    Text('Período ${periodoAhora.name.toUpperCase()}'),
-                  ],
+                const Spacer(),
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Tarifa.getIconPeriodo(periodoAhora),
+                  title: Text('Periodo ${periodoAhora.name.toUpperCase()}'),
                 ),
-              ),
-              const SizedBox(height: 2),
-              FittedBox(
-                child: Row(
-                  children: [
-                    Text(
-                      Tarifa.getEmojiCara(boxData.preciosHora, precioNow),
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(width: 5),
-                    if (rango == RangoHoras.baratas)
-                      Text('8 horas más baratas'),
-                    if (rango == RangoHoras.caras) Text('8 horas más caras'),
-                    if (rango == RangoHoras.intermedias)
-                      Text('8 horas intermedias'),
-                  ],
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Text(
+                    Tarifa.getEmojiCara(boxData.preciosHora, precioNow),
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  title: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(rango.description),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              FittedBox(
-                child: Row(
-                  children: [
-                    Icon(
-                      desviacion > 0 ? Icons.upload : Icons.download,
-                      color: desviacion > 0 ? Colors.red : Colors.green,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      '${desviacion.toStringAsFixed(4)} €',
-                      style: TextStyle(),
-                    ),
-                  ],
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: Icon(
+                    desviacion > 0 ? Icons.upload : Icons.download,
+                    color: desviacion > 0 ? Colors.red : Colors.green,
+                  ),
+                  title: Text(
+                    '${desviacion.toStringAsFixed(4)} €',
+                    style: TextStyle(),
+                  ),
                 ),
-              ),
-            ],
+                const Spacer(),
+              ],
+            ),
           ),
-        ),
-        //const SizedBox(width: 8),
-        Expanded(
-          //flex: 3,
-          child: AspectRatio(
-            aspectRatio: 1, //4 / 5, // 9 / 16,
+          //const SizedBox(width: 8),
+          Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              //crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  'Rangos de precios',
+                  'Rango de precios',
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall!
@@ -140,8 +123,8 @@ class HeadHomeTab extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

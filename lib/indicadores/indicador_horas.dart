@@ -147,14 +147,10 @@ class _IndicadorHorasState extends State<IndicadorHoras> {
 
   @override
   Widget build(BuildContext context) {
-    //final double altoScreen = MediaQuery.of(context).size.height;
-    //final double anchoScreen = MediaQuery.of(context).size.width;
     return ClipPath(
       clipper: StyleApp.kBorderClipper,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        //width: double.infinity,
-        //height: altoScreen / 2,
         decoration: StyleApp.kBoxDeco,
         child: Column(
           children: [

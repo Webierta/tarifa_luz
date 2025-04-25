@@ -79,14 +79,8 @@ class HomeTab extends StatelessWidget {
                 padding: EdgeInsets.only(left: 6),
                 child: Row(
                   children: [
-                    /*Icon(
-                      Icons.access_time,
-                      color: StyleApp.onBackgroundColor,
-                      size: 24,
-                    ),*/
-                    //SizedBox(width: 4),
                     Text(
-                      '🕒 Horas y Períodos',
+                      '🕒 Horas y Periodos',
                       style: TextStyle(
                         color: StyleApp.onBackgroundColor,
                         fontSize: 16,
@@ -99,9 +93,15 @@ class HomeTab extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              AspectRatio(
-                aspectRatio: 5 / 4,
-                child: IndicadorHoras(boxData: boxData),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxHeight: altoScreen / 1.4),
+                  child: AspectRatio(
+                    aspectRatio: 5 / 4,
+                    child: IndicadorHoras(boxData: boxData),
+                  ),
+                ),
               ),
             ],
           ),

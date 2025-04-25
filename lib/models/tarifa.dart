@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:tarifa_luz/utils/estados.dart';
 
 enum RangoHoras {
-  baratas('😄'),
-  intermedias('😐'),
-  caras('😡');
+  baratas('😄', '8 horas más baratas'),
+  intermedias('😐', '8 horas intermedias'),
+  caras('😡', '8 horas más caras');
 
   final String emoji;
+  final String description;
 
-  const RangoHoras(this.emoji);
+  const RangoHoras(this.emoji, this.description);
 }
 
 class Tarifa {

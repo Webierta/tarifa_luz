@@ -186,7 +186,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return (currentIndex == listBoxData.length - 1);
   }
 
+  void scrollPositionMin() {
+    if (scrollController.position.pixels ==
+        scrollController.position.minScrollExtent) {
+      return;
+    }
+    scrollController.animateTo(
+      scrollController.position.minScrollExtent,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn,
+    );
+  }
+
   void nextBoxData() {
+    scrollPositionMin();
     setState(() => listBoxData = storage.listBoxDataSort);
     int currentIndex =
         listBoxData.indexWhere((e) => e.fecha == boxDataSelect?.fecha);
@@ -198,6 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void prevBoxData() {
+    scrollPositionMin();
     setState(() => listBoxData = storage.listBoxDataSort);
     int currentIndex =
         listBoxData.indexWhere((e) => e.fecha == boxDataSelect?.fecha);
@@ -479,11 +493,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                   currentIndex: currentTab,
                   onTap: (int index) {
-                    scrollController.animateTo(
+                    /*scrollController.animateTo(
                       scrollController.position.minScrollExtent,
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.fastOutSlowIn,
-                    );
+                    );*/
+                    scrollPositionMin();
                     if (currentTab != index) {
                       setState(() => currentTab = index);
                     }

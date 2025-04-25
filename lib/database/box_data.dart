@@ -92,6 +92,15 @@ class BoxData {
     return DateFormat('dd/MM/yy').format(fecha);
   }
 
+  /*String get fechaDiaSemana {
+    String diaSemana = DateFormat('EEEE').format(fecha);
+    if (diaSemana.isEmpty) {
+      return '';
+    }
+    return diaSemana[0].toUpperCase() + diaSemana.substring(1);
+    //return DateFormat('EEE').format(fecha);
+  }*/
+
   BoxData copyWith(
       {DateTime? fecha,
       List<double>? preciosHora,
