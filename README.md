@@ -1,3 +1,5 @@
+> ## El Proyecto ha sido completamente renovado y movido a este repositorio: [Open Luz](https://github.com/Webierta/open_luz/releases) pendiente de su publicación
+
 # Tarifa Luz
 
 <img src="https://github.com/Webierta/tarifa_luz/blob/main/fastlane/metadata/android/en-US/images/icon.png" width="100">
